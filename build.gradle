@@ -1,0 +1,31 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.9'
+	id 'io.spring.dependency-management' version '1.1.2'
+}
+
+group = 'com.pl'
+version = 'nadgodziny 0.1'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	implementation 'com.vaadin:vaadin-spring-boot-starter:24.0.0'
+	implementation 'com.twilio.sdk:twilio:9.2.5'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
