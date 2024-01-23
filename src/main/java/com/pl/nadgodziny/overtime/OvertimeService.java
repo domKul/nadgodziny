@@ -15,7 +15,6 @@ class OvertimeService {
         this.overtimeRepository = overtimeRepository;
     }
 
-
      void addNewOvertime(Overtime overtime) {
          Optional<Overtime> ifNotNull = Optional.ofNullable(overtime);
          try {
@@ -41,6 +40,4 @@ class OvertimeService {
     int sumByGivenStatusAndMonth(int month, String status){
          return overtimeRepository.countByDurationByStatus(month, status);
     }
-
-
 }

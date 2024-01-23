@@ -6,25 +6,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
-
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 public class OvertimeConsoleServiceTest {
 
     @InjectMocks
     private OvertimeConsoleService overtimeConsoleService;
-
     @Mock
     private OvertimeService overtimeService;
+    @Mock
     private  ConfigurableApplicationContext applicationContext;
-
-    private OvertimeRepository overtimeRepository;
 
     @BeforeEach
     void beforeEachTest() {
@@ -60,4 +57,17 @@ public class OvertimeConsoleServiceTest {
         // Then
         assertEquals(" Zły format daty.", exception.getMessage());
     }
+
+    @Test
+    void shouldExitFromProgram(){
+        //Given
+        Scanner scanner =new Scanner("3");
+
+        // When
+        overtimeConsoleService.whatNext(scanner.nextInt());
+
+        // Then
+        verify(applicationContext, times(1)).close();
+    }
+
 }

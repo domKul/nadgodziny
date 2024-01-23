@@ -14,7 +14,6 @@ import java.util.Scanner;
 public class OvertimeConsoleService {
     private final Scanner sc = new Scanner(System.in);
     private final ConfigurableApplicationContext applicationContext;
-
     private final OvertimeService overtimeService;
 
     OvertimeConsoleService(ConfigurableApplicationContext applicationContext, OvertimeService overtimeService) {
@@ -42,7 +41,7 @@ public class OvertimeConsoleService {
         }
     }
 
-    private boolean whatNext(int nextInt) {
+     boolean whatNext(int nextInt) {
         try {
             switch (nextInt) {
                 case 1 -> createOvertimeAndSaveToDb(sc);
@@ -113,13 +112,11 @@ public class OvertimeConsoleService {
     void getOvertimeByMonth(Scanner scanner) {
         printText("Podaj miesiac (1-12): ");
         int month = scanner.nextInt();
-        scanner.nextLine();
+        //scanner.nextLine();
         List<Overtime> overtimeByMonth = overtimeService.findOvertimeByMonth(month);
         printText("\n\n\n\n\n");
         isEmptyOrNot(overtimeByMonth);
-        for (Overtime overtime : overtimeByMonth) {
-            printText(overtime.toString());
-        }
+        overtimeByMonth.forEach(System.out::println);
     }
 
     void isEmptyOrNot(List<Overtime> byMonthOvertimeDate) {
