@@ -1,14 +1,13 @@
-package com.pl.nadgodziny.repository;
+package com.pl.nadgodziny.overtime;
 
-import com.pl.nadgodziny.model.Overtime;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface OvertimeRepository extends CrudRepository<Overtime, Long> {
+interface OvertimeRepository extends JpaRepository<Overtime, Long> {
 
     @Query("SELECT o " +
             "FROM Overtime o " +
@@ -24,5 +23,5 @@ public interface OvertimeRepository extends CrudRepository<Overtime, Long> {
             "FROM Overtime o " +
             "WHERE MONTH(o.overtimeDate) = :month " +
             "AND (o.status) = :status")
-    int coundByDurationBystatus( int month, String status);
+    int countByDurationByStatus(int month, String status);
 }

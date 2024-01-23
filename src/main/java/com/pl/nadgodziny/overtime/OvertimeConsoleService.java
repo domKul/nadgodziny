@@ -1,10 +1,8 @@
-package com.pl.nadgodziny.service;
+package com.pl.nadgodziny.overtime;
 
-import com.pl.nadgodziny.exception.WrongArgumentInputException;
-import com.pl.nadgodziny.model.Overtime;
-import com.pl.nadgodziny.repository.OvertimeRepository;
+import com.pl.nadgodziny.overtime.exception.WrongArgumentInputException;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -14,15 +12,18 @@ import java.util.Scanner;
 
 @Service
 public class OvertimeConsoleService {
-    private Scanner sc = new Scanner(System.in);
-    private final OvertimeRepository overtimeRepository;
+    private final Scanner sc = new Scanner(System.in);
+    private final ConfigurableApplicationContext applicationContext;
 
-    public OvertimeConsoleService(OvertimeRepository overtimeRepository) {
-        this.overtimeRepository = overtimeRepository;
+    private final OvertimeService overtimeService;
+
+    OvertimeConsoleService(ConfigurableApplicationContext applicationContext, OvertimeService overtimeService) {
+        this.applicationContext = applicationContext;
+        this.overtimeService = overtimeService;
     }
 
     public void runApp() {
-        try {
+        try (sc){
             do {
                 initialInfo();
                 int nextInt;
@@ -38,18 +39,17 @@ public class OvertimeConsoleService {
             } while (true);
         } catch (Exception e) {
             printText("Wystąpił błąd: " + e.getMessage());
-        } finally {
-            sc.close();
         }
     }
 
     private boolean whatNext(int nextInt) {
         try {
             switch (nextInt) {
-                case 1 -> createOvertimeandSaveToDb(sc);
+                case 1 -> createOvertimeAndSaveToDb(sc);
                 case 2 -> findAll();
                 case 3 -> {
                     printText("Zamykanie aplikacji...");
+                    applicationContext.close();
                     return true;
                 }
                 case 4 -> getOvertimeByMonth(sc);
@@ -64,68 +64,71 @@ public class OvertimeConsoleService {
         return false;
     }
 
-    private void printText(String txt) {
+    void printText(String txt) {
         System.out.println(txt);
     }
 
-    @Transactional
-    public void addNewOvertime(Overtime overtime) {
-        overtimeRepository.save(overtime);
-    }
-
-    private void createOvertimeandSaveToDb(Scanner scanner) {
+    void addNewOvertime(Overtime overtime) {
         try {
-            Overtime overtime = createOvertimeObject(scanner);
-            addNewOvertime(overtime);
-        } catch (DateTimeParseException e) {
-            printText(" Zły format daty.");
-        } catch (WrongArgumentInputException e) {
-            printText("Błąd: Nieprawidłowe dane wejściowe." + e);
+            overtimeService.addNewOvertime(overtime);
         } catch (Exception e) {
-            printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
+            throw new RuntimeException("Wystąpił błąd podczas zapisu nadgodzin do bazy danych.", e);
         }
     }
 
-    private Overtime createOvertimeObject(Scanner scanner) {
-        printText("Data nadgodzin w formacie RRRR-MM-DD:");
-        String dateString = scanner.nextLine();
-        LocalDate date = localDateFromString(dateString);
-        printText("Rodzaj nadgodzin");
-        String status = scanner.nextLine();
-        printText("Czas pracy (w godzinach)");
-        int hours = scanner.nextInt();
-        return new Overtime(date, status, hours);
+    void createOvertimeAndSaveToDb(Scanner scanner) {
+        Overtime overtime = createOvertimeObject(scanner);
+        addNewOvertime(overtime);
+
     }
 
-    private static LocalDate localDateFromString(String dateString) {
+    Overtime createOvertimeObject(Scanner scanner) {
+        try {
+            printText("Data nadgodzin w formacie RRRR-MM-DD:");
+            String dateString = scanner.nextLine();
+            LocalDate date = localDateFromString(dateString);
+            printText("Rodzaj nadgodzin");
+            String status = scanner.nextLine();
+            printText("Czas pracy (w godzinach)");
+            int hours = scanner.nextInt();
+            return new Overtime(date, status, hours);
+        } catch (DateTimeParseException e) {
+            throw new DateTimeParseException(" Zły format daty.", e.getParsedString(), e.getErrorIndex());
+        }
+    }
+
+    static LocalDate localDateFromString(String dateString) {
         return LocalDate.parse(dateString);
     }
 
-    private void findAll() {
-        Iterable<Overtime> allOvertimes = overtimeRepository.findAll();
+    void findAll() {
+        List<Overtime> allOvertimes = overtimeService.getAllOvertimes();
         printText("\n\n\n\nLista wszystkich nadgodzin:");
-
+        isEmptyOrNot(allOvertimes);
         for (Overtime overtime : allOvertimes) {
             printText(overtime.toString());
         }
     }
 
-    private void getOvertimeByMonth(Scanner scanner) {
+    void getOvertimeByMonth(Scanner scanner) {
         printText("Podaj miesiac (1-12): ");
         int month = scanner.nextInt();
         scanner.nextLine();
-        List<Overtime> byMonthOvertimeDate = overtimeRepository.findByMonthOvertimeDate(month);
+        List<Overtime> overtimeByMonth = overtimeService.findOvertimeByMonth(month);
         printText("\n\n\n\n\n");
-        if (byMonthOvertimeDate.isEmpty()) {
-            printText("Nie znaleziono danych z miesiaca " + month);
-        }
-        for (Overtime overtime : byMonthOvertimeDate) {
+        isEmptyOrNot(overtimeByMonth);
+        for (Overtime overtime : overtimeByMonth) {
             printText(overtime.toString());
         }
     }
 
+    void isEmptyOrNot(List<Overtime> byMonthOvertimeDate) {
+        if (byMonthOvertimeDate.isEmpty()) {
+            printText("Nie znaleziono danych ");
+        }
+    }
 
-    private void initialInfo() {
+    void initialInfo() {
         printText("\n\n\nWybierz opcje" +
                 " \n 1-dodaj " +
                 "\n 2-wszystkie " +
@@ -135,23 +138,20 @@ public class OvertimeConsoleService {
                 "\n 6-suma nadgodzin o z danego rodzaju w danym miesiacu");
     }
 
-    private void sumOfAllOvertimeHoursByMonth(Scanner scanner) {
+    void sumOfAllOvertimeHoursByMonth(Scanner scanner) {
         printText("Podaj miesiac");
         int month = scanner.nextInt();
         scanner.nextLine();
-
-        List<Overtime> byMonthOvertimeDate = overtimeRepository.findByMonthOvertimeDate(month);
-
+        List<Overtime> byMonthOvertimeDate = overtimeService.findOvertimeByMonth(month);
         if (byMonthOvertimeDate.isEmpty()) {
             printText("Nie znaleziono danych z miesiąca " + month);
             return;
         }
-
-        int sum = overtimeRepository.countByDuration(month);
+        int sum = overtimeService.sumDurationByMonth(month);
         printText("Laczna suma godzin to " + sum);
     }
 
-    private void sumByGivenStatusOfGivenMonth(Scanner scanner) {
+     void sumByGivenStatusOfGivenMonth(Scanner scanner) {
         try {
             printText("podaj miesiac nadgodzin: ");
             int miesiac = scanner.nextInt();
@@ -161,7 +161,7 @@ public class OvertimeConsoleService {
             if (miesiac < 1 || miesiac > 12) {
                 throw new WrongArgumentInputException("Błąd: Nieprawidłowy miesiąc.");
             }
-            int i = overtimeRepository.coundByDurationBystatus(miesiac, rodzaj);
+            int i = overtimeService.sumByGivenStatusAndMonth(miesiac, rodzaj);
             printText("liczba godzin to " + i);
         } catch (WrongArgumentInputException e) {
             printText(e.getMessage());
@@ -169,6 +169,4 @@ public class OvertimeConsoleService {
             printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
         }
     }
-
-
 }

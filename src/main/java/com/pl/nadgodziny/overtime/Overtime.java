@@ -1,4 +1,4 @@
-package com.pl.nadgodziny.model;
+package com.pl.nadgodziny.overtime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Overtime {
+class Overtime {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
@@ -21,7 +21,7 @@ public class Overtime {
     public Overtime() {
     }
 
-    public Overtime( LocalDate overtimeDate, String status, int duration) {
+    public Overtime(LocalDate overtimeDate, String status, int duration) {
         this.creationDate = LocalDate.now();
         this.overtimeDate = overtimeDate;
         this.status = status;
@@ -73,7 +73,7 @@ public class Overtime {
                 overtimeDate +
                 " ||  rodzaj " +
                 status +
-                " ||  czas pracy "+
+                " ||  czas pracy " +
                 duration + " godzin";
     }
 }

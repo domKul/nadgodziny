@@ -1,4 +1,4 @@
-package com.pl.nadgodziny.exception;
+package com.pl.nadgodziny.overtime.exception;
 
 public class WrongArgumentInputException extends RuntimeException{
 
