@@ -104,15 +104,13 @@ public class OvertimeConsoleService {
         List<Overtime> allOvertimes = overtimeService.getAllOvertimes();
         printText("\n\n\n\nLista wszystkich nadgodzin:");
         isEmptyOrNot(allOvertimes);
-        for (Overtime overtime : allOvertimes) {
-            printText(overtime.toString());
-        }
+        allOvertimes.forEach(System.out::println);
     }
 
     void getOvertimeByMonth(Scanner scanner) {
         printText("Podaj miesiac (1-12): ");
         int month = scanner.nextInt();
-        //scanner.nextLine();
+        scanner.nextLine();
         List<Overtime> overtimeByMonth = overtimeService.findOvertimeByMonth(month);
         printText("\n\n\n\n\n");
         isEmptyOrNot(overtimeByMonth);
