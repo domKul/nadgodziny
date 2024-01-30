@@ -1,4 +1,4 @@
-package com.pl.nadgodziny.overtime;
+package dominik.nadgodziny.overtime;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

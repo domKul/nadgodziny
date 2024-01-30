@@ -1,4 +1,4 @@
-package com.pl.nadgodziny.overtime;
+package dominik.nadgodziny.overtime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,20 +8,23 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
+
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class OvertimeConsoleServiceTest {
+class OvertimeConsoleServiceTest {
 
     @InjectMocks
     private OvertimeConsoleService overtimeConsoleService;
     @Mock
     private OvertimeService overtimeService;
     @Mock
-    private  ConfigurableApplicationContext applicationContext;
+    private ConfigurableApplicationContext applicationContext;
 
     @BeforeEach
     void beforeEachTest() {
@@ -59,9 +62,9 @@ public class OvertimeConsoleServiceTest {
     }
 
     @Test
-    void shouldExitFromProgram(){
+    void shouldExitFromProgram() {
         //Given
-        Scanner scanner =new Scanner("3");
+        Scanner scanner = new Scanner("3");
 
         // When
         overtimeConsoleService.whatNext(scanner.nextInt());

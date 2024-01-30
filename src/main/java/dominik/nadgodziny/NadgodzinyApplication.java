@@ -1,6 +1,6 @@
-package com.pl.nadgodziny;
+package dominik.nadgodziny;
 
-import com.pl.nadgodziny.overtime.OvertimeConsoleService;
+import dominik.nadgodziny.overtime.OvertimeConsoleService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

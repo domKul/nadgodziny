@@ -1,4 +1,4 @@
-package com.pl.nadgodziny.overtime;
+package dominik.nadgodziny.overtime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

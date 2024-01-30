@@ -1,6 +1,6 @@
-package com.pl.nadgodziny.overtime;
+package dominik.nadgodziny.overtime;
 
-import com.pl.nadgodziny.overtime.exception.WrongArgumentInputException;
+import dominik.nadgodziny.overtime.exception.WrongArgumentInputException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +59,6 @@ public class OvertimeConsoleService {
         } catch (InputMismatchException e) {
             printText("Zle dane wejsciowe");
         }
-
         return false;
     }
 
