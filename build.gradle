@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.pl'
-version = 'nadgodziny 0.1'
+version = 'nadgodziny 1.0'
 
 java {
 	sourceCompatibility = '17'

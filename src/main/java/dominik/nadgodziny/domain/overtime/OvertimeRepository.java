@@ -1,4 +1,4 @@
-package dominik.nadgodziny.overtime;
+package dominik.nadgodziny.domain.overtime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-interface OvertimeRepository extends JpaRepository<Overtime, Long> {
+interface OvertimeRepository extends JpaRepository<Overtime, Long>{
 
     @Query("SELECT o " +
             "FROM Overtime o " +
@@ -24,4 +24,7 @@ interface OvertimeRepository extends JpaRepository<Overtime, Long> {
             "WHERE MONTH(o.overtimeDate) = :month " +
             "AND (o.status) = :status")
     int countByDurationByStatus(int month, String status);
+    @Query("SELECT o FROM Overtime o ")
+    List<Overtime>findAllOvertimes();
+
 }

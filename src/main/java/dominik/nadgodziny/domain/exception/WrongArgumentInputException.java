@@ -1,4 +1,4 @@
-package dominik.nadgodziny.overtime.exception;
+package dominik.nadgodziny.domain.exception;
 
 public class WrongArgumentInputException extends RuntimeException{
 
