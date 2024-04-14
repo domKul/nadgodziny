@@ -16,13 +16,11 @@ class SmsBuilder implements SmsProcessor {
     private String phoneNumberTo;
     @Value("${twilio.phone.number.from}")
     private String phoneNumberFrom;
-    @Value("${twilio.account.user}")
-    private String accountSid;
-    @Value("${twilio.account.token}")
-    private String authToken;
+    @Value("${twilio.message.body}")
+    private String smsBody;
 
     @Override
     public void sendSms() {
-        smsSenderSchema.smsSchema(accountSid,authToken,phoneNumberTo,phoneNumberFrom);
+        smsSenderSchema.smsSchema(phoneNumberTo,phoneNumberFrom,smsBody);
     }
 }

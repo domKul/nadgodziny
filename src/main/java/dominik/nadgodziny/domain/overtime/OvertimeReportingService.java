@@ -30,7 +30,6 @@ class OvertimeReportingService {
     }
 
     void createOvertimeObject(Scanner scanner) {
-
         try {
             printText("Data nadgodzin w formacie RRRR-MM-DD:");
             String dateString = scanner.nextLine();

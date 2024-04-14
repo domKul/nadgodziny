@@ -2,17 +2,16 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/nadgodziny?serverTimezone=Europe/Warsaw&useSSL=False
     username: root
-    password: x4pfavsjkodilla  # Replace with your actual database password for security
+    password: x4pfavsjkodilla
   jpa:
     database: mysql
     show-sql: false
     hibernate:
       ddl-auto: update
-      # Uncomment and configure the dialect if necessary based on your specific database version
-      # dialect: org.hibernate.dialect.MySQL5Dialect  # Example for MySQL 5.x
 
-# Twilio configuration (consider using a secure secrets management solution in production)
 twilio:
+  message:
+    body: Dodaj nadgodziny
   account:
     user: ACc88d082fd152619024b33f84b0a51d94
     token: ab1f9bfbbbd8f82ddf4d2f83c3f36fd3
