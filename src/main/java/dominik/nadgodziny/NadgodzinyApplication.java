@@ -4,10 +4,10 @@ import dominik.nadgodziny.infrastructure.console.OvertimeMainLoop;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-//@EnableScheduling
+//@EnableScheduling1
 public class NadgodzinyApplication {
 
 	public static void main(String[] args) {

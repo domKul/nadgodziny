@@ -1,6 +1,7 @@
 package dominik.nadgodziny.infrastructure.console;
 
-import dominik.nadgodziny.domain.overtime.OvertimeConsoleFacade;
+import dominik.nadgodziny.domain.OvertimeConsoleFacade;
+import dominik.nadgodziny.infrastructure.console.OvertimeMainLoop;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

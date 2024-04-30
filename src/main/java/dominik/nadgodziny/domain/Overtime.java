@@ -1,4 +1,4 @@
-package dominik.nadgodziny.domain.overtime;
+package dominik.nadgodziny.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 class Overtime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
@@ -26,6 +27,22 @@ class Overtime {
         this.overtimeDate = overtimeDate;
         this.status = status;
         this.duration = duration;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
     public LocalDate getOvertimeDate() {
@@ -67,13 +84,13 @@ class Overtime {
 
     @Override
     public String toString() {
-        return "ID " + id + "\n ||  wpisano " +
+        return "ID " + id + " ||  wpisano " +
                 creationDate +
                 " ||  data nadgodzin " +
                 overtimeDate +
                 " ||  rodzaj " +
                 status +
                 " ||  czas pracy " +
-                duration + " godzin";
+                duration + " godzin ";
     }
 }

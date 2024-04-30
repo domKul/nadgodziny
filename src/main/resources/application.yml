@@ -1,4 +1,6 @@
 spring:
+  banner:
+    location: banner.txt
   datasource:
     url: jdbc:mysql://localhost:3306/nadgodziny?serverTimezone=Europe/Warsaw&useSSL=False
     username: root
@@ -23,4 +25,6 @@ twilio:
 scheduling:
   enabled: true
   request:
-    delay: 0 * * * * *
+    delay: 0 0 14 * * SAT
+#    delay: 0 * * * * *
+

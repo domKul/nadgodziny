@@ -18,7 +18,7 @@ repositories {
 dependencies {
 
 	implementation group: 'com.twilio.sdk', name: 'twilio', version: '8.0.0'
-	runtimeOnly'com.h2database:h2'
+//	runtimeOnly'com.h2database:h2'
 	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.5.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -1,4 +1,4 @@
-package dominik.nadgodziny.infrastructure.sender.scheduler;
+package dominik.nadgodziny.infrastructure.scheduler;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;

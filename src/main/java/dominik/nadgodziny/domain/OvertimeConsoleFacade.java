@@ -1,13 +1,10 @@
-package dominik.nadgodziny.domain.overtime;
+package dominik.nadgodziny.domain;
 
-import org.springframework.stereotype.Service;
+import dominik.nadgodziny.domain.dto.OvertimeResponseDto;
 
-import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 
-import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
-
-@Service
 public class OvertimeConsoleFacade {
     private final OvertimeReaderService overtimeReaderService;
     private final OvertimeReportingService overtimeReportingService;
@@ -17,21 +14,23 @@ public class OvertimeConsoleFacade {
         this.overtimeReportingService = overtimeReportingService;
     }
 
-    public void createOvertimeAndSaveToDb(Scanner scanner) throws DateTimeParseException{
-        overtimeReportingService.createOvertimeObject(scanner);
+    public OvertimeResponseDto createOvertimeAndSaveToDb(Scanner scanner){
+       return overtimeReportingService.createOvertimeObject(scanner);
     }
 
-    public void findAll() {
-        overtimeReaderService.getAllOvertimes();
+    public List<OvertimeResponseDto> findAll() {
+        List<Overtime> allOvertimes = overtimeReaderService.getAllOvertimes();
+        return OvertimeMapper.mapToOvertimeResponseDtoList(allOvertimes);
     }
 
-    public void findByMonth(Scanner scanner) {
-        overtimeReaderService.getOvertimeByMonth(scanner);
+    public List<OvertimeResponseDto> findByMonth(Scanner scanner) {
+        List<Overtime> overtimeByMonth = overtimeReaderService.getOvertimeByMonth(scanner);
+        return OvertimeMapper.mapToOvertimeResponseDtoList(overtimeByMonth);
     }
 
 
     public void initialInfo() {
-        printText("\n\n\nWybierz opcje" +
+        ConsoleWriter.printText("\n\n\nWybierz opcje" +
                 " \n 1-dodaj " +
                 "\n 2-wszystkie " +
                 "\n 3-zakoncz " +
@@ -40,8 +39,8 @@ public class OvertimeConsoleFacade {
                 "\n 6-suma nadgodzin o z danego rodzaju w danym miesiacu");
     }
 
-    public void sumOfAllOvertimeHoursByMonth(Scanner scanner) {
-        overtimeReaderService.getSumOfAllOvertimeHoursByMonth(scanner);
+    public int sumOfAllOvertimeHoursByMonth(Scanner scanner) {
+        return overtimeReaderService.getSumOfAllOvertimeHoursByMonth(scanner);
     }
 
     public void sumByGivenStatusOfGivenMonth(Scanner scanner) {
