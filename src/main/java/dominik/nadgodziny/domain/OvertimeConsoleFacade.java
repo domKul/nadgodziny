@@ -43,7 +43,7 @@ public class OvertimeConsoleFacade {
         return overtimeReaderService.getSumOfAllOvertimeHoursByMonth(scanner);
     }
 
-    public void sumByGivenStatusOfGivenMonth(Scanner scanner) {
-        overtimeReaderService.getSumByGivenStatusOfGivenMonth(scanner);
+    public int sumByGivenStatusOfGivenMonth(Scanner scanner) {
+       return overtimeReaderService.getSumByGivenStatusOfGivenMonth(scanner);
     }
 }

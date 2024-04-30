@@ -1,9 +1,6 @@
 package dominik.nadgodziny.domain;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Scanner;
 
 interface OvertimeReader {
 
@@ -15,6 +12,6 @@ interface OvertimeReader {
     int getSumOfAllOvertimeHoursByMonth(int month);
 
 
-    void getSumByGivenStatusOfGivenMonth(Scanner scanner);
+    int getSumOfHoursByGivenStatusOfGivenMonth(int month,String status);
 
 }

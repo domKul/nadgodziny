@@ -67,12 +67,12 @@ class OvertimeConsoleFacadeTest {
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
         //When
-        List<OvertimeResponseDto> retuslt = overtimeConsoleFacade.findByMonth(monthToFind);
+        List<OvertimeResponseDto> result = overtimeConsoleFacade.findByMonth(monthToFind);
         //Then
         assertAll(
-                ()->assertThat(retuslt.size()).isEqualTo(1),
-                ()->assertThat(retuslt.get(0).duration()).isEqualTo(5),
-                ()->assertThat(retuslt.get(0).overtimeDate().getDayOfMonth()).isEqualTo(12)
+                ()->assertThat(result.size()).isEqualTo(1),
+                ()->assertThat(result.get(0).duration()).isEqualTo(5),
+                ()->assertThat(result.get(0).overtimeDate().getDayOfMonth()).isEqualTo(12)
         );
     }
 
@@ -86,11 +86,47 @@ class OvertimeConsoleFacadeTest {
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
         //When
-        int retuslt = overtimeConsoleFacade.sumOfAllOvertimeHoursByMonth(monthToFind);
+        int result = overtimeConsoleFacade.sumOfAllOvertimeHoursByMonth(monthToFind);
         //Then
         assertAll(
-                ()->assertThat(retuslt).isNotNull(),
-                ()->assertThat(retuslt).isEqualTo(10)
+                ()->assertThat(result).isNotNull(),
+                ()->assertThat(result).isEqualTo(10)
+        );
+    }
+
+    @Test
+    void shouldSumAllHoursByGivenStatus() {
+        //Given
+        Scanner overtime1 = new Scanner("2023-10-09\nnadgodziny\n5\n");
+        Scanner overtime2= new Scanner("2023-10-12\nnadgodziny\n5\n");
+        Scanner monthToFind= new Scanner("10\nnadgodziny");
+        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
+        overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
+        overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
+        //When
+        int result = overtimeConsoleFacade.sumByGivenStatusOfGivenMonth(monthToFind);
+        //Then
+        assertAll(
+                ()->assertThat(result).isNotNull(),
+                ()->assertThat(result).isEqualTo(10)
+        );
+    }
+
+    @Test
+    void shouldSumAllHoursByGivenStatusInGivenMonth() {
+        //Given
+        Scanner overtime1 = new Scanner("2023-01-09\nnadgodziny\n5\n");
+        Scanner overtime2= new Scanner("2023-10-12\nnadgodziny\n5\n");
+        Scanner monthToFind= new Scanner("10\nnadgodziny");
+        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
+        overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
+        overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
+        //When
+        int result = overtimeConsoleFacade.sumByGivenStatusOfGivenMonth(monthToFind);
+        //Then
+        assertAll(
+                ()->assertThat(result).isNotNull(),
+                ()->assertThat(result).isEqualTo(5)
         );
     }
 

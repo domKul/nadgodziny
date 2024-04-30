@@ -1,9 +1,6 @@
 package dominik.nadgodziny.domain;
 
-import dominik.nadgodziny.domain.dto.OvertimeResponseDto;
-
 import java.util.List;
-import java.util.Scanner;
 
 class OvertimeFacadeFetchImpl implements OvertimeReader {
     public OvertimeFacadeFetchImpl(List<Overtime> overtimes) {
@@ -30,7 +27,7 @@ class OvertimeFacadeFetchImpl implements OvertimeReader {
 
 
     @Override
-    public void getSumByGivenStatusOfGivenMonth(Scanner scanner) {
-
+    public int getSumOfHoursByGivenStatusOfGivenMonth(int month,String status) {
+        return 0;
     }
 }

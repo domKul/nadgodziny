@@ -35,6 +35,15 @@ class OvertimeReaderService implements OvertimeReader {
                 .reduce(0,Integer::sum);
     }
 
+    @Override
+    public int getSumOfHoursByGivenStatusOfGivenMonth(int month,String status) {
+        return overtimeRepository.findAll().stream()
+                .filter(o -> o.getOvertimeDate().getMonthValue() == month)
+                .filter(o->o.getStatus().equals(status))
+                .map(Overtime::getDuration)
+                .reduce(0,Integer::sum);
+    }
+
     public List<Overtime> getAllOvertimes() {
         ConsoleWriter.printText("\n\n\n\nLista wszystkich nadgodzin:");
         List<Overtime> allOvertimes = findAllOvertimes();
@@ -66,23 +75,25 @@ class OvertimeReaderService implements OvertimeReader {
         return summing;
     }
 
-    public void getSumByGivenStatusOfGivenMonth(Scanner scanner) {
+    public int getSumByGivenStatusOfGivenMonth(Scanner scanner) {
         try {
-            ConsoleWriter.printText("podaj miesiac nadgodzin: ");
-            int miesiac = scanner.nextInt();
+            ConsoleWriter.printText("podaj month nadgodzin: ");
+            int month = scanner.nextInt();
             scanner.nextLine();
             ConsoleWriter.printText("podaj rodzja nadgodzin");
-            String rodzaj = scanner.nextLine();
-            if (miesiac < 1 || miesiac > 12) {
-                throw new WrongArgumentInputException(ErrorMessages.WRONG_MONTH.name());
+            String status = scanner.nextLine();
+            if (month < 1 || month > 12) {
+                throw new WrongArgumentInputException(ErrorMessages.WRONG_MONTH.getMessage());
             }
-            int i = overtimeRepository.countByDurationByStatus(miesiac, rodzaj);
-            ConsoleWriter.printText("liczba godzin to " + i);
+            int sumResult = getSumOfHoursByGivenStatusOfGivenMonth(month, status);
+            ConsoleWriter.printText("liczba godzin to " + sumResult);
+            return sumResult;
         } catch (WrongArgumentInputException e) {
             ConsoleWriter.printText(e.getMessage());
         } catch (Exception e) {
             ConsoleWriter.printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
         }
+        return 0;
     }
 
     void isEmptyOrNot(List<Overtime> byMonthOvertimeDate) {

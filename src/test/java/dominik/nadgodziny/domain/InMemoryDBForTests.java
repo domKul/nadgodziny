@@ -6,30 +6,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 class InMemoryDBForTests implements OvertimeRepository {
 
-    Map<Long,Overtime>database = new ConcurrentHashMap<>();
-
-    @Override
-    public List<Overtime> findByMonthOvertimeDate(int month) {
-        return database.values().stream()
-                .filter(d->d.getOvertimeDate().getMonth().equals(month))
-                .toList();
-    }
-
-    @Override
-    public int countByDuration(int month) {
-        return 0;
-    }
-
-    @Override
-    public int countByDurationByStatus(int month, String status) {
-        return 0;
-    }
+    Map<Long, Overtime> database = new ConcurrentHashMap<>();
 
 
     @Override
@@ -115,7 +101,7 @@ class InMemoryDBForTests implements OvertimeRepository {
     @Override
     public <S extends Overtime> S save(S entity) {
         Random random = new Random();
-        long id = random.nextLong(0,99);
+        long id = random.nextLong(0, 99);
         Overtime overtime = new Overtime(entity.getOvertimeDate(),
                 entity.getStatus(),
                 entity.getDuration());
