@@ -1,4 +1,4 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
 import java.util.List;
 

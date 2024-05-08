@@ -1,13 +1,13 @@
 package dominik.nadgodziny.infrastructure.console;
 
-import dominik.nadgodziny.domain.OvertimeConsoleFacade;
+import dominik.nadgodziny.domain.overtime.OvertimeConsoleFacade;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static dominik.nadgodziny.domain.ConsoleWriter.printText;
+import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
 @Component
 public class OvertimeMainLoop {

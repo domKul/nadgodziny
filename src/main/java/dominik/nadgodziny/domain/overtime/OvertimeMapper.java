@@ -1,6 +1,6 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
-import dominik.nadgodziny.domain.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
 
 import java.util.List;
 
@@ -14,12 +14,9 @@ class OvertimeMapper {
                  overtime.getDuration());
      }
 
-
-
      public static List<OvertimeResponseDto>mapToOvertimeResponseDtoList(List<Overtime> overtime){
          return overtime.stream()
                  .map(OvertimeMapper::mapToOvertimeResponseDto)
                  .toList();
      }
-
 }

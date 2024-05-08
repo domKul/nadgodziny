@@ -1,4 +1,4 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

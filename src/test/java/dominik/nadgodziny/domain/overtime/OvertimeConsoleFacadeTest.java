@@ -1,6 +1,6 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
-import dominik.nadgodziny.domain.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;

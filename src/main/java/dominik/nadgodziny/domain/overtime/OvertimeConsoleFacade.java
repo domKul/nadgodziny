@@ -1,18 +1,15 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
-import dominik.nadgodziny.domain.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Scanner;
-
+@AllArgsConstructor
 public class OvertimeConsoleFacade {
+
     private final OvertimeReaderService overtimeReaderService;
     private final OvertimeReportingService overtimeReportingService;
-
-    OvertimeConsoleFacade(OvertimeReaderService overtimeReaderService, OvertimeReportingService overtimeReportingService) {
-        this.overtimeReaderService = overtimeReaderService;
-        this.overtimeReportingService = overtimeReportingService;
-    }
 
     public OvertimeResponseDto createOvertimeAndSaveToDb(Scanner scanner){
        return overtimeReportingService.createOvertimeObject(scanner);

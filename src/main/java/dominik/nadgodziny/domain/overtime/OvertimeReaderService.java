@@ -1,19 +1,16 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
 
-import dominik.nadgodziny.domain.exception.ErrorMessages;
-import dominik.nadgodziny.domain.exception.WrongArgumentInputException;
+import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
+import dominik.nadgodziny.domain.overtime.exception.WrongArgumentInputException;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 class OvertimeReaderService implements OvertimeReader {
 
     private final OvertimeRepository overtimeRepository;
-
-    OvertimeReaderService(OvertimeRepository overtimeRepository) {
-        this.overtimeRepository = overtimeRepository;
-    }
 
     @Override
     public List<Overtime> findAllOvertimes() {

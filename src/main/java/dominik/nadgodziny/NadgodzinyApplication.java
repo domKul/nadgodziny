@@ -6,12 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
-//@EnableScheduling1
 public class NadgodzinyApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(NadgodzinyApplication.class, args);
 		OvertimeMainLoop overtimeMainLoop = context.getBean(OvertimeMainLoop.class);
+		System.out.println("Version 1.0.0");
 		overtimeMainLoop.runApp();
 	}
 }

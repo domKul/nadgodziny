@@ -1,11 +1,10 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class BeanConfiguration {
-
 
     @Bean
     OvertimeReaderService overtimeReaderService(OvertimeRepository overtimeRepository){

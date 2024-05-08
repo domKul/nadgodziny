@@ -1,24 +1,21 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
-import dominik.nadgodziny.domain.dto.OvertimeResponseDto;
-import dominik.nadgodziny.domain.exception.ErrorMessages;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static dominik.nadgodziny.domain.ConsoleWriter.printText;
-
+import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
+@RequiredArgsConstructor
 class OvertimeReportingService {
 
     private final OvertimeRepository overtimeRepository;
 
-    public OvertimeReportingService(OvertimeRepository overtimeRepository) {
-        this.overtimeRepository = overtimeRepository;
-    }
 
-    //@Transactional
     Optional<Overtime> addNewOvertime(Overtime overtime) {
         Optional<Overtime> ifNotNull = Optional.ofNullable(overtime);
         try {

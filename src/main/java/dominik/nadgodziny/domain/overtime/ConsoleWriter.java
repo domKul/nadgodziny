@@ -1,4 +1,4 @@
-package dominik.nadgodziny.domain;
+package dominik.nadgodziny.domain.overtime;
 
 public class ConsoleWriter {
 
