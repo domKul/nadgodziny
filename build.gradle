@@ -1,11 +1,11 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.9'
+	id 'org.springframework.boot' version '3.1.4'
 	id 'io.spring.dependency-management' version '1.1.2'
 }
 
 group = 'com.pl'
-version = 'nadgodziny 0.1'
+version = 'nadgodziny 1.0'
 
 java {
 	sourceCompatibility = '17'
@@ -16,15 +16,20 @@ repositories {
 }
 
 dependencies {
-
 	implementation group: 'com.twilio.sdk', name: 'twilio', version: '8.0.0'
-	runtimeOnly'com.h2database:h2'
 	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.5.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+}
 
+configurations {
+	all {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
 }
 
 tasks.named('test') {

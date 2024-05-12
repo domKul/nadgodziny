@@ -1,0 +1,5 @@
+spring:
+  scheduling:
+    enabled: false
+    request:
+      delay: PT1M

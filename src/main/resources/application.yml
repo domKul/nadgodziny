@@ -1,0 +1,30 @@
+spring:
+  banner:
+    location: banner.txt
+  datasource:
+    url: jdbc:mysql://localhost:3306/nadgodziny?serverTimezone=Europe/Warsaw&useSSL=False
+    username: root
+    password: x4pfavsjkodilla
+  jpa:
+    database: mysql
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+
+twilio:
+  message:
+    body: Dodaj nadgodziny
+  account:
+    user: ACc88d082fd152619024b33f84b0a51d94
+    token: ab1f9bfbbbd8f82ddf4d2f83c3f36fd3
+  phone:
+    number:
+      to: +48697709761
+      from: +13344718306
+
+scheduling:
+  enabled: true
+  request:
+    delay: 0 0 14 * * SAT
+#    delay: 0 * * * * *
+
