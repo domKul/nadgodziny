@@ -15,7 +15,6 @@ class OvertimeReportingService {
 
     private final OvertimeRepository overtimeRepository;
 
-
     Optional<Overtime> addNewOvertime(Overtime overtime) {
         Optional<Overtime> ifNotNull = Optional.ofNullable(overtime);
         try {
