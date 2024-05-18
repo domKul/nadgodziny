@@ -31,7 +31,7 @@ class OvertimeMainLoopTest {
     }
 
     @Test
-    void shouldExitFromProgram() {
+    void shouldExitFromProgramByGivenNumber() {
         //Given
         Scanner scanner = new Scanner("3");
 
