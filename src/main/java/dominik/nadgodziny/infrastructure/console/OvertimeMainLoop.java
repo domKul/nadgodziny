@@ -1,6 +1,7 @@
 package dominik.nadgodziny.infrastructure.console;
 
 import dominik.nadgodziny.domain.overtime.OvertimeConsoleFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -10,31 +11,18 @@ import java.util.Scanner;
 import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
 @Component
+@RequiredArgsConstructor
 public class OvertimeMainLoop {
 
     private final Scanner sc = new Scanner(System.in);
     private final OvertimeConsoleFacade overtimeConsoleFacade;
     private final ConfigurableApplicationContext applicationContext;
 
-
-    public OvertimeMainLoop(OvertimeConsoleFacade overtimeConsoleFacade, ConfigurableApplicationContext applicationContext) {
-        this.overtimeConsoleFacade = overtimeConsoleFacade;
-        this.applicationContext = applicationContext;
-    }
-
     public void runApp() {
         try (sc){
             do {
                 overtimeConsoleFacade.initialInfo();
-                int nextInt;
-                try {
-                    nextInt = sc.nextInt();
-                    sc.nextLine();
-                } catch (InputMismatchException e) {
-                    printText("Musisz wybrać cyfrę.");
-                    sc.nextLine();
-                    continue;
-                }
+                int nextInt = inputNumber();
                 if (whatNext(nextInt)) return;
             } while (true);
         } catch (Exception e) {
@@ -42,7 +30,19 @@ public class OvertimeMainLoop {
         }
     }
 
-     boolean whatNext(int nextInt) {
+    private int inputNumber() {
+        int nextInt = 0;
+        try {
+            nextInt = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            printText("\nMusisz wybrać cyfrę.");
+            sc.nextLine();
+        }
+        return nextInt;
+    }
+
+    boolean whatNext(int nextInt) {
         try {
             switch (nextInt) {
                 case 1 -> overtimeConsoleFacade.createOvertimeAndSaveToDb(sc);
@@ -55,7 +55,6 @@ public class OvertimeMainLoop {
                 case 4 -> overtimeConsoleFacade.findByMonth(sc);
                 case 5 -> overtimeConsoleFacade.sumOfAllOvertimeHoursByMonth(sc);
                 case 6 -> overtimeConsoleFacade.sumByGivenStatusOfGivenMonth(sc);
-                default -> printText("Nieprawidłowa opcja. Wybierz od 1 do 6");
             }
         } catch (InputMismatchException e) {
             printText("Zle dane wejsciowe");

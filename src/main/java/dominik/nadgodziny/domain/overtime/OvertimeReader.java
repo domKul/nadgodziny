@@ -8,10 +8,7 @@ interface OvertimeReader {
 
     List<Overtime> findOvertimeByMonth(int month);
 
-
     int getSumOfAllOvertimeHoursByMonth(int month);
 
-
     int getSumOfHoursByGivenStatusOfGivenMonth(int month,String status);
-
 }

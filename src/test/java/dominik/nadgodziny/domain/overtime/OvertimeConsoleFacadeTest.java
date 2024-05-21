@@ -17,7 +17,7 @@ class OvertimeConsoleFacadeTest {
     @Test
     void shouldCreateOvertimeAndSaveToDbSuccessfully() {
         // Given
-        Scanner scanner = new Scanner("2023-09-09\nnadgodziny\n5\n");
+        Scanner scanner = new Scanner("2023-09-09\n1\n5\n");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
 
         // When
@@ -46,7 +46,7 @@ class OvertimeConsoleFacadeTest {
     @Test
     void shouldFindAllOvertimeWIthSuccessWithFourResults() {
         //Given
-        Scanner scanner1 = new Scanner("2023-09-09\nnadgodziny\n5\n");
+        Scanner scanner1 = new Scanner("2023-09-09\n1\n5\n");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
 
         overtimeConsoleFacade.createOvertimeAndSaveToDb(scanner1);
@@ -59,8 +59,8 @@ class OvertimeConsoleFacadeTest {
     @Test
     void shouldFindAllOvertimeWIthSuccessWithGivenMonth() {
         //Given
-        Scanner overtime1 = new Scanner("2023-10-09\nnadgodziny\n5\n");
-        Scanner overtime2= new Scanner("2023-09-12\nnadgodziny\n5\n");
+        Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
+        Scanner overtime2= new Scanner("2023-09-12\n1\n5\n");
         Scanner monthToFind= new Scanner("9\n");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
 
@@ -79,8 +79,8 @@ class OvertimeConsoleFacadeTest {
     @Test
     void shouldSumAllHoursByGivenMonth() {
         //Given
-        Scanner overtime1 = new Scanner("2023-10-09\nnadgodziny\n5\n");
-        Scanner overtime2= new Scanner("2023-10-12\nnadgodziny\n5\n");
+        Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
+        Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
         Scanner monthToFind= new Scanner("10\n");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
@@ -97,14 +97,15 @@ class OvertimeConsoleFacadeTest {
     @Test
     void shouldSumAllHoursByGivenStatus() {
         //Given
-        Scanner overtime1 = new Scanner("2023-10-09\nnadgodziny\n5\n");
-        Scanner overtime2= new Scanner("2023-10-12\nnadgodziny\n5\n");
+        Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
+        Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
         Scanner monthToFind= new Scanner("10\nnadgodziny");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
         //When
         int result = overtimeConsoleFacade.sumByGivenStatusOfGivenMonth(monthToFind);
+        System.out.println(result);
         //Then
         assertAll(
                 ()->assertThat(result).isNotNull(),
@@ -115,8 +116,8 @@ class OvertimeConsoleFacadeTest {
     @Test
     void shouldSumAllHoursByGivenStatusInGivenMonth() {
         //Given
-        Scanner overtime1 = new Scanner("2023-01-09\nnadgodziny\n5\n");
-        Scanner overtime2= new Scanner("2023-10-12\nnadgodziny\n5\n");
+        Scanner overtime1 = new Scanner("2023-01-09\n1\n5\n");
+        Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
         Scanner monthToFind= new Scanner("10\nnadgodziny");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
@@ -135,20 +136,17 @@ class OvertimeConsoleFacadeTest {
         //Given
         ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
-
         System.setOut(new PrintStream(outputStreamCaught));
-
         //When
         overtimeConsoleFacade.initialInfo();
-
         //Then
         String expectedOutput = "\n\n\nWybierz opcje" +
-                " \n 1-dodaj " +
-                "\n 2-wszystkie " +
+                "\n 1-dodaj " +
+                "\n 2-lista wszystkich nadgodzin " +
                 "\n 3-zakoncz " +
-                "\n 4-znajdz po miesiacu" +
+                "\n 4-znajdz nadgodziny w danym miesiacu" +
                 "\n 5-suma godzin w danym miesiacu" +
-                "\n 6-suma nadgodzin o z danego rodzaju w danym miesiacu";
+                "\n 6-suma nadgodzin z danego rodzaju w danym miesiacu";
 
         String expectedTrimmed = expectedOutput.trim();
         String actualTrimmed = outputStreamCaught.toString().trim();
