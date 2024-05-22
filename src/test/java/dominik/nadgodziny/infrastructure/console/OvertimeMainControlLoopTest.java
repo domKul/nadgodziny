@@ -36,7 +36,7 @@ class OvertimeMainControlLoopTest {
         Scanner scanner = new Scanner("3");
 
         // When
-        overtimeMainControlLoop.whatNext(scanner.nextInt());
+        overtimeMainControlLoop.initialChoice(scanner.nextInt());
 
         // Then
         verify(applicationContext, times(1)).close();

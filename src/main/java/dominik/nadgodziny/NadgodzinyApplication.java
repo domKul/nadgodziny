@@ -11,7 +11,7 @@ public class NadgodzinyApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(NadgodzinyApplication.class, args);
 		OvertimeMainControlLoop overtimeMainControlLoop = context.getBean(OvertimeMainControlLoop.class);
-		System.out.println("Version 1.0.0");
+		System.out.println("Version 1.1.1");
 		overtimeMainControlLoop.runAppMain();
 	}
 }

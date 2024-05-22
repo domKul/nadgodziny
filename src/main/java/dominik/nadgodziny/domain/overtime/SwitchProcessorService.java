@@ -25,8 +25,8 @@ class SwitchProcessorService implements OvertimeFunctionDescription {
         }
         String status = "";
         switch (statusNumber){
-            case 1 -> status = "nadgodziny";
-            case 2 -> status = "zlecenie";
+            case 1 -> status = "Nadgodziny";
+            case 2 -> status = "Zlecenie";
         }
         return status;
     }
