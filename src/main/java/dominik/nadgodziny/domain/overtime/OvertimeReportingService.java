@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 @RequiredArgsConstructor
-class OvertimeReportingService {
+class OvertimeReportingService extends SwitchProcessorService {
 
     private final OvertimeRepository overtimeRepository;
 
@@ -34,7 +34,8 @@ class OvertimeReportingService {
             String dateString = scanner.nextLine();
             LocalDate date = localDateFromString(dateString);
             printText("Rodzaj nadgodzin");
-            String status = scanner.nextLine();
+            String status;
+            status = statusSelectionLoop(scanner);
             printText("Czas pracy (w godzinach)");
             int hours = scanner.nextInt();
             scanner.nextLine();

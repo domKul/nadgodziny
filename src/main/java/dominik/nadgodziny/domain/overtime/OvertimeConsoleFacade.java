@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 import java.util.Scanner;
 @AllArgsConstructor
-public class OvertimeConsoleFacade {
+public class OvertimeConsoleFacade implements OvertimeFunctionDescription{
 
     private final OvertimeReaderService overtimeReaderService;
     private final OvertimeReportingService overtimeReportingService;
@@ -27,20 +27,17 @@ public class OvertimeConsoleFacade {
 
 
     public void initialInfo() {
-        ConsoleWriter.printText("\n\n\nWybierz opcje" +
-                " \n 1-dodaj " +
-                "\n 2-wszystkie " +
-                "\n 3-zakoncz " +
-                "\n 4-znajdz po miesiacu" +
-                "\n 5-suma godzin w danym miesiacu" +
-                "\n 6-suma nadgodzin o z danego rodzaju w danym miesiacu");
+        initialMenu();
+    }
+    public void initialFind(){
+        initialMenuFind();
     }
 
     public int sumOfAllOvertimeHoursByMonth(Scanner scanner) {
-        return overtimeReaderService.getSumOfAllOvertimeHoursByMonth(scanner);
+        return overtimeReaderService.getSumOfAllOvertimeHoursByMonthAndYear(scanner);
     }
 
     public int sumByGivenStatusOfGivenMonth(Scanner scanner) {
-       return overtimeReaderService.getSumByGivenStatusOfGivenMonth(scanner);
+       return overtimeReaderService.getSumByGivenStatusOfGivenMonthWithYear(scanner);
     }
 }

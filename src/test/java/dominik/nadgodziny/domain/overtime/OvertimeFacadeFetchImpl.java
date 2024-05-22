@@ -21,13 +21,13 @@ class OvertimeFacadeFetchImpl implements OvertimeReader {
     }
 
     @Override
-    public int getSumOfAllOvertimeHoursByMonth(int month) {
+    public int getSumOfAllOvertimeHoursByMonth(int year, int month) {
         return 0;
     }
 
 
     @Override
-    public int getSumOfHoursByGivenStatusOfGivenMonth(int month,String status) {
+    public int getSumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year, int month, String status) {
         return 0;
     }
 }

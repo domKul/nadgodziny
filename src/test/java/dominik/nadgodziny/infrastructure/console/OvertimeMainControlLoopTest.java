@@ -14,9 +14,9 @@ import java.util.Scanner;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-class OvertimeMainLoopTest {
+class OvertimeMainControlLoopTest {
     @InjectMocks
-    OvertimeMainLoop overtimeMainLoop;
+    OvertimeMainControlLoop overtimeMainControlLoop;
     @Mock
     ConfigurableApplicationContext applicationContext;
     @Mock
@@ -26,8 +26,8 @@ class OvertimeMainLoopTest {
     @BeforeEach
     void beforeEachTest() {
         MockitoAnnotations.openMocks(this);
-        overtimeMainLoop = Mockito.mock(OvertimeMainLoop.class);
-        overtimeMainLoop = new OvertimeMainLoop(overtimeConsoleFacade,applicationContext);
+        overtimeMainControlLoop = Mockito.mock(OvertimeMainControlLoop.class);
+        overtimeMainControlLoop = new OvertimeMainControlLoop(overtimeConsoleFacade,applicationContext);
     }
 
     @Test
@@ -36,7 +36,7 @@ class OvertimeMainLoopTest {
         Scanner scanner = new Scanner("3");
 
         // When
-        overtimeMainLoop.whatNext(scanner.nextInt());
+        overtimeMainControlLoop.initialChoice(scanner.nextInt());
 
         // Then
         verify(applicationContext, times(1)).close();

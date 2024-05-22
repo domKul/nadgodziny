@@ -17,7 +17,6 @@ class InMemoryDBForTests implements OvertimeRepository {
 
     Map<Long, Overtime> database = new ConcurrentHashMap<>();
 
-
     @Override
     public void flush() {
 
