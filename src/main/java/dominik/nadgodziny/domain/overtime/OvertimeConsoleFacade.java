@@ -29,12 +29,15 @@ public class OvertimeConsoleFacade implements OvertimeFunctionDescription{
     public void initialInfo() {
         initialMenu();
     }
+    public void initialFind(){
+        initialMenuFind();
+    }
 
     public int sumOfAllOvertimeHoursByMonth(Scanner scanner) {
-        return overtimeReaderService.getSumOfAllOvertimeHoursByMonth(scanner);
+        return overtimeReaderService.getSumOfAllOvertimeHoursByMonthAndYear(scanner);
     }
 
     public int sumByGivenStatusOfGivenMonth(Scanner scanner) {
-       return overtimeReaderService.getSumByGivenStatusOfGivenMonth(scanner);
+       return overtimeReaderService.getSumByGivenStatusOfGivenMonthWithYear(scanner);
     }
 }

@@ -8,8 +8,9 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+
 @RequiredArgsConstructor
-class OvertimeReaderService implements OvertimeReader {
+class OvertimeReaderService extends SwitchProcessorService implements OvertimeReader {
 
     private final OvertimeRepository overtimeRepository;
 
@@ -23,28 +24,30 @@ class OvertimeReaderService implements OvertimeReader {
 
     @Override
     public List<Overtime> findOvertimeByMonth(int month) {
-        return overtimeRepository.findAll().stream()
+        return findAllOvertimes().stream()
                 .filter(o -> o.getOvertimeDate().getMonthValue() == month)
                 .toList();
     }
 
     @Override
-    public int getSumOfAllOvertimeHoursByMonth(int month) {
-        return overtimeRepository.findAll().stream()
-                .filter(Objects::nonNull)
-                .filter(o -> o.getOvertimeDate().getMonthValue() == month)
-                .map(Overtime::getDuration)
-                .reduce(0,Integer::sum);
+    public int getSumOfAllOvertimeHoursByMonth(int year, int month) {
+        List<Overtime> allOvertimeByMonth = findOvertimeByMonth(month);
+        return allOvertimeByMonth.stream()
+                .filter(o -> o.getOvertimeDate().getYear() == year)
+                .mapToInt(Overtime::getDuration)
+                .sum();
     }
 
     @Override
-    public int getSumOfHoursByGivenStatusOfGivenMonth(int month,String status) {
-        return overtimeRepository.findAll().stream()
-                .filter(o -> o.getOvertimeDate().getMonthValue() == month)
-                .filter(o->o.getStatus().equals(status))
-                .map(Overtime::getDuration)
-                .reduce(0,Integer::sum);
+    public int getSumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year, int month, String status) {
+        List<Overtime> allOvertimeByMonth = findOvertimeByMonth(month);
+        return allOvertimeByMonth.stream()
+                .filter(o -> o.getOvertimeDate().getYear() == year)
+                .filter(o -> o.getStatus().equals(status))
+                .mapToInt(Overtime::getDuration)
+                .sum();
     }
+
 
     public List<Overtime> getAllOvertimes() {
         ConsoleWriter.printText("\n\n\n\nLista wszystkich nadgodzin:");
@@ -66,12 +69,14 @@ class OvertimeReaderService implements OvertimeReader {
         return overtimeByMonth;
     }
 
-    public int getSumOfAllOvertimeHoursByMonth(Scanner scanner) {
+    public int getSumOfAllOvertimeHoursByMonthAndYear(Scanner scanner) {
+        ConsoleWriter.printText("Podaj rok nadgodzin: ");
+        int year = scanner.nextInt();
         ConsoleWriter.printText("Podaj miesiac");
         int month = scanner.nextInt();
         isCorrectMonthNumber(month);
         scanner.nextLine();
-        int summing = getSumOfAllOvertimeHoursByMonth(month);
+        int summing = getSumOfAllOvertimeHoursByMonth(year,month);
         if (summing == 0) {
             ConsoleWriter.printText("Nie znaleziono danych z miesiąca " + month);
         }
@@ -79,16 +84,18 @@ class OvertimeReaderService implements OvertimeReader {
         return summing;
     }
 
-    public int getSumByGivenStatusOfGivenMonth(Scanner scanner) {
+    public int getSumByGivenStatusOfGivenMonthWithYear(Scanner scanner) {
         try {
-            ConsoleWriter.printText("podaj miesiac nadgodzin: ");
+            ConsoleWriter.printText("Podaj rok nadgodzin: ");
+            int year = scanner.nextInt();
+            ConsoleWriter.printText("Podaj miesiac nadgodzin (1 -12): ");
             int month = scanner.nextInt();
             isCorrectMonthNumber(month);
             scanner.nextLine();
-            ConsoleWriter.printText("podaj rodzja nadgodzin");
-            String status = scanner.nextLine();
-            int sumResult = getSumOfHoursByGivenStatusOfGivenMonth(month, status);
-            ConsoleWriter.printText("liczba godzin to " + sumResult + "godzin");
+            ConsoleWriter.printText("Podaj rodzja nadgodzin (nadgodziny - zlecenie)");
+            String selectedStatus = statusSelectionLoop(scanner);
+            int sumResult = getSumOfHoursByGivenStatusOfGivenMonthAndGivenYear(year, month, selectedStatus);
+            ConsoleWriter.printText("Liczba godzin to " + sumResult + " godzin");
             return sumResult;
         } catch (WrongArgumentInputException e) {
             ConsoleWriter.printText(e.getMessage());

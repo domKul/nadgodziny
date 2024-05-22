@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 interface OvertimeRepository extends JpaRepository<Overtime, Long>{
 
+
 }

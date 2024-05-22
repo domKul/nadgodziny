@@ -6,13 +6,12 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
 import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 @RequiredArgsConstructor
-class OvertimeReportingService implements OvertimeFunctionDescription{
+class OvertimeReportingService extends SwitchProcessorService {
 
     private final OvertimeRepository overtimeRepository;
 
@@ -36,11 +35,7 @@ class OvertimeReportingService implements OvertimeFunctionDescription{
             LocalDate date = localDateFromString(dateString);
             printText("Rodzaj nadgodzin");
             String status;
-            do {
-                statusSelectionMenu();
-                int statusSelection = scanner.nextInt();
-                 status = selectStatus(statusSelection);
-            }while (status.isEmpty());
+            status = statusSelectionLoop(scanner);
             printText("Czas pracy (w godzinach)");
             int hours = scanner.nextInt();
             scanner.nextLine();
@@ -50,20 +45,6 @@ class OvertimeReportingService implements OvertimeFunctionDescription{
             printText(" Zły format daty.");
        }
         return overtime != null ? OvertimeMapper.mapToOvertimeResponseDto(overtime) : null;
-    }
-
-     String selectStatus(int statusNumber)throws InputMismatchException {
-        if(statusNumber > 2 || statusNumber < 1){
-            printText(ErrorMessages.WRONG_STATUS_NUMBER.getMessage());
-        }
-        String status = "";
-            switch (statusNumber){
-                case 1 ->
-                    status = "nadgodziny";
-                case 2 ->
-                    status = "zlecenie";
-            }
-        return status;
     }
 
     LocalDate localDateFromString(String dateString) {

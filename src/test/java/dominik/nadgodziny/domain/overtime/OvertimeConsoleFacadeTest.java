@@ -48,7 +48,6 @@ class OvertimeConsoleFacadeTest {
         //Given
         Scanner scanner1 = new Scanner("2023-09-09\n1\n5\n");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
-
         overtimeConsoleFacade.createOvertimeAndSaveToDb(scanner1);
         //When
         List<OvertimeResponseDto> all = overtimeConsoleFacade.findAll();
@@ -81,7 +80,7 @@ class OvertimeConsoleFacadeTest {
         //Given
         Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
-        Scanner monthToFind= new Scanner("10\n");
+        Scanner monthToFind= new Scanner("2023\n10\n");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
@@ -99,7 +98,7 @@ class OvertimeConsoleFacadeTest {
         //Given
         Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
-        Scanner monthToFind= new Scanner("10\nnadgodziny");
+        Scanner monthToFind= new Scanner("2023\n10\n1");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
@@ -118,7 +117,7 @@ class OvertimeConsoleFacadeTest {
         //Given
         Scanner overtime1 = new Scanner("2023-01-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
-        Scanner monthToFind= new Scanner("10\nnadgodziny");
+        Scanner monthToFind= new Scanner("2023\n10\n1");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
