@@ -6,7 +6,9 @@ interface OvertimeReader {
 
     List<Overtime> findAllOvertimes();
 
-    List<Overtime> findOvertimeByMonth(int month);
+    List<Overtime>findAllOvertimesByStatus(int year, String status);
+
+     List<Overtime> findOvertimeByMonthAndYear(int year,int month);
 
     int getSumOfAllOvertimeHoursByMonth(int year,int month);
 

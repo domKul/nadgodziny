@@ -12,31 +12,51 @@ import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
 @Component
 @RequiredArgsConstructor
-public class OvertimeMainControlLoop {
+public class OvertimeMainControlLoop{
 
-    private final Scanner sc = new Scanner(System.in);
     private final OvertimeConsoleFacade overtimeConsoleFacade;
     private final ConfigurableApplicationContext applicationContext;
+    private final Scanner sc = new Scanner(System.in);
 
     private int inputNumber() {
-        int nextInt = 0;
-        try {
-            nextInt = sc.nextInt();
-            sc.nextLine();
-        } catch (InputMismatchException e) {
-            printText("\nMusisz wybrać cyfrę.");
-            sc.nextLine();
+        while (true) {
+            try {
+                int nextInt = sc.nextInt();
+                sc.nextLine();
+                return nextInt;
+            } catch (InputMismatchException e) {
+                printText("\nMusisz wybrać cyfrę.");
+                sc.nextLine();
+            }
         }
-        return nextInt;
     }
 
     public void runAppMain() {
-        try (sc){
-                overtimeConsoleFacade.initialInfo();
-                int nextInt = inputNumber();
-                initialChoice(nextInt);
-        } catch (Exception e) {
+        try  {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            overtimeConsoleFacade.initialInfo();
+            int nextInt = inputNumber();
+            initialChoice(nextInt);
+        } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
+        } catch (Exception e) {
+            printText( e.getMessage());
+        }
+    }
+
+    void initialChoice(int nextInt) {
+        try {
+            switch (nextInt) {
+                case 1 -> runAppAddOrDelete();
+                case 2 -> runAppFind();
+                case 3 -> {
+                    printText("Zamykanie aplikacji...");
+                    applicationContext.close();
+                }
+            }
+        } catch (InputMismatchException e) {
+            printText("Zle dane wejsciowe");
         }
     }
 
@@ -45,37 +65,50 @@ public class OvertimeMainControlLoop {
             do {
                 overtimeConsoleFacade.initialFind();
                 int nextInt = inputNumber();
-                if (whatNextToFind(nextInt)) return;
+                if (getNextOptionFind(nextInt)) return;
             } while (true);
-        } catch (Exception e) {
+        } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
     }
 
-    void initialChoice(int nextInt) {
+    boolean getNextOptionFind(int nextInt) {
         try {
             switch (nextInt) {
-                case 1 -> overtimeConsoleFacade.createOvertimeAndSaveToDb(sc);
-                case 2 -> runAppFind();
-                case 3 -> {
-                    printText("Zamykanie aplikacji...");
-                    applicationContext.close();
-
+                case 1 -> overtimeConsoleFacade.findAll();
+                case 2 -> overtimeConsoleFacade.findByMonth(sc);
+                case 3 -> overtimeConsoleFacade.findByStatusAndYear(sc);
+                case 4 -> overtimeConsoleFacade.sumOfAllOvertimeHoursByMonth(sc);
+                case 5 -> overtimeConsoleFacade.sumByGivenStatusOfGivenMonth(sc);
+                case 6 -> {
+                    runAppMain();
+                    return true;
                 }
             }
         } catch (InputMismatchException e) {
             printText("Zle dane wejsciowe");
         }
+        return false;
     }
 
-        boolean whatNextToFind(int nextInt) {
+    public void runAppAddOrDelete() {
         try {
-            switch (nextInt) {
-                case 1 -> overtimeConsoleFacade.findAll();
-                case 2 -> overtimeConsoleFacade.findByMonth(sc);
-                case 3 -> overtimeConsoleFacade.sumOfAllOvertimeHoursByMonth(sc);
-                case 4 -> overtimeConsoleFacade.sumByGivenStatusOfGivenMonth(sc);
-                case 5 -> {
+            do {
+                overtimeConsoleFacade.initialAddOrDelete();
+                int nextInt = inputNumber();
+                if (getNextOptionAddOrDelete(nextInt)) return;
+            } while (true);
+        } catch (InputMismatchException e) {
+            printText("Wystąpił błąd: " + e.getMessage());
+        }
+    }
+
+    boolean getNextOptionAddOrDelete (int nextOption){
+        try {
+            switch (nextOption) {
+                case 1 -> overtimeConsoleFacade.createOvertimeAndSaveToDb(sc);
+                case 2 -> overtimeConsoleFacade.deleteOvertimeById(sc);
+                case 3 -> {
                     runAppMain();
                     return true;
                 }

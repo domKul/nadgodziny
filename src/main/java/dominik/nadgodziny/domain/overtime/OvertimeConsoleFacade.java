@@ -16,13 +16,22 @@ public class OvertimeConsoleFacade implements OvertimeFunctionDescription{
     }
 
     public List<OvertimeResponseDto> findAll() {
-        List<Overtime> allOvertimes = overtimeReaderService.getAllOvertimes();
+        List<Overtime> allOvertimes = overtimeReaderService.getAllOvertimesSortedById();
         return OvertimeMapper.mapToOvertimeResponseDtoList(allOvertimes);
     }
 
+    public boolean deleteOvertimeById(Scanner scanner){
+        return overtimeReportingService.removeOvertimeFromDB(scanner);
+    }
+
     public List<OvertimeResponseDto> findByMonth(Scanner scanner) {
-        List<Overtime> overtimeByMonth = overtimeReaderService.getOvertimeByMonth(scanner);
+        List<Overtime> overtimeByMonth = overtimeReaderService.getOvertimeByMonthAndYear(scanner);
         return OvertimeMapper.mapToOvertimeResponseDtoList(overtimeByMonth);
+    }
+
+    public List<OvertimeResponseDto> findByStatusAndYear(Scanner scanner) {
+        List<Overtime> overtimeByStatus = overtimeReaderService.getSumByGivenStatus(scanner);
+        return OvertimeMapper.mapToOvertimeResponseDtoList(overtimeByStatus);
     }
 
 
