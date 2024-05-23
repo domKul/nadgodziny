@@ -2,10 +2,12 @@ package dominik.nadgodziny.domain.overtime;
 
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
 import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
+import dominik.nadgodziny.domain.overtime.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -15,7 +17,7 @@ class OvertimeReportingService extends SwitchProcessorService {
 
     private final OvertimeRepository overtimeRepository;
 
-    Optional<Overtime> addNewOvertime(Overtime overtime) {
+     Optional<Overtime> addNewOvertime(Overtime overtime) {
         Optional<Overtime> ifNotNull = Optional.ofNullable(overtime);
         try {
             if (ifNotNull.isPresent()) {
@@ -25,6 +27,27 @@ class OvertimeReportingService extends SwitchProcessorService {
             throw new RuntimeException(ErrorMessages.INTERNAL_SERVER_ERROR.name(), e);
         }
         return ifNotNull;
+    }
+    
+    boolean removeOvertimeFromDB(Scanner scanner){
+         printText("Podaj Id nadgodzin");
+        try{
+            long id = scanner.nextLong();
+            deleteOvertimeById(id);
+        }catch (InputMismatchException e){
+            printText("Id musi byc cyfra");
+            return false;
+        }
+        return true;
+    }
+
+    void deleteOvertimeById(long id){
+         if (overtimeRepository.existsById(id)){
+             overtimeRepository.deleteById(id);
+             printText("Usnunieto nadgodzini o id: " + id);
+         }else {
+             printText("Nie znaleziono nadgodzin o podanym id: " + id);
+         }
     }
 
     OvertimeResponseDto createOvertimeObject(Scanner scanner) {

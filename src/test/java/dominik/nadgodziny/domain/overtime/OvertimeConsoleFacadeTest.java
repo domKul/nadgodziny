@@ -60,7 +60,7 @@ class OvertimeConsoleFacadeTest {
         //Given
         Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-09-12\n1\n5\n");
-        Scanner monthToFind= new Scanner("9\n");
+        Scanner monthToFind= new Scanner("2023\n9\n");
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
 
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
@@ -72,6 +72,32 @@ class OvertimeConsoleFacadeTest {
                 ()->assertThat(result.size()).isEqualTo(1),
                 ()->assertThat(result.get(0).duration()).isEqualTo(5),
                 ()->assertThat(result.get(0).overtimeDate().getDayOfMonth()).isEqualTo(12)
+        );
+    }
+
+
+    @Test
+    void shouldFindAllOvertimeWIthSuccessWithGivenStatus() {
+        //Given
+        Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
+        Scanner overtime2= new Scanner("2023-09-12\n1\n5\n");
+        Scanner overtime3= new Scanner("2023-09-12\n2\n5\n");
+        Scanner monthToFind= new Scanner("2023\n1\n");
+        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
+
+        overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
+        overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
+        overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime3);
+        //When
+        List<OvertimeResponseDto> result = overtimeConsoleFacade.findByStatusAndYear(monthToFind);
+        //Then
+        assertAll(
+                ()->assertThat(result.size()).isEqualTo(2),
+                ()->assertThat(result.get(0).status().equals("nadgodziny")),
+                ()->assertThat(result.get(0).overtimeDate().getYear() == 2023),
+                ()->assertThat(result.get(1).status().equals("nadgodziny")),
+                ()->assertThat(result.get(1).overtimeDate().getYear() == 2023)
+
         );
     }
 
@@ -130,8 +156,10 @@ class OvertimeConsoleFacadeTest {
         );
     }
 
+
+
     @Test
-    public void ShouldPrintInitialInfo() {
+    public void ShouldPrintInitialInfoOfMainMenu() {
         //Given
         ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
         OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
@@ -140,7 +168,7 @@ class OvertimeConsoleFacadeTest {
         overtimeConsoleFacade.initialInfo();
         //Then
         String expectedOutput = "\n\n\nWybierz opcje" +
-                "\n 1-Dodaj nadgodziny " +
+                "\n 1-Dodaj / Usun " +
                 "\n 2-Wyszukaj nadgodziny" +
                 "\n 3-Zakoncz ";
 

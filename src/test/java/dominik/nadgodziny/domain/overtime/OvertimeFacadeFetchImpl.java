@@ -14,8 +14,14 @@ class OvertimeFacadeFetchImpl implements OvertimeReader {
     }
 
     @Override
-    public List<Overtime> findOvertimeByMonth(int month) {
+    public List<Overtime> findAllOvertimesByStatus(int year, String status) {
+        return null;
+    }
+
+    @Override
+    public List<Overtime> findOvertimeByMonthAndYear(int year,int month) {
         return overtimes.stream()
+                .filter(o -> o.getOvertimeDate().getYear() == year)
                 .filter(o->o.getOvertimeDate().getMonthValue() == month)
                 .toList();
     }

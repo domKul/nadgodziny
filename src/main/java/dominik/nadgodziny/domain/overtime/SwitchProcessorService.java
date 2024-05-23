@@ -12,7 +12,7 @@ class SwitchProcessorService implements OvertimeFunctionDescription {
      String statusSelectionLoop(Scanner scanner) {
         String status;
         do {
-            statusSelectionMenu();
+            overtimeStatusSelectionMenu();
             int statusSelection = scanner.nextInt();
             status = SwitchProcessorService.selectStatus(statusSelection);
         }while (status.isEmpty());
@@ -25,8 +25,8 @@ class SwitchProcessorService implements OvertimeFunctionDescription {
         }
         String status = "";
         switch (statusNumber){
-            case 1 -> status = "Nadgodziny";
-            case 2 -> status = "Zlecenie";
+            case 1 -> status = "nadgodziny";
+            case 2 -> status = "zlecenie";
         }
         return status;
     }
