@@ -24,6 +24,7 @@ class OvertimeConsoleFacadeConfig {
     }
     OvertimeConsoleFacade overtimeConsoleFacadeTest(){
          return new OvertimeConsoleFacade(new OvertimeReaderService(inMemoryDBForTests ),
-                 new OvertimeReportingService(inMemoryDBForTests));
+                 new OvertimeReportingService(inMemoryDBForTests)
+         ,new OvertimeStatisticsService(ovetimeFacadeFetch));
     }
 }

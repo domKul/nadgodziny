@@ -1,9 +1,10 @@
 package dominik.nadgodziny.domain.overtime;
 
-
 import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
 import dominik.nadgodziny.domain.overtime.exception.WrongArgumentInputException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -19,80 +20,119 @@ class OvertimeReaderService extends SwitchProcessorService implements OvertimeRe
 
     @Override
     public List<Overtime> findAllOvertimes() {
-        return overtimeRepository.findAll();
+        try {
+            return overtimeRepository.findAll();
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return List.of();
+        }
     }
 
     @Override
     public List<Overtime> findAllOvertimesByStatus(int year, String status) {
-        return findAllOvertimes().stream()
-                .filter(o -> o.getOvertimeDate().getYear() == year)
-                .filter(o -> o.getStatus().equals(status))
-                .toList();
+        try {
+            return findAllOvertimes().stream()
+                    .filter(o -> o.getOvertimeDate().getYear() == year)
+                    .filter(o -> o.getStatus().equals(status))
+                    .toList();
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return List.of();
+        }
     }
 
     @Override
-    public List<Overtime> findOvertimeByMonthAndYear(int year,int month) {
-        return findAllOvertimes().stream()
-                .filter(o -> o.getOvertimeDate().getYear() == year)
-                .filter(o -> o.getOvertimeDate().getMonthValue() == month)
-                .toList();
+    public List<Overtime> findOvertimeByMonthAndYear(int year, int month) {
+        try {
+            return findAllOvertimes().stream()
+                    .filter(o -> o.getOvertimeDate().getYear() == year)
+                    .filter(o -> o.getOvertimeDate().getMonthValue() == month)
+                    .toList();
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return List.of();
+        }
     }
 
     @Override
     public int getSumOfAllOvertimeHoursByMonth(int year, int month) {
-        List<Overtime> allOvertimeByMonth = findOvertimeByMonthAndYear(year,month);
-        return allOvertimeByMonth.stream()
-                .mapToInt(Overtime::getDuration)
-                .sum();
+        try {
+            List<Overtime> allOvertimeByMonth = findOvertimeByMonthAndYear(year, month);
+            return allOvertimeByMonth.stream()
+                    .mapToInt(Overtime::getDuration)
+                    .sum();
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return 0;
+        }
     }
 
     @Override
     public int getSumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year, int month, String status) {
-        List<Overtime> allOvertimeByMonth = findOvertimeByMonthAndYear(year,month);
-        return allOvertimeByMonth.stream()
-                .filter(o -> o.getStatus().equals(status))
-                .mapToInt(Overtime::getDuration)
-                .sum();
+        try {
+            List<Overtime> allOvertimeByMonth = findOvertimeByMonthAndYear(year, month);
+            return allOvertimeByMonth.stream()
+                    .filter(o -> o.getStatus().equals(status))
+                    .mapToInt(Overtime::getDuration)
+                    .sum();
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return 0;
+        }
     }
 
-
     public List<Overtime> getAllOvertimesSortedById() {
-        ConsoleWriter.printText("\n\n\n\nLista wszystkich nadgodzin:");
-        List<Overtime> allOvertimes = findAllOvertimes();
-        isEmptyOrNot(allOvertimes);
-        allOvertimes.stream()
-                .sorted(Comparator.comparingLong(Overtime::getId))
-                .forEach(System.out::println);
-        return allOvertimes;
+        try {
+            ConsoleWriter.printText("\n\n\n\nLista wszystkich nadgodzin:");
+            List<Overtime> allOvertimes = findAllOvertimes();
+            isEmptyOrNot(allOvertimes);
+            allOvertimes.stream()
+                    .sorted(Comparator.comparingLong(Overtime::getId))
+                    .forEach(System.out::println);
+            return allOvertimes;
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return List.of();
+        }
     }
 
     public List<Overtime> getOvertimeByMonthAndYear(Scanner scanner) {
-        ConsoleWriter.printText("Podaj rok nadgodzin: ");
-        int year = scanner.nextInt();
-        ConsoleWriter.printText("Podaj miesiac (1-12): ");
-        int month = scanner.nextInt();
-        isCorrectMonthNumber(month);
-        List<Overtime> overtimeByMonth = findOvertimeByMonthAndYear(year,month);
-        scanner.nextLine();
-        ConsoleWriter.printText("\n\n\n");
-        isEmptyOrNot(overtimeByMonth);
-        overtimeByMonth.forEach(System.out::println);
-        return overtimeByMonth;
+        try {
+            ConsoleWriter.printText("Podaj rok nadgodzin: ");
+            int year = scanner.nextInt();
+            ConsoleWriter.printText("Podaj miesiac (1-12): ");
+            int month = scanner.nextInt();
+            isCorrectMonthNumber(month);
+            List<Overtime> overtimeByMonth = findOvertimeByMonthAndYear(year, month);
+            scanner.nextLine();
+            ConsoleWriter.printText("\n\n\n");
+            isEmptyOrNot(overtimeByMonth);
+            overtimeByMonth.forEach(System.out::println);
+            return overtimeByMonth;
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return List.of();
+        }
     }
 
     public int getSumOfAllOvertimeHoursByMonthAndYear(Scanner scanner) {
-        ConsoleWriter.printText("Podaj rok nadgodzin: ");
-        int year = scanner.nextInt();
-        ConsoleWriter.printText("Podaj miesiac");
-        int month = scanner.nextInt();
-        isCorrectMonthNumber(month);
-        scanner.nextLine();
-        int summing = getSumOfAllOvertimeHoursByMonth(year,month);
-        if (summing == 0) {
-            ConsoleWriter.printText("Nie znaleziono danych z miesiąca " + month);
+        try {
+            ConsoleWriter.printText("Podaj rok nadgodzin: ");
+            int year = scanner.nextInt();
+            ConsoleWriter.printText("Podaj miesiac");
+            int month = scanner.nextInt();
+            isCorrectMonthNumber(month);
+            scanner.nextLine();
+            int summing = getSumOfAllOvertimeHoursByMonth(year, month);
+            if (summing == 0) {
+                ConsoleWriter.printText("Nie znaleziono danych z miesiąca " + month);
+            }
+            ConsoleWriter.printText("Laczna suma godzin to " + summing);
+            return summing;
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return 0;
         }
-        ConsoleWriter.printText("Laczna suma godzin to " + summing);
-        return summing;
     }
 
     public int getSumByGivenStatusOfGivenMonthWithYear(Scanner scanner) {
@@ -110,6 +150,8 @@ class OvertimeReaderService extends SwitchProcessorService implements OvertimeRe
             return sumResult;
         } catch (WrongArgumentInputException e) {
             ConsoleWriter.printText(e.getMessage());
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
         } catch (Exception e) {
             ConsoleWriter.printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
         }
@@ -117,14 +159,19 @@ class OvertimeReaderService extends SwitchProcessorService implements OvertimeRe
     }
 
     public List<Overtime> getSumByGivenStatus(Scanner scanner){
-        ConsoleWriter.printText("Podaj rok nadgodzin: ");
-        int year = scanner.nextInt();
-        ConsoleWriter.printText("Podaj rodzja nadgodzin (nadgodziny - zlecenie)");
-        String selectedStatus = statusSelectionLoop(scanner);
-        List<Overtime> allOvertimesByStatus = findAllOvertimesByStatus(year, selectedStatus);
-        ConsoleWriter.printText("Znaleziono " + allOvertimesByStatus.size());
-        allOvertimesByStatus.forEach(System.out::println);
-        return allOvertimesByStatus;
+        try {
+            ConsoleWriter.printText("Podaj rok nadgodzin: ");
+            int year = scanner.nextInt();
+            ConsoleWriter.printText("Podaj rodzja nadgodzin (nadgodziny - zlecenie)");
+            String selectedStatus = statusSelectionLoop(scanner);
+            List<Overtime> allOvertimesByStatus = findAllOvertimesByStatus(year, selectedStatus);
+            ConsoleWriter.printText("Znaleziono " + allOvertimesByStatus.size());
+            allOvertimesByStatus.forEach(System.out::println);
+            return allOvertimesByStatus;
+        } catch (DataAccessException e) {
+            ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
+            return List.of();
+        }
     }
 
     void isCorrectMonthNumber(int month) {

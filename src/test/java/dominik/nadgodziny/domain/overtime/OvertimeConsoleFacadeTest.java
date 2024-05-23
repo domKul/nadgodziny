@@ -170,7 +170,8 @@ class OvertimeConsoleFacadeTest {
         String expectedOutput = "\n\n\nWybierz opcje" +
                 "\n 1-Dodaj / Usun " +
                 "\n 2-Wyszukaj nadgodziny" +
-                "\n 3-Zakoncz ";
+                "\n 3-Statystyki" +
+                "\n 4-Zakoncz ";
 
         String expectedTrimmed = expectedOutput.trim();
         String actualTrimmed = outputStreamCaught.toString().trim();

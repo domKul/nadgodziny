@@ -2,7 +2,6 @@ package dominik.nadgodziny.domain.overtime;
 
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
 import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
-import dominik.nadgodziny.domain.overtime.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
