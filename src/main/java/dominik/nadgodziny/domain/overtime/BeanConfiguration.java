@@ -16,11 +16,17 @@ class BeanConfiguration {
         return new OvertimeReportingService(overtimeRepository);
     }
 
+    @Bean
+    OvertimeStatisticsService overtimeStatisticsService(OvertimeReader overtimeReaderService){
+        return new OvertimeStatisticsService(overtimeReaderService);
+    }
+
 
     @Bean
     OvertimeConsoleFacade overtimeConsoleFacade(OvertimeReportingService overtimeRepository,
-                                                OvertimeReaderService overtimeReader){
-        return new OvertimeConsoleFacade(overtimeReader,overtimeRepository);
+                                                OvertimeReaderService overtimeReader,
+                                                OvertimeStatisticsService overtimeStatisticsService){
+        return new OvertimeConsoleFacade(overtimeReader,overtimeRepository,overtimeStatisticsService);
     }
 
 }

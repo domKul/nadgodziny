@@ -18,6 +18,7 @@ public class OvertimeMainControlLoop{
     private final ConfigurableApplicationContext applicationContext;
     private final Scanner sc = new Scanner(System.in);
 
+
     private int inputNumber() {
         while (true) {
             try {
@@ -50,7 +51,8 @@ public class OvertimeMainControlLoop{
             switch (nextInt) {
                 case 1 -> runAppAddOrDelete();
                 case 2 -> runAppFind();
-                case 3 -> {
+                case 3 -> runAppStatistics();
+                case 4 -> {
                     printText("Zamykanie aplikacji...");
                     applicationContext.close();
                 }
@@ -60,7 +62,16 @@ public class OvertimeMainControlLoop{
         }
     }
 
-    public void runAppFind() {
+    void runAppStatistics() {
+        try {
+                overtimeConsoleFacade.showStatisticsByYear();
+                runAppMain();
+        } catch (InputMismatchException e) {
+            printText("Wystąpił błąd: " + e.getMessage());
+        }
+    }
+
+     void runAppFind() {
         try {
             do {
                 overtimeConsoleFacade.initialFind();
@@ -91,7 +102,7 @@ public class OvertimeMainControlLoop{
         return false;
     }
 
-    public void runAppAddOrDelete() {
+     void runAppAddOrDelete() {
         try {
             do {
                 overtimeConsoleFacade.initialAddOrDelete();

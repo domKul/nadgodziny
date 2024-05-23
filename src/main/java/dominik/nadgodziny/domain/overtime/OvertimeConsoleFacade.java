@@ -10,6 +10,7 @@ public class OvertimeConsoleFacade implements OvertimeFunctionDescription{
 
     private final OvertimeReaderService overtimeReaderService;
     private final OvertimeReportingService overtimeReportingService;
+    private final OvertimeStatisticsService overtimeStatisticsService;
 
     public OvertimeResponseDto createOvertimeAndSaveToDb(Scanner scanner){
        return overtimeReportingService.createOvertimeObject(scanner);
@@ -48,5 +49,9 @@ public class OvertimeConsoleFacade implements OvertimeFunctionDescription{
 
     public int sumByGivenStatusOfGivenMonth(Scanner scanner) {
        return overtimeReaderService.getSumByGivenStatusOfGivenMonthWithYear(scanner);
+    }
+
+    public void showStatisticsByYear(){
+        overtimeStatisticsService.generateStatistics();
     }
 }

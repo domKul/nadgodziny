@@ -33,7 +33,7 @@ class OvertimeMainControlLoopTest {
     @Test
     void shouldExitFromProgramByGivenNumber() {
         //Given
-        Scanner scanner = new Scanner("3");
+        Scanner scanner = new Scanner("4");
 
         // When
         overtimeMainControlLoop.initialChoice(scanner.nextInt());
