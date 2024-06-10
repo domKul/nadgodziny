@@ -1,4 +1,4 @@
-package dominik.nadgodziny.infrastructure.console;
+package dominik.nadgodziny.infrastructure.overtime.console;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
