@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class SmsBuilder implements SmsProcessor {
 
-    private final SmsSenderSchema smsSenderSchema;
+    private final SmsSenderConfig smsSenderConfig;
 
     @Value("${twilio.phone.number.to}")
-    private String phoneNumberTo;
+    private  String phoneNumberTo;
     @Value("${twilio.phone.number.from}")
     private String phoneNumberFrom;
     @Value("${twilio.message.body}")
@@ -19,6 +19,6 @@ class SmsBuilder implements SmsProcessor {
 
     @Override
     public void sendSms() {
-        smsSenderSchema.smsSchema(phoneNumberTo,phoneNumberFrom,smsBody);
+        smsSenderConfig.smsSchema(phoneNumberTo,phoneNumberFrom,smsBody);
     }
 }

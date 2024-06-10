@@ -1,9 +1,11 @@
 package dominik.nadgodziny;
 
 import dominik.nadgodziny.infrastructure.console.OvertimeMainControlLoop;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 public class NadgodzinyApplication {
@@ -11,7 +13,9 @@ public class NadgodzinyApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(NadgodzinyApplication.class, args);
 		OvertimeMainControlLoop overtimeMainControlLoop = context.getBean(OvertimeMainControlLoop.class);
-		System.out.println("Version 1.1.4");
+		Environment env = context.getEnvironment();
+		String version = env.getProperty("application.version");
+		System.out.println(version);
 		overtimeMainControlLoop.runAppMain();
 	}
 }

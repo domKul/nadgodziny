@@ -14,11 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OvertimeConsoleFacadeTest {
 
+    OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
+
+
     @Test
     void shouldCreateOvertimeAndSaveToDbSuccessfully() {
         // Given
         Scanner scanner = new Scanner("2023-09-09\n1\n5\n");
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
 
         // When
         OvertimeResponseDto overtimeResponseDto = overtimeConsoleFacade.createOvertimeAndSaveToDb(scanner);
@@ -36,9 +38,8 @@ class OvertimeConsoleFacadeTest {
     @Test
     void shouldFindAllOvertimeWIthSuccessWithZeroResults() {
         //Given
-        OvertimeConsoleFacade facade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         //When
-        List<OvertimeResponseDto> all = facade.findAll();
+        List<OvertimeResponseDto> all = overtimeConsoleFacade.findAll();
         //Then
         assertEquals(0, all.size());
     }
@@ -47,7 +48,6 @@ class OvertimeConsoleFacadeTest {
     void shouldFindAllOvertimeWIthSuccessWithFourResults() {
         //Given
         Scanner scanner1 = new Scanner("2023-09-09\n1\n5\n");
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(scanner1);
         //When
         List<OvertimeResponseDto> all = overtimeConsoleFacade.findAll();
@@ -61,7 +61,6 @@ class OvertimeConsoleFacadeTest {
         Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-09-12\n1\n5\n");
         Scanner monthToFind= new Scanner("2023\n9\n");
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
 
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
@@ -83,7 +82,6 @@ class OvertimeConsoleFacadeTest {
         Scanner overtime2= new Scanner("2023-09-12\n1\n5\n");
         Scanner overtime3= new Scanner("2023-09-12\n2\n5\n");
         Scanner monthToFind= new Scanner("2023\n1\n");
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
 
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
@@ -107,7 +105,6 @@ class OvertimeConsoleFacadeTest {
         Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
         Scanner monthToFind= new Scanner("2023\n10\n");
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
         //When
@@ -125,7 +122,6 @@ class OvertimeConsoleFacadeTest {
         Scanner overtime1 = new Scanner("2023-10-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
         Scanner monthToFind= new Scanner("2023\n10\n1");
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
         //When
@@ -144,7 +140,6 @@ class OvertimeConsoleFacadeTest {
         Scanner overtime1 = new Scanner("2023-01-09\n1\n5\n");
         Scanner overtime2= new Scanner("2023-10-12\n1\n5\n");
         Scanner monthToFind= new Scanner("2023\n10\n1");
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime1);
         overtimeConsoleFacade.createOvertimeAndSaveToDb(overtime2);
         //When
@@ -162,7 +157,6 @@ class OvertimeConsoleFacadeTest {
     public void ShouldPrintInitialInfoOfMainMenu() {
         //Given
         ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
-        OvertimeConsoleFacade overtimeConsoleFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
         System.setOut(new PrintStream(outputStreamCaught));
         //When
         overtimeConsoleFacade.initialInfo();
@@ -176,6 +170,24 @@ class OvertimeConsoleFacadeTest {
         String expectedTrimmed = expectedOutput.trim();
         String actualTrimmed = outputStreamCaught.toString().trim();
         assertEquals(expectedTrimmed, actualTrimmed);
+        System.setOut(System.out);
+    }
+
+    @Test
+    void shouldSumAmmOvertimesStatisticByYear(){
+        //Given
+        ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaught));
+        //When
+        overtimeConsoleFacade.showStatisticsByYear();
+
+        //Then
+        String expectedMessage = "W roku 2023 zrobiono 8 dodatkowych godzin\n" +
+                "W roku 2024 zrobiono 16 dodatkowych godzin".trim();
+
+        String result = outputStreamCaught.toString().trim();
+        System.out.println(result);
+        assertEquals(expectedMessage,result);
         System.setOut(System.out);
     }
 }
