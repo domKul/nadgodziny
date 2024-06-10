@@ -1,4 +1,4 @@
-package dominik.nadgodziny.infrastructure.console;
+package dominik.nadgodziny.infrastructure.overtime.console;
 
 import dominik.nadgodziny.domain.overtime.OvertimeConsoleFacade;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package dominik.nadgodziny.infrastructure.sender;
+package dominik.nadgodziny.infrastructure.overtime.sender;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

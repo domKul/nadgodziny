@@ -1,7 +1,6 @@
 package dominik.nadgodziny;
 
-import dominik.nadgodziny.infrastructure.console.OvertimeMainControlLoop;
-import org.springframework.beans.factory.annotation.Value;
+import dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoop;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

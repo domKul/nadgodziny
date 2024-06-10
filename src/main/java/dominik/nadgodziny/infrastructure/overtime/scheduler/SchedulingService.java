@@ -1,6 +1,6 @@
-package dominik.nadgodziny.infrastructure.scheduler;
+package dominik.nadgodziny.infrastructure.overtime.scheduler;
 
-import dominik.nadgodziny.infrastructure.sender.SmsProcessor;
+import dominik.nadgodziny.infrastructure.overtime.sender.SmsProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
