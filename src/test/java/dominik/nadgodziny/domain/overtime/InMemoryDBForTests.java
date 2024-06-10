@@ -162,7 +162,7 @@ class InMemoryDBForTests implements OvertimeRepository {
 
     @Override
     public void deleteAll() {
-
+        database.clear();
     }
 
     @Override

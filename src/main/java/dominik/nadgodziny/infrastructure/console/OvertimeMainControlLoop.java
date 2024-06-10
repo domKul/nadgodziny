@@ -12,14 +12,13 @@ import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
 @Component
 @RequiredArgsConstructor
-public class OvertimeMainControlLoop{
+public class OvertimeMainControlLoop {
 
     private final OvertimeConsoleFacade overtimeConsoleFacade;
     private final ConfigurableApplicationContext applicationContext;
     private final Scanner sc = new Scanner(System.in);
 
-
-    private int inputNumber() {
+     int inputNumber() {
         while (true) {
             try {
                 int nextInt = sc.nextInt();
@@ -33,7 +32,7 @@ public class OvertimeMainControlLoop{
     }
 
     public void runAppMain() {
-        try  {
+        try {
             System.out.print("\033[H\033[2J");
             System.out.flush();
             overtimeConsoleFacade.initialInfo();
@@ -42,7 +41,7 @@ public class OvertimeMainControlLoop{
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         } catch (Exception e) {
-            printText( e.getMessage());
+            printText(e.getMessage());
         }
     }
 
@@ -64,14 +63,16 @@ public class OvertimeMainControlLoop{
 
     void runAppStatistics() {
         try {
-                overtimeConsoleFacade.showStatisticsByYear();
-                runAppMain();
+            overtimeConsoleFacade.initialInfo();
+            overtimeConsoleFacade.showStatisticsByYear();
+            int nextInt = inputNumber();
+            initialChoice(nextInt);
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
     }
 
-     void runAppFind() {
+    void runAppFind() {
         try {
             do {
                 overtimeConsoleFacade.initialFind();
@@ -102,7 +103,7 @@ public class OvertimeMainControlLoop{
         return false;
     }
 
-     void runAppAddOrDelete() {
+    void runAppAddOrDelete() {
         try {
             do {
                 overtimeConsoleFacade.initialAddOrDelete();
@@ -114,7 +115,7 @@ public class OvertimeMainControlLoop{
         }
     }
 
-    boolean getNextOptionAddOrDelete (int nextOption){
+    boolean getNextOptionAddOrDelete(int nextOption) {
         try {
             switch (nextOption) {
                 case 1 -> overtimeConsoleFacade.createOvertimeAndSaveToDb(sc);

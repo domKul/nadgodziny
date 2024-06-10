@@ -4,7 +4,6 @@ import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
 import dominik.nadgodziny.domain.overtime.exception.WrongArgumentInputException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataAccessResourceFailureException;
 
 import java.util.Comparator;
 import java.util.List;
