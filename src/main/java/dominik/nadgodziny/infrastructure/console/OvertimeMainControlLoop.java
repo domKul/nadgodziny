@@ -33,10 +33,10 @@ public class OvertimeMainControlLoop {
 
     public void runAppMain() {
         try {
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
             overtimeConsoleFacade.initialInfo();
             int nextInt = inputNumber();
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             initialChoice(nextInt);
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());

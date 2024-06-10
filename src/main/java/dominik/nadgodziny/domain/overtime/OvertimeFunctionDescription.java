@@ -3,7 +3,7 @@ package dominik.nadgodziny.domain.overtime;
  interface OvertimeFunctionDescription {
 
     default void initialMenu() {
-        ConsoleWriter.printText("Wybierz opcje" +
+        ConsoleWriter.printText("\n\nWybierz opcje" +
                 "\n 1-Dodaj / Usun " +
                 "\n 2-Wyszukaj nadgodziny" +
                 "\n 3-Statystyki" +
