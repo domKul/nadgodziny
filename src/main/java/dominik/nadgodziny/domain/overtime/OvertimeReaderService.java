@@ -80,8 +80,6 @@ class OvertimeReaderService implements OvertimeReader {
 
     @Override
     public List<Overtime> sortAllOvertimesById() {
-
-        //todo przystosowac implementacje do kosoli i rest'a
         try {
             ConsoleWriter.printText("\n\n\n\nLista wszystkich nadgodzin:");
             List<Overtime> allOvertimes = findAllOvertimes();

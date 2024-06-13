@@ -130,29 +130,6 @@ class OvertimeOvertimeReaderConsoleFacadeTest {
         );
     }
 
-
-
-
-//    @Test
-//    public void ShouldPrintInitialInfoOfMainMenu() {
-//        //Given
-//        ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outputStreamCaught));
-//        //When
-//        overtimeFacade.initialInfo();
-//        //Then
-//        String expectedOutput = "\n\n\nWybierz opcje" +
-//                "\n 1-Dodaj / Usun " +
-//                "\n 2-Wyszukaj nadgodziny" +
-//                "\n 3-Statystyki" +
-//                "\n 4-Zakoncz ";
-//
-//        String expectedTrimmed = expectedOutput.trim();
-//        String actualTrimmed = outputStreamCaught.toString().trim();
-//        assertEquals(expectedTrimmed, actualTrimmed);
-//        System.setOut(System.out);
-//    }
-
     @Test
     void shouldSumAllOvertimesStatisticByYear(){
         //Given
