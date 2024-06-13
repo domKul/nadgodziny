@@ -1,6 +1,8 @@
-package dominik.nadgodziny.domain.overtime;
+package dominik.nadgodziny.infrastructure.overtime.console;
 
- interface OvertimeFunctionDescription {
+import dominik.nadgodziny.domain.overtime.ConsoleWriter;
+
+interface OvertimeMenuFunctionDescription {
 
     default void initialMenu() {
         ConsoleWriter.printText("\n\nWybierz opcje" +

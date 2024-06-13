@@ -1,6 +1,6 @@
 package dominik.nadgodziny.infrastructure.overtime.console;
 
-import dominik.nadgodziny.domain.overtime.OvertimeConsoleFacade;
+import dominik.nadgodziny.domain.overtime.OvertimeFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -12,13 +12,15 @@ import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
 @Component
 @RequiredArgsConstructor
-public class OvertimeMainControlLoop {
+public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription {
 
-    private final OvertimeConsoleFacade overtimeConsoleFacade;
+    private final OvertimeFacade overtimeConsoleFacade;
     private final ConfigurableApplicationContext applicationContext;
+    private final OvertimeReaderConsole overtimeReaderConsole;
+    private final OvertimeReportingConsole overtimeReportingConsole;
     private final Scanner sc = new Scanner(System.in);
 
-     int inputNumber() {
+    int inputNumber() {
         while (true) {
             try {
                 int nextInt = sc.nextInt();
@@ -33,7 +35,7 @@ public class OvertimeMainControlLoop {
 
     public void runAppMain() {
         try {
-            overtimeConsoleFacade.initialInfo();
+            initialMenu();
             int nextInt = inputNumber();
             System.out.print("\033[H\033[2J");
             System.out.flush();
@@ -63,7 +65,7 @@ public class OvertimeMainControlLoop {
 
     void runAppStatistics() {
         try {
-            overtimeConsoleFacade.initialInfo();
+            initialMenu();
             overtimeConsoleFacade.showStatisticsByYear();
             int nextInt = inputNumber();
             initialChoice(nextInt);
@@ -75,7 +77,7 @@ public class OvertimeMainControlLoop {
     void runAppFind() {
         try {
             do {
-                overtimeConsoleFacade.initialFind();
+                initialMenuFind();
                 int nextInt = inputNumber();
                 if (getNextOptionFind(nextInt)) return;
             } while (true);
@@ -87,11 +89,11 @@ public class OvertimeMainControlLoop {
     boolean getNextOptionFind(int nextInt) {
         try {
             switch (nextInt) {
-                case 1 -> overtimeConsoleFacade.findAll();
-                case 2 -> overtimeConsoleFacade.findByMonth(sc);
-                case 3 -> overtimeConsoleFacade.findByStatusAndYear(sc);
-                case 4 -> overtimeConsoleFacade.sumOfAllOvertimeHoursByMonth(sc);
-                case 5 -> overtimeConsoleFacade.sumByGivenStatusOfGivenMonth(sc);
+                case 1 -> overtimeReaderConsole.findAllSorted();
+                case 2 -> overtimeReaderConsole.findOvertimeByMonth(sc);
+                case 3 -> overtimeReaderConsole.findOvertimeByStatus(sc);
+                case 4 -> overtimeReaderConsole.getSumOfAllOvertimeHoursByMonthAndYear(sc);
+                case 5 -> overtimeReaderConsole.getSumByGivenStatusOfGivenMonthWithYear(sc);
                 case 6 -> {
                     runAppMain();
                     return true;
@@ -106,7 +108,7 @@ public class OvertimeMainControlLoop {
     void runAppAddOrDelete() {
         try {
             do {
-                overtimeConsoleFacade.initialAddOrDelete();
+                initialAddOrDelete();
                 int nextInt = inputNumber();
                 if (getNextOptionAddOrDelete(nextInt)) return;
             } while (true);
@@ -118,8 +120,8 @@ public class OvertimeMainControlLoop {
     boolean getNextOptionAddOrDelete(int nextOption) {
         try {
             switch (nextOption) {
-                case 1 -> overtimeConsoleFacade.createOvertimeAndSaveToDb(sc);
-                case 2 -> overtimeConsoleFacade.deleteOvertimeById(sc);
+                case 1 -> overtimeReportingConsole.createOvertimeObjectFromConsole(sc);
+                case 2 -> overtimeReportingConsole.removeOvertimeFromConsole(sc);
                 case 3 -> {
                     runAppMain();
                     return true;

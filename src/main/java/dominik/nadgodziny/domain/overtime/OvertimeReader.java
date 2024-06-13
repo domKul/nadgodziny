@@ -5,12 +5,13 @@ import java.util.List;
 interface OvertimeReader {
 
     List<Overtime> findAllOvertimes();
+    List<Overtime> findAllOvertimesByStatus(int year, String status);
 
-    List<Overtime>findAllOvertimesByStatus(int year, String status);
+    List<Overtime> findOvertimeByMonthAndYear(int year, int month);
 
-     List<Overtime> findOvertimeByMonthAndYear(int year,int month);
+    int sumOfAllOvertimeHoursByMonth(int year, int month);
 
-    int getSumOfAllOvertimeHoursByMonth(int year,int month);
+    int sumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year, int month, String status);
 
-    int getSumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year,int month,String status);
+    List<Overtime> sortAllOvertimesById();
 }
