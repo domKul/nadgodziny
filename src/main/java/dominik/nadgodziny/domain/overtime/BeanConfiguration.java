@@ -7,26 +7,26 @@ import org.springframework.context.annotation.Configuration;
 class BeanConfiguration {
 
     @Bean
-    OvertimeReaderService overtimeReaderService(OvertimeRepository overtimeRepository){
+    OvertimeReaderService overtimeReaderService(OvertimeRepository overtimeRepository) {
         return new OvertimeReaderService(overtimeRepository);
     }
 
     @Bean
-    OvertimeReportingService overtimeReportingService(OvertimeRepository overtimeRepository){
+    OvertimeReportingService overtimeReportingService(OvertimeRepository overtimeRepository) {
         return new OvertimeReportingService(overtimeRepository);
     }
 
     @Bean
-    OvertimeStatisticsService overtimeStatisticsService(OvertimeReader overtimeReaderService){
+    OvertimeStatisticsService overtimeStatisticsService(OvertimeReaderService overtimeReaderService) {
         return new OvertimeStatisticsService(overtimeReaderService);
     }
 
 
     @Bean
-    OvertimeConsoleFacade overtimeConsoleFacade(OvertimeReportingService overtimeRepository,
-                                                OvertimeReaderService overtimeReader,
-                                                OvertimeStatisticsService overtimeStatisticsService){
-        return new OvertimeConsoleFacade(overtimeReader,overtimeRepository,overtimeStatisticsService);
+    OvertimeFacade overtimeConsoleFacade(OvertimeReportingService overtimeReportingService,
+                                         OvertimeReaderService overtimeReaderService,
+                                         OvertimeStatisticsService overtimeStatisticsService) {
+        return new OvertimeFacade(overtimeStatisticsService, overtimeReportingService, overtimeReaderService);
     }
 
 }

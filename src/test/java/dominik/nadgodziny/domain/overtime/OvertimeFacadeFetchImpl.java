@@ -8,7 +8,6 @@ class OvertimeFacadeFetchImpl implements OvertimeReader {
     }
 
     List<Overtime> overtimes;
-    @Override
     public List<Overtime> findAllOvertimes() {
         return overtimes;
     }
@@ -27,13 +26,20 @@ class OvertimeFacadeFetchImpl implements OvertimeReader {
     }
 
     @Override
-    public int getSumOfAllOvertimeHoursByMonth(int year, int month) {
+    public int sumOfAllOvertimeHoursByMonth(int year, int month) {
         return 0;
     }
 
 
     @Override
-    public int getSumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year, int month, String status) {
+    public int sumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year, int month, String status) {
         return 0;
     }
+
+    @Override
+    public List<Overtime> sortAllOvertimesById() {
+        return null;
+    }
+
+
 }

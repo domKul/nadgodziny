@@ -11,20 +11,27 @@ class OvertimeConsoleFacadeConfig {
 
      OvertimeConsoleFacadeConfig() {
         this.ovetimeFacadeFetch = new OvertimeFacadeFetchImpl(List.of(
-                new Overtime(LocalDate.parse("2023-01-12"),"status",8),
-                new Overtime(LocalDate.parse("2024-01-13"),"status",8),
-                new Overtime(LocalDate.parse("2024-01-14"),"status",8)
+                new Overtime(LocalDate.parse("2023-09-12"),"nadgodziny",5),
+                new Overtime(LocalDate.parse("2024-01-13"),"nadgodziny",5),
+                new Overtime(LocalDate.parse("2024-01-14"),"zlecenie",8)
         ));
         this.inMemoryDBForTests = new InMemoryDBForTests();
+        inMemoryDBForTests.saveAll(List.of(
+                new Overtime(LocalDate.parse("2023-09-12"),"nadgodziny",5),
+                new Overtime(LocalDate.parse("2024-01-13"),"nadgodziny",5),
+                new Overtime(LocalDate.parse("2024-01-14"),"zlecenie",8)
+        ));
     }
 
     public OvertimeConsoleFacadeConfig(List<Overtime> overtimes) {
         this.inMemoryDBForTests = new InMemoryDBForTests();
         this.ovetimeFacadeFetch = new OvertimeFacadeFetchImpl(overtimes);
     }
-    OvertimeConsoleFacade overtimeConsoleFacadeTest(){
-         return new OvertimeConsoleFacade(new OvertimeReaderService(inMemoryDBForTests ),
-                 new OvertimeReportingService(inMemoryDBForTests)
-         ,new OvertimeStatisticsService(ovetimeFacadeFetch));
+    OvertimeFacade overtimeConsoleFacadeTest(){
+        return new OvertimeFacade(
+                new OvertimeStatisticsService(ovetimeFacadeFetch),
+                new OvertimeReportingService(inMemoryDBForTests),
+                new OvertimeReaderService(inMemoryDBForTests)
+        );
     }
 }

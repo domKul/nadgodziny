@@ -1,4 +1,4 @@
-package dominik.nadgodziny.domain.overtime;
+package dominik.nadgodziny.infrastructure.overtime.console;
 
 import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
 
@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
-class SwitchProcessorService implements OvertimeFunctionDescription {
+class SwitchStatusProcessor implements OvertimeMenuFunctionDescription {
 
-     String statusSelectionLoop(Scanner scanner) {
+      protected String statusSelectionLoop(Scanner scanner) {
         String status;
         do {
             overtimeStatusSelectionMenu();
             int statusSelection = scanner.nextInt();
-            status = SwitchProcessorService.selectStatus(statusSelection);
+            status = SwitchStatusProcessor.selectStatus(statusSelection);
         }while (status.isEmpty());
         return status;
     }

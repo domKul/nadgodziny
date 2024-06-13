@@ -6,10 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -69,8 +66,12 @@ class InMemoryDBForTests implements OvertimeRepository {
 
     @Override
     public <S extends Overtime> List<S> findAll(Example<S> example) {
-        return null;
+        if (Objects.nonNull(example)) {
+            return (List<S>) example;
+        }
+        return Collections.emptyList();
     }
+
 
     @Override
     public <S extends Overtime> List<S> findAll(Example<S> example, Sort sort) {
@@ -111,7 +112,11 @@ class InMemoryDBForTests implements OvertimeRepository {
 
     @Override
     public <S extends Overtime> List<S> saveAll(Iterable<S> entities) {
-        return null;
+        List<S> result = new ArrayList<>();
+        for (S entity : entities) {
+            result.add(save(entity));
+        }
+        return result;
     }
 
     @Override
