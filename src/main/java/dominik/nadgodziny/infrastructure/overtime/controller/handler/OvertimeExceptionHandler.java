@@ -16,10 +16,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class OvertimeExceptionHandler {
+class OvertimeExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    ResponseEntity<ExceptionMessage> shouldHandleOvertimeNotFound(NotFoundException ex){
+    ResponseEntity<ExceptionMessage> shouldHandleOvertimeNotFound(NotFoundException ex) {
         ExceptionMessage exceptionMessage = new ExceptionMessage(
                 ex.getMessage(),
                 HttpStatus.NOT_FOUND

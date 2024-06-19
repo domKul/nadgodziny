@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1/overtimes")
 @RequiredArgsConstructor
 @Validated
-public class OvertimeController {
+class OvertimeController {
 
     private final OvertimeFacade overtimeConsoleFacade;
 
