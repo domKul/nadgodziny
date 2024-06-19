@@ -37,14 +37,6 @@ public class OvertimeFacade {
         return OvertimeMapper.mapToOvertimeResponseDtoList(overtimeByStatus);
     }
 
-
-//    public void initialInfo() {
-//        initialMenu();
-//    }
-//    public void initialFind(){
-//        initialMenuFind();
-//    }
-
     public int sumOfAllOvertimeHoursByMonth(int year, int month) {
         return overtimeReaderService.sumOfAllOvertimeHoursByMonth(year, month);
     }

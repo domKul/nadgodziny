@@ -40,6 +40,7 @@ class OvertimeReaderConsole extends SwitchStatusProcessor {
 
     public void findAllSorted(){
         List<OvertimeResponseDto> overtimesFound = overtimeConsoleFacade.findAll();
+        ConsoleWriter.printText("\n\nLista wszystkich nadgodzin:");
         overtimesFound.forEach(System.out::println);
     }
 
