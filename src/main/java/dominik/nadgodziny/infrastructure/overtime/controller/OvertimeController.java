@@ -4,7 +4,6 @@ import dominik.nadgodziny.domain.overtime.OvertimeFacade;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/overtimes")
 @RequiredArgsConstructor
-@Validated
 class OvertimeController {
 
     private final OvertimeFacade overtimeConsoleFacade;

@@ -21,7 +21,7 @@ class OvertimeStatisticsService {
 
     private Map<Integer, Integer> calculateOvertimeHoursByYear() {
         Map<Integer,Integer> map =new HashMap<>();
-        for (Overtime allOvertime : overtimeReaderService.findAllOvertimes()) {
+        for (OvertimeEntity allOvertime : overtimeReaderService.findAllOvertimes()) {
             int year = allOvertime.getOvertimeDate().getYear();
             int actualHours = map.getOrDefault(year, 0);
             int updatingHours = actualHours + allOvertime.getDuration();

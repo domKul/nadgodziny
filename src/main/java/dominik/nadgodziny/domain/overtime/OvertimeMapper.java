@@ -6,7 +6,7 @@ import java.util.List;
 
 class OvertimeMapper {
 
-     public static OvertimeResponseDto mapToOvertimeResponseDto(Overtime overtime){
+     public static OvertimeResponseDto mapToOvertimeResponseDto(OvertimeEntity overtime){
          return new OvertimeResponseDto(overtime.getId(),
                  overtime.getCreationDate(),
                  overtime.getOvertimeDate(),
@@ -14,7 +14,7 @@ class OvertimeMapper {
                  overtime.getDuration());
      }
 
-     public static List<OvertimeResponseDto>mapToOvertimeResponseDtoList(List<Overtime> overtime){
+     public static List<OvertimeResponseDto>mapToOvertimeResponseDtoList(List<OvertimeEntity> overtime){
          return overtime.stream()
                  .map(OvertimeMapper::mapToOvertimeResponseDto)
                  .toList();

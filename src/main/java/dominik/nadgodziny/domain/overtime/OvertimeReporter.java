@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 interface OvertimeReporter {
 
-    Overtime createOvertimeObject(LocalDate date, String status, int hours);
-    void addNewOvertime(Overtime overtime);
+    OvertimeEntity createOvertimeObject(LocalDate date, String status, int hours);
+    void addNewOvertime(OvertimeEntity overtime);
     void deleteOvertimeById(long id);
 }

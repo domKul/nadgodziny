@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
-class SwitchStatusProcessor implements OvertimeMenuFunctionDescription {
+class StatusSelectionProcessor implements OvertimeMenuFunctionDescription {
 
       protected String statusSelectionLoop(Scanner scanner) {
         String status;
         do {
             overtimeStatusSelectionMenu();
             int statusSelection = scanner.nextInt();
-            status = SwitchStatusProcessor.selectStatus(statusSelection);
+            status = StatusSelectionProcessor.selectStatus(statusSelection);
         }while (status.isEmpty());
         return status;
     }

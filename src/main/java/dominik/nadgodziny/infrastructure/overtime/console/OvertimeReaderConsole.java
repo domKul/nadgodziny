@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 @RequiredArgsConstructor
 @Component
-class OvertimeReaderConsole extends SwitchStatusProcessor {
+class OvertimeReaderConsole extends StatusSelectionProcessor {
 
     private final OvertimeFacade overtimeConsoleFacade;
     private static final int MAX_MONTH_NUMBER = 12;

@@ -9,7 +9,8 @@ interface OvertimeMenuFunctionDescription {
                 "\n 1-Dodaj / Usun " +
                 "\n 2-Wyszukaj nadgodziny" +
                 "\n 3-Statystyki" +
-                "\n 4-Zakoncz ");
+                "\n 4-Zakoncz " +
+                "\n 5-Exportuj do CSV");
     }
 
      default void initialMenuFind() {
@@ -34,4 +35,10 @@ interface OvertimeMenuFunctionDescription {
                  "\n 2-Usun" +
                  "\n 3-Cofnij");
      }
+
+    default void initialCsvExport() {
+        ConsoleWriter.printText("\nWybierz opcje" +
+                "\n 1-Exportuj do pliku " +
+                "\n 2-Cofnij");
+    }
 }
