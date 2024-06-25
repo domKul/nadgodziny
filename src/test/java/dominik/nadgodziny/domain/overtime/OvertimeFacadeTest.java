@@ -12,11 +12,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class OvertimeOvertimeReaderConsoleFacadeTest {
+class OvertimeFacadeTest {
 
     OvertimeFacade overtimeFacade = new OvertimeConsoleFacadeConfig().overtimeConsoleFacadeTest();
-
-
 
     @Test
     void shouldCreateOvertimeAndSaveToDbSuccessfully() {
@@ -146,5 +144,23 @@ class OvertimeOvertimeReaderConsoleFacadeTest {
         System.out.println(result);
         assertEquals(expectedMessage,result);
         System.setOut(System.out);
+    }
+
+    @Test
+    void shouldDeleteOvertimeByGivenId(){
+        //Given
+        List<OvertimeResponseDto> listBeforeDelete = overtimeFacade.findAll();
+        OvertimeResponseDto overtimeResponseDto = listBeforeDelete.get(0);
+
+        //When
+        long id = overtimeResponseDto.id();
+        overtimeFacade.deleteOvertimeById(id);
+        List<OvertimeResponseDto> listAfterDelete = overtimeFacade.findAll();
+
+        //Then
+        assertAll(
+                ()-> assertThat(listBeforeDelete.size()).isEqualTo(3),
+                ()-> assertThat(listAfterDelete.size()).isEqualTo(2)
+        );
     }
 }

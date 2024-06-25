@@ -27,6 +27,7 @@ class OvertimeConsoleFacadeConfig {
         this.inMemoryDBForTests = new InMemoryDBForTests();
         this.ovetimeFacadeFetch = new OvertimeFacadeFetchImpl(overtimes);
     }
+
     OvertimeFacade overtimeConsoleFacadeTest(){
         return new OvertimeFacade(
                 new OvertimeStatisticsService(ovetimeFacadeFetch),

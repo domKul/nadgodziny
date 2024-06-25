@@ -121,12 +121,13 @@ class InMemoryDBForTests implements OvertimeRepository {
 
     @Override
     public Optional<OvertimeEntity> findById(Long aLong) {
-        return Optional.empty();
+        return Optional.ofNullable(database.get(aLong));
     }
 
     @Override
     public boolean existsById(Long aLong) {
-        return false;
+        OvertimeEntity overtimeEntity = database.get(aLong);
+        return Objects.nonNull(overtimeEntity);
     }
 
     @Override
@@ -147,7 +148,7 @@ class InMemoryDBForTests implements OvertimeRepository {
 
     @Override
     public void deleteById(Long aLong) {
-
+        database.remove(aLong);
     }
 
     @Override
