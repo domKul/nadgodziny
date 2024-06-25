@@ -10,7 +10,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class PromptMenuTest {
+class PromptMenuTest {
 
     @Autowired
     OvertimeMainControlLoop overtimeMainControlLoop;

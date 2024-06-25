@@ -4,4 +4,9 @@ public interface CsvConverter {
 
     void writeOvertimesToCSV();
 
+    default String[] csvHeader() {
+        return new String[]{"id", "overtimeDate", "duration", "status"};
+    }
+
 }
+

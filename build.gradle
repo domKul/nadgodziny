@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
 	implementation group: 'com.twilio.sdk', name: 'twilio', version: '8.0.0'
+	implementation 'com.opencsv:opencsv:5.5.2'
 	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.5.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -29,7 +30,7 @@ dependencies {
 }
 
 configurations {
-	all {
+	configureEach {
 		exclude group: 'commons-logging', module: 'commons-logging'
 	}
 }

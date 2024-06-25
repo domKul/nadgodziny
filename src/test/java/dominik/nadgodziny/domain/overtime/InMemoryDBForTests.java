@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 class InMemoryDBForTests implements OvertimeRepository {
 
-    Map<Long, Overtime> database = new ConcurrentHashMap<>();
+    Map<Long, OvertimeEntity> database = new ConcurrentHashMap<>();
 
     @Override
     public void flush() {
@@ -20,17 +20,17 @@ class InMemoryDBForTests implements OvertimeRepository {
     }
 
     @Override
-    public <S extends Overtime> S saveAndFlush(S entity) {
+    public <S extends OvertimeEntity> S saveAndFlush(S entity) {
         return null;
     }
 
     @Override
-    public <S extends Overtime> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends OvertimeEntity> List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
     }
 
     @Override
-    public void deleteAllInBatch(Iterable<Overtime> entities) {
+    public void deleteAllInBatch(Iterable<OvertimeEntity> entities) {
 
     }
 
@@ -45,27 +45,27 @@ class InMemoryDBForTests implements OvertimeRepository {
     }
 
     @Override
-    public Overtime getOne(Long aLong) {
+    public OvertimeEntity getOne(Long aLong) {
         return null;
     }
 
     @Override
-    public Overtime getById(Long aLong) {
+    public OvertimeEntity getById(Long aLong) {
         return null;
     }
 
     @Override
-    public Overtime getReferenceById(Long aLong) {
+    public OvertimeEntity getReferenceById(Long aLong) {
         return null;
     }
 
     @Override
-    public <S extends Overtime> Optional<S> findOne(Example<S> example) {
+    public <S extends OvertimeEntity> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
 
     @Override
-    public <S extends Overtime> List<S> findAll(Example<S> example) {
+    public <S extends OvertimeEntity> List<S> findAll(Example<S> example) {
         if (Objects.nonNull(example)) {
             return (List<S>) example;
         }
@@ -74,44 +74,44 @@ class InMemoryDBForTests implements OvertimeRepository {
 
 
     @Override
-    public <S extends Overtime> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends OvertimeEntity> List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
     @Override
-    public <S extends Overtime> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends OvertimeEntity> Page<S> findAll(Example<S> example, Pageable pageable) {
         return null;
     }
 
     @Override
-    public <S extends Overtime> long count(Example<S> example) {
+    public <S extends OvertimeEntity> long count(Example<S> example) {
         return 0;
     }
 
     @Override
-    public <S extends Overtime> boolean exists(Example<S> example) {
+    public <S extends OvertimeEntity> boolean exists(Example<S> example) {
         return false;
     }
 
     @Override
-    public <S extends Overtime, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends OvertimeEntity, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
 
     @Override
-    public <S extends Overtime> S save(S entity) {
+    public <S extends OvertimeEntity> S save(S entity) {
         Random random = new Random();
         long id = random.nextLong(0, 99);
-        Overtime overtime = new Overtime(entity.getOvertimeDate(),
+        OvertimeEntity overtime = new OvertimeEntity(entity.getOvertimeDate(),
                 entity.getStatus(),
                 entity.getDuration());
         overtime.setId(id);
-        Overtime result = database.put(id, overtime);
+        OvertimeEntity result = database.put(id, overtime);
         return (S) result;
     }
 
     @Override
-    public <S extends Overtime> List<S> saveAll(Iterable<S> entities) {
+    public <S extends OvertimeEntity> List<S> saveAll(Iterable<S> entities) {
         List<S> result = new ArrayList<>();
         for (S entity : entities) {
             result.add(save(entity));
@@ -120,7 +120,7 @@ class InMemoryDBForTests implements OvertimeRepository {
     }
 
     @Override
-    public Optional<Overtime> findById(Long aLong) {
+    public Optional<OvertimeEntity> findById(Long aLong) {
         return Optional.empty();
     }
 
@@ -130,13 +130,13 @@ class InMemoryDBForTests implements OvertimeRepository {
     }
 
     @Override
-    public List<Overtime> findAll() {
+    public List<OvertimeEntity> findAll() {
         return database.values().stream()
                 .toList();
     }
 
     @Override
-    public List<Overtime> findAllById(Iterable<Long> longs) {
+    public List<OvertimeEntity> findAllById(Iterable<Long> longs) {
         return null;
     }
 
@@ -151,7 +151,7 @@ class InMemoryDBForTests implements OvertimeRepository {
     }
 
     @Override
-    public void delete(Overtime entity) {
+    public void delete(OvertimeEntity entity) {
 
     }
 
@@ -161,7 +161,7 @@ class InMemoryDBForTests implements OvertimeRepository {
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Overtime> entities) {
+    public void deleteAll(Iterable<? extends OvertimeEntity> entities) {
 
     }
 
@@ -171,12 +171,12 @@ class InMemoryDBForTests implements OvertimeRepository {
     }
 
     @Override
-    public List<Overtime> findAll(Sort sort) {
+    public List<OvertimeEntity> findAll(Sort sort) {
         return database.values().stream().toList();
     }
 
     @Override
-    public Page<Overtime> findAll(Pageable pageable) {
+    public Page<OvertimeEntity> findAll(Pageable pageable) {
         return null;
     }
 }

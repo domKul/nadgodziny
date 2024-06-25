@@ -23,20 +23,24 @@ class OvertimeCsvExporter implements CsvConverter {
     public void writeOvertimesToCSV() {
         List<OvertimeResponseDto> overtimes = overtimeFacade.findAll();
         try (CSVWriter writer = new CSVWriter(new FileWriter(FILEPATH))) {
-            String[] headers = {"id", "overtimeDate", "duration", "status"};
+            String[] headers = csvHeader();
             writer.writeNext(headers);
             for (OvertimeResponseDto overtime : overtimes) {
-                String[] row = {
-                        String.valueOf(overtime.id()),
-                        overtime.overtimeDate().toString(),
-                        String.valueOf(overtime.duration()),
-                        overtime.status()
-                };
+                String[] row = writeLine(overtime);
                 writer.writeNext(row);
             }
             System.out.println("Dane zostały zapisane do pliku CSV.");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private  String[] writeLine(OvertimeResponseDto overtime) {
+        return new String[]{
+                String.valueOf(overtime.id()),
+                overtime.overtimeDate().toString(),
+                String.valueOf(overtime.duration()),
+                overtime.status()
+        };
     }
 }
