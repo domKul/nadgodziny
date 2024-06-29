@@ -20,7 +20,7 @@ twilio:
       from: +13344718306
 
 scheduling:
-  enabled: true
+  enabled: false
   request:
 #    delay: 0 0 14 * * SAT
     delay: 0 * * * * *

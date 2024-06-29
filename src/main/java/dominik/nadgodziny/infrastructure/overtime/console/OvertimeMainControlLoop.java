@@ -22,7 +22,7 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
     private final OvertimeReportingConsole overtimeReportingConsole;
     private final Scanner sc = new Scanner(System.in);
 
-    int inputNumber() {
+    public int inputNumber() {
         while (true) {
             try {
                 int nextInt = sc.nextInt();
@@ -106,11 +106,12 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
 
     void runAppFind() {
         try {
+            int nextInt;
             do {
-                initialMenuFind();
-                int nextInt = inputNumber();
-                if (getNextOptionFind(nextInt)) return;
-            } while (true);
+            initialMenuFind();
+            nextInt = inputNumber();
+            } while (nextInt > 6 || nextInt < 1);
+            getNextOptionFind(nextInt);
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
@@ -137,15 +138,16 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
 
     void runAppAddOrDelete() {
         try {
+            initialAddOrDelete();
+            int nextInt;
             do {
-                initialAddOrDelete();
-                int nextInt = inputNumber();
-                if (getNextOptionAddOrDelete(nextInt)) return;
-            } while (true);
+                nextInt = inputNumber();
+            } while (!getNextOptionAddOrDelete(nextInt));
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
     }
+
 
     boolean getNextOptionAddOrDelete(int nextOption) {
         try {
