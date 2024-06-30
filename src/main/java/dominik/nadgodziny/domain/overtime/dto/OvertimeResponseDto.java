@@ -7,6 +7,7 @@ public record OvertimeResponseDto( long id,
          LocalDate overtimeDate,
          String status,
          int duration) {
+
     @Override
     public String toString() {
         return "ID " + id + " ||  wpisano " +

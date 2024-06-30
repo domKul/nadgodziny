@@ -1,10 +1,7 @@
 spring:
   banner:
     location: banner.txt
-  datasource:
-    url: jdbc:mysql://localhost:3306/nadgodziny?allowPublicKeyRetrieval=true&useSSL=false
-    username: root
-    password: x4pfavsjkodilla
+
   jpa:
     database: mysql
     show-sql: false
@@ -23,10 +20,10 @@ twilio:
       from: +13344718306
 
 scheduling:
-  enabled: true
+  enabled: false
   request:
-    delay: 0 0 14 * * SAT
-#    delay: 0 * * * * *
+#    delay: 0 0 14 * * SAT
+    delay: 0 * * * * *
 application:
   version: Version 1.3.0
 

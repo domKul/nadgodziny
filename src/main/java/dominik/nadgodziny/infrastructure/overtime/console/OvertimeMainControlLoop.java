@@ -1,6 +1,7 @@
 package dominik.nadgodziny.infrastructure.overtime.console;
 
 import dominik.nadgodziny.domain.overtime.OvertimeFacade;
+import dominik.nadgodziny.infrastructure.overtime.export.csv.CsvConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -16,11 +17,12 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
 
     private final OvertimeFacade overtimeConsoleFacade;
     private final ConfigurableApplicationContext applicationContext;
+    private final CsvConverter csvConverter;
     private final OvertimeReaderConsole overtimeReaderConsole;
     private final OvertimeReportingConsole overtimeReportingConsole;
     private final Scanner sc = new Scanner(System.in);
 
-    int inputNumber() {
+    public int inputNumber() {
         while (true) {
             try {
                 int nextInt = sc.nextInt();
@@ -57,6 +59,7 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
                     printText("Zamykanie aplikacji...");
                     applicationContext.close();
                 }
+                case 5 -> {runCsvExporter();}
             }
         } catch (InputMismatchException e) {
             printText("Zle dane wejsciowe");
@@ -74,13 +77,41 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
         }
     }
 
+    void runCsvExporter() {
+        try {
+            do{
+                initialCsvExport();
+                int nextInt = inputNumber();
+                csvConverter.writeOvertimesToCSV();
+                if(getCsvOption(nextInt))return;
+            }while (true);
+        } catch (InputMismatchException e) {
+            printText("Wystąpił błąd: " + e.getMessage());
+        }
+    }
+    boolean getCsvOption(final int nextInt) {
+        try {
+            switch (nextInt){
+                case 1 -> runCsvExporter();
+                case 2-> {
+                    runAppMain();
+                    return true;
+                }
+            }
+        } catch (InputMismatchException e) {
+            printText("Zle dane wejsciowe");
+        }
+        return false;
+    }
+
     void runAppFind() {
         try {
+            int nextInt;
             do {
-                initialMenuFind();
-                int nextInt = inputNumber();
-                if (getNextOptionFind(nextInt)) return;
-            } while (true);
+            initialMenuFind();
+            nextInt = inputNumber();
+            } while (nextInt > 6 || nextInt < 1);
+            getNextOptionFind(nextInt);
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
@@ -107,15 +138,16 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
 
     void runAppAddOrDelete() {
         try {
+            initialAddOrDelete();
+            int nextInt;
             do {
-                initialAddOrDelete();
-                int nextInt = inputNumber();
-                if (getNextOptionAddOrDelete(nextInt)) return;
-            } while (true);
+                nextInt = inputNumber();
+            } while (!getNextOptionAddOrDelete(nextInt));
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
     }
+
 
     boolean getNextOptionAddOrDelete(int nextOption) {
         try {

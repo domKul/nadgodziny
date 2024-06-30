@@ -14,12 +14,12 @@ public class OvertimeFacade {
     private final OvertimeReaderService overtimeReaderService;
 
     public List<OvertimeResponseDto> findByMonth(int year, int month){
-        List<Overtime> overtimeByMonthAndYear = overtimeReaderService.findOvertimeByMonthAndYear(year, month);
+        List<OvertimeEntity> overtimeByMonthAndYear = overtimeReaderService.findOvertimeByMonthAndYear(year, month);
         return OvertimeMapper.mapToOvertimeResponseDtoList(overtimeByMonthAndYear);
     }
 
     public OvertimeResponseDto createOvertimeAndSaveToDb(LocalDate date, String status, int hours){
-        Overtime overtime = overtimeReportingService.createOvertimeObject(date, status, hours);
+        OvertimeEntity overtime = overtimeReportingService.createOvertimeObject(date, status, hours);
         return OvertimeMapper.mapToOvertimeResponseDto(overtime);
     }
 
@@ -28,22 +28,14 @@ public class OvertimeFacade {
     }
 
     public List<OvertimeResponseDto> findAll() {
-        List<Overtime> allOvertimes = overtimeReaderService.sortAllOvertimesById();
+        List<OvertimeEntity> allOvertimes = overtimeReaderService.sortAllOvertimesById();
         return OvertimeMapper.mapToOvertimeResponseDtoList(allOvertimes);
     }
 
     public List<OvertimeResponseDto> findByStatusAndYear(int year, String status) {
-        List<Overtime> overtimeByStatus = overtimeReaderService.findAllOvertimesByStatus(year,status);
+        List<OvertimeEntity> overtimeByStatus = overtimeReaderService.findAllOvertimesByStatus(year,status);
         return OvertimeMapper.mapToOvertimeResponseDtoList(overtimeByStatus);
     }
-
-
-//    public void initialInfo() {
-//        initialMenu();
-//    }
-//    public void initialFind(){
-//        initialMenuFind();
-//    }
 
     public int sumOfAllOvertimeHoursByMonth(int year, int month) {
         return overtimeReaderService.sumOfAllOvertimeHoursByMonth(year, month);

@@ -1,9 +1,6 @@
 package dominik.nadgodziny.domain.overtime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +11,10 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@Table(name = "Overtime")
 @NoArgsConstructor
 @EqualsAndHashCode
-class Overtime {
+class OvertimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -27,7 +25,7 @@ class Overtime {
     private int duration;
 
 
-    public Overtime(LocalDate overtimeDate, String status, int duration) {
+    public OvertimeEntity(LocalDate overtimeDate, String status, int duration) {
         this.creationDate = LocalDate.now();
         this.overtimeDate = overtimeDate;
         this.status = status;

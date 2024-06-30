@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 @RequiredArgsConstructor
 @Component
-class OvertimeReaderConsole extends SwitchStatusProcessor {
+class OvertimeReaderConsole extends StatusSelectionProcessor {
 
     private final OvertimeFacade overtimeConsoleFacade;
     private static final int MAX_MONTH_NUMBER = 12;
@@ -40,6 +40,7 @@ class OvertimeReaderConsole extends SwitchStatusProcessor {
 
     public void findAllSorted(){
         List<OvertimeResponseDto> overtimesFound = overtimeConsoleFacade.findAll();
+        ConsoleWriter.printText("\n\nLista wszystkich nadgodzin:");
         overtimesFound.forEach(System.out::println);
     }
 

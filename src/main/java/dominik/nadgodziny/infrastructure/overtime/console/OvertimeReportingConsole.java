@@ -13,7 +13,7 @@ import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 
 @Component
 @RequiredArgsConstructor
-class OvertimeReportingConsole extends SwitchStatusProcessor {
+class OvertimeReportingConsole extends StatusSelectionProcessor {
 
     private final OvertimeFacade overtimeFacade;
 

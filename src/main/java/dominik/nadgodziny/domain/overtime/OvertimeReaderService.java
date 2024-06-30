@@ -1,5 +1,7 @@
 package dominik.nadgodziny.domain.overtime;
 
+import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
+import dominik.nadgodziny.domain.overtime.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 
@@ -13,10 +15,15 @@ import java.util.stream.Stream;
 class OvertimeReaderService implements OvertimeReader {
 
     private final OvertimeRepository overtimeRepository;
+
     @Override
-    public List<Overtime> findAllOvertimes() {
+    public List<OvertimeEntity> findAllOvertimes() {
         try {
-            return overtimeRepository.findAll();
+            List<OvertimeEntity> all = overtimeRepository.findAll();
+            if (all.isEmpty()){
+                throw new NotFoundException(ErrorMessages.NOT_FOUND.getMessage());
+            }
+            return all;
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
             return Collections.emptyList();
@@ -24,7 +31,7 @@ class OvertimeReaderService implements OvertimeReader {
     }
 
     @Override
-    public List<Overtime> findAllOvertimesByStatus(int year, String status) {
+    public List<OvertimeEntity> findAllOvertimesByStatus(int year, String status) {
         try {
             return findAllOvertimes().stream()
                     .filter(o -> o.getOvertimeDate().getYear() == year)
@@ -37,26 +44,26 @@ class OvertimeReaderService implements OvertimeReader {
     }
 
     @Override
-    public List<Overtime> findOvertimeByMonthAndYear(int year, int month) {
+    public List<OvertimeEntity> findOvertimeByMonthAndYear(int year, int month) {
         try {
-            List<Overtime> overtimeList = findAllOvertimes().stream()
+            List<OvertimeEntity> overtimeList = findAllOvertimes().stream()
                     .filter(o -> o.getOvertimeDate().getYear() == year)
                     .filter(o -> o.getOvertimeDate().getMonthValue() == month)
                     .toList();
-            isEmptyOrNot(overtimeList);
+            isEmptyConsoleInfo(overtimeList);
             return overtimeList;
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
-            return List.of();
+            return Collections.emptyList();
         }
     }
 
     @Override
     public int sumOfAllOvertimeHoursByMonth(int year, int month) {
         try {
-            List<Overtime> allOvertimeByMonth = findOvertimeByMonthAndYear(year, month);
+            List<OvertimeEntity> allOvertimeByMonth = findOvertimeByMonthAndYear(year, month);
             return allOvertimeByMonth.stream()
-                    .mapToInt(Overtime::getDuration)
+                    .mapToInt(OvertimeEntity::getDuration)
                     .sum();
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
@@ -67,10 +74,10 @@ class OvertimeReaderService implements OvertimeReader {
     @Override
     public int sumOfHoursByGivenStatusOfGivenMonthAndGivenYear(int year, int month, String status) {
         try {
-            List<Overtime> allOvertimeByMonth = findOvertimeByMonthAndYear(year, month);
+            List<OvertimeEntity> allOvertimeByMonth = findOvertimeByMonthAndYear(year, month);
             return allOvertimeByMonth.stream()
                     .filter(o -> o.getStatus().equals(status))
-                    .mapToInt(Overtime::getDuration)
+                    .mapToInt(OvertimeEntity::getDuration)
                     .sum();
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
@@ -79,12 +86,11 @@ class OvertimeReaderService implements OvertimeReader {
     }
 
     @Override
-    public List<Overtime> sortAllOvertimesById() {
+    public List<OvertimeEntity> sortAllOvertimesById() {
         try {
-            ConsoleWriter.printText("\n\n\n\nLista wszystkich nadgodzin:");
-            List<Overtime> allOvertimes = findAllOvertimes();
-            Stream<Overtime> sorted = getSorted(allOvertimes);
-            isEmptyOrNot(allOvertimes);
+            List<OvertimeEntity> allOvertimes = findAllOvertimes();
+            Stream<OvertimeEntity> sorted = getSorted(allOvertimes);
+            isEmptyConsoleInfo(allOvertimes);
             return sorted.toList();
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
@@ -93,12 +99,12 @@ class OvertimeReaderService implements OvertimeReader {
 
     }
 
-    private static Stream<Overtime> getSorted(List<Overtime> allOvertimes) {
+    Stream<OvertimeEntity> getSorted(List<OvertimeEntity> allOvertimes) {
         return allOvertimes.stream()
-                .sorted(Comparator.comparingLong(Overtime::getId));
+                .sorted(Comparator.comparingLong(OvertimeEntity::getId));
     }
 
-     void isEmptyOrNot(List<Overtime> byMonthOvertimeDate) {
+    void isEmptyConsoleInfo(List<OvertimeEntity> byMonthOvertimeDate) {
         if (byMonthOvertimeDate.isEmpty()) {
             ConsoleWriter.printText("Nie znaleziono danych ");
         }
