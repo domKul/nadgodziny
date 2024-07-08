@@ -13,6 +13,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.Scanner;
+
 @SpringBootTest(classes = NadgodzinyApplication.class)
 @ActiveProfiles("integration")
 @Testcontainers
@@ -23,6 +25,7 @@ public abstract class InitIntegrationTestData {
     protected OvertimeFacade overtimeFacade;
     @Autowired
     protected OvertimeMainControlLoop overtimeMainControlLoop;
+    protected Scanner scanner;
 
 
     @Container
@@ -37,4 +40,5 @@ public abstract class InitIntegrationTestData {
         registry.add("spring.datasource.username", mysql::getUsername);
         registry.add("spring.datasource.password", mysql::getPassword);
     }
+
 }

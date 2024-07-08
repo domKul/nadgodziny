@@ -96,7 +96,6 @@ class OvertimeReaderService implements OvertimeReader {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
             return Collections.emptyList();
         }
-
     }
 
     Stream<OvertimeEntity> getSorted(List<OvertimeEntity> allOvertimes) {

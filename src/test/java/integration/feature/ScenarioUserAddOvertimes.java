@@ -1,5 +1,6 @@
 package integration.feature;
 
+import dominik.nadgodziny.domain.overtime.OvertimeFacade;
 import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
 import dominik.nadgodziny.domain.overtime.exception.NotFoundException;
 import dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoop;
@@ -12,11 +13,16 @@ import org.mockito.Mockito;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 
 class ScenarioUserAddOvertimes extends InitIntegrationTestData {
 
     private final ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
+    private  Scanner scanner = new Scanner(System.in);
 
     @BeforeEach
     void setUp() {
@@ -29,7 +35,7 @@ class ScenarioUserAddOvertimes extends InitIntegrationTestData {
     }
 
     @Test
-    void userWantToAddNewOvertimeToDB() {
+    void userswapBetweenOptionsInMenu() {
         // 1.0 There are no overtimes in the db
         // Given
         NotFoundException notFoundException = Assertions.assertThrows(NotFoundException.class,
@@ -37,11 +43,13 @@ class ScenarioUserAddOvertimes extends InitIntegrationTestData {
         // When
         String expectedMessage = ErrorMessages.NOT_FOUND.getMessage();
         // Then
-        Assertions.assertEquals(expectedMessage, notFoundException.getMessage());
+        assertEquals(expectedMessage, notFoundException.getMessage());
         // 1.1 User runs the app and wants to see initial menu options
         // Given
         outputStreamCaught.reset();
         OvertimeMainControlLoop mockControlLoop = Mockito.spy(overtimeMainControlLoop);
+        OvertimeFacade facade = Mockito.spy(overtimeFacade);
+        Scanner sc = Mockito.spy(scanner);
         // When
         mockControlLoop.runAppMain();
 
@@ -62,7 +70,7 @@ class ScenarioUserAddOvertimes extends InitIntegrationTestData {
         // 1.2 User selects 1 to enter add/delete menu
         // Given
         outputStreamCaught.reset();
-        Mockito.doReturn(1).when(mockControlLoop).inputNumber();
+        doReturn(1).doReturn(1).doReturn(3).when(mockControlLoop).inputNumber();
 
         // When
         mockControlLoop.runAppMain();
@@ -78,10 +86,10 @@ class ScenarioUserAddOvertimes extends InitIntegrationTestData {
         // 1.3 User selects 2 to enter find overtimes menu
         // Given
         outputStreamCaught.reset();
-        Mockito.doReturn(2).when(mockControlLoop).inputNumber();
+        doReturn(2).doReturn(6).when(mockControlLoop).inputNumber();
 
         // When
-       mockControlLoop.runAppMain();
+        mockControlLoop.runAppMain();
 
         // Then
         String expectedMenuOutput2 = "Wybierz opcje" +
