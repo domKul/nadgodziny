@@ -49,7 +49,7 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
         }
     }
 
-    void initialChoice(int nextInt) {
+    public void initialChoice(int nextInt) {
         try {
             switch (nextInt) {
                 case 1 -> runAppAddOrDelete();
@@ -59,14 +59,16 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
                     printText("Zamykanie aplikacji...");
                     applicationContext.close();
                 }
-                case 5 -> {runCsvExporter();}
+                case 5 -> {
+                    runCsvExporter();
+                }
             }
         } catch (InputMismatchException e) {
             printText("Zle dane wejsciowe");
         }
     }
 
-    void runAppStatistics() {
+    public void runAppStatistics() {
         try {
             initialMenu();
             overtimeConsoleFacade.showStatisticsByYear();
@@ -77,23 +79,24 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
         }
     }
 
-    void runCsvExporter() {
+    public void runCsvExporter() {
         try {
-            do{
+            do {
                 initialCsvExport();
                 int nextInt = inputNumber();
                 csvConverter.writeOvertimesToCSV();
-                if(getCsvOption(nextInt))return;
-            }while (true);
+                if (getCsvOption(nextInt)) return;
+            } while (true);
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
     }
-    boolean getCsvOption(final int nextInt) {
+
+    public boolean getCsvOption(final int nextInt) {
         try {
-            switch (nextInt){
+            switch (nextInt) {
                 case 1 -> runCsvExporter();
-                case 2-> {
+                case 2 -> {
                     runAppMain();
                     return true;
                 }
@@ -104,20 +107,20 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
         return false;
     }
 
-    void runAppFind() {
+    public void runAppFind() {
         try {
             int nextInt;
             do {
-            initialMenuFind();
-            nextInt = inputNumber();
-            } while (nextInt > 6 || nextInt < 1);
-            getNextOptionFind(nextInt);
+                initialMenuFind();
+                nextInt = inputNumber();
+                if (getNextOptionFind(nextInt)) return;
+            } while (true);
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
     }
 
-    boolean getNextOptionFind(int nextInt) {
+    public boolean getNextOptionFind(int nextInt) {
         try {
             switch (nextInt) {
                 case 1 -> overtimeReaderConsole.findAllSorted();
@@ -136,20 +139,21 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
         return false;
     }
 
-    void runAppAddOrDelete() {
+    public void runAppAddOrDelete() {
         try {
-            initialAddOrDelete();
             int nextInt;
             do {
+                initialAddOrDelete();
                 nextInt = inputNumber();
-            } while (!getNextOptionAddOrDelete(nextInt));
+                if (getNextOptionAddOrDelete(nextInt)) return;
+            } while (true);
         } catch (InputMismatchException e) {
             printText("Wystąpił błąd: " + e.getMessage());
         }
     }
 
 
-    boolean getNextOptionAddOrDelete(int nextOption) {
+    public boolean getNextOptionAddOrDelete(int nextOption) {
         try {
             switch (nextOption) {
                 case 1 -> overtimeReportingConsole.createOvertimeObjectFromConsole(sc);
