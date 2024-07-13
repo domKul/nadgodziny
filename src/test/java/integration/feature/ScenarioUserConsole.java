@@ -28,11 +28,13 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     private final ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private Scanner scanner = new Scanner(System.in);
+    OvertimeMainControlLoop mockControlLoop;
 
     @BeforeEach
     void setUp() {
         System.setOut(new PrintStream(outputStreamCaught));
         MockitoAnnotations.openMocks(this);
+        mockControlLoop = Mockito.spy(overtimeMainControlLoop);
     }
 
     @AfterEach
@@ -41,7 +43,19 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     }
 
     @Test
-    void userswapBetweenOptionsInMenu() {
+    void userAddAndFindOvertimeInConsole() {
+        LocalDate todaysDate = LocalDate.now();
+        beforStartTheyAreZeroRecordsInDb();
+        userRunAllAndSeeInitialMenu();
+        userEnterToAddOrDeleteMenu();
+        userSelectFindOptionFromInitialMenu();
+        userSelectAddOrDeleteMenu();
+        userWantToAddOvertimesAndFindOneAddedBeforSearch(todaysDate);
+        userWantToFindOvertimesAndFind3OvertimesInDb(todaysDate);
+        userWantToFindOvertimeByStatusZlecenieAndFindZeroResultResposnse();
+    }
+
+    private void beforStartTheyAreZeroRecordsInDb() {
         // 1.0 There are no overtimes in the db
         // Given
         NotFoundException notFoundException = Assertions.assertThrows(NotFoundException.class,
@@ -50,10 +64,12 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         String expectedMessage = ErrorMessages.NOT_FOUND.getMessage();
         // Then
         assertEquals(expectedMessage, notFoundException.getMessage());
+    }
+
+    private void userRunAllAndSeeInitialMenu() {
         // 1.1 User runs the app and wants to see initial menu options
         // Given
         outputStreamCaught.reset();
-        OvertimeMainControlLoop mockControlLoop = Mockito.spy(overtimeMainControlLoop);
         // When
         mockControlLoop.runAppMain();
 
@@ -65,12 +81,14 @@ class ScenarioUserConsole extends InitIntegrationTestData {
                 " 4-Zakoncz \n" +
                 " 5-Exportuj do CSV";
 
-        String actualOutput = outputStreamCaught.toString().trim();
+        String actualOutput = outputStreamCaught.toString();
         if (actualOutput.endsWith("null")) {
             actualOutput = actualOutput.substring(0, actualOutput.length() - 4).trim();
         }
         assertTrue(actualOutput.contains(expectedOutput.trim()));
+    }
 
+    private void userEnterToAddOrDeleteMenu() {
         // 1.2 User selects 1 to enter add/delete menu
         // Given
         outputStreamCaught.reset();
@@ -86,7 +104,9 @@ class ScenarioUserConsole extends InitIntegrationTestData {
                 "\n 3-Cofnij";
         String actualMenuOutput = outputStreamCaught.toString().trim();
         assertTrue(actualMenuOutput.contains(expectedMenuOutput.trim()));
+    }
 
+    private void userSelectFindOptionFromInitialMenu() {
         // 1.3 User selects 2 to enter find overtimes menu
         // Given
         outputStreamCaught.reset();
@@ -105,7 +125,9 @@ class ScenarioUserConsole extends InitIntegrationTestData {
                 "\n 6-Cofnij";
         String actualMenuOutput2 = outputStreamCaught.toString().trim();
         assertTrue(actualMenuOutput2.contains(expectedMenuOutput2.trim()));
+    }
 
+    private void userSelectAddOrDeleteMenu() {
         // 1.4 User select add/delete menu and save overtime to empty db
         // Given
         String inputData = "\n1\n1\n2023-12-12\n1\n8\n";
@@ -125,52 +147,61 @@ class ScenarioUserConsole extends InitIntegrationTestData {
                 () -> assertEquals(LocalDate.parse("2023-12-12"), addedOvertime.overtimeDate()),
                 () -> assertEquals(8, addedOvertime.duration())
         );
+    }
 
+    private void userWantToAddOvertimesAndFindOneAddedBeforSearch(LocalDate todaysDate) {
         // 1.5 user want to find all overtimes and find 1 overtime after adding it
         // Given
         outputStreamCaught.reset();
         String inputData2 = "\n2\n1\n";
-        ByteArrayInputStream testIn2 = new ByteArrayInputStream(inputData2.getBytes());
-        ByteArrayOutputStream testOut2 = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(testOut2));
-        scanner = new Scanner(testIn2);
-        overtimeMainControlLoop.setScanner(scanner);
+        userInput(inputData2, outputStreamCaught);
 
         // When
         overtimeMainControlLoop.runAppMain();
 
         // Then
-        System.setOut(originalOut);
-        String output2 = testOut2.toString();
-        LocalDate todaysDate = LocalDate.now();
+        String output2 = outputStreamCaught.toString();
         assertAll(
-                ()-> assertThat(output2).contains("ID 1 ||  wpisano " + todaysDate + " || " +
+                () -> assertThat(output2).contains("ID 1 ||  wpisano " + todaysDate + " || " +
                         " data nadgodzin 2023-12-12 ||  rodzaj nadgodziny || " +
                         " czas pracy 8 godzin")
         );
+    }
 
+    private void userWantToFindOvertimesAndFind3OvertimesInDb(LocalDate todaysDate) {
         //1.5 they are two more overtimes in db and want to find all (3 overtimes output)
         // Given
         outputStreamCaught.reset();
-        additionalTwoOvertimesAdder();
+        additionalTwoOvertimesAdderWith2023Year();
         String inputData3 = "\n2\n1\n";
-        ByteArrayInputStream testIn3 = new ByteArrayInputStream(inputData3.getBytes());
-        ByteArrayOutputStream testOut3 = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(testOut3));
-        scanner = new Scanner(testIn3);
-        overtimeMainControlLoop.setScanner(scanner);
+        userInput(inputData3, outputStreamCaught);
 
         // When
         overtimeMainControlLoop.runAppMain();
 
         // Then
-        System.setOut(originalOut);
-        String output3 = testOut3.toString();
-        String expectedListOfOvertimes = "ID 1 ||  wpisano " + todaysDate +" ||  data nadgodzin 2023-12-12 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
+        String output3 = outputStreamCaught.toString();
+        String expectedListOfOvertimes = "ID 1 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-12 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
                 "ID 2 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-01 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
                 "ID 3 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-02 ||  rodzaj nadgodziny ||  czas pracy 8 godzin ";
         assertAll(
-                ()-> assertThat(output3).contains(expectedListOfOvertimes)
+                () -> assertThat(output3).contains(expectedListOfOvertimes)
         );
+    }
+
+    private void userWantToFindOvertimeByStatusZlecenieAndFindZeroResultResposnse() {
+        //1.6 user want to find overtimes with status "zlecenie" in 2023 year and they are 0 in db with messale "Znaleziono 0"
+        //Given
+        outputStreamCaught.reset();
+        String inputData4 = "\n2\n3\n2023\n2";
+        userInput(inputData4, outputStreamCaught);
+
+        //When
+        overtimeMainControlLoop.runAppMain();
+
+        //Then
+        String output4 = outputStreamCaught.toString();
+        String expectedResposne = "Znaleziono 0";
+        assertThat(output4).contains(expectedResposne);
     }
 }
