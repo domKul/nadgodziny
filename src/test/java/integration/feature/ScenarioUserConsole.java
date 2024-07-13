@@ -55,6 +55,7 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         userWantToAddOvertimesWithZlecenieStatus();
         userWantToSumeAllOvertimesByGivenMonthAndYear();
         userWantToSumeAllOvertimesByGivenStatus();
+        userWantToFindOvertimesByGivenMonthAndYear(todaysDate);
     }
 
     private void beforStartTheyAreZeroRecordsInDb() {
@@ -250,6 +251,26 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         String output = outputStreamCaught.toString();
 
         assertThat(output).contains("Liczba godzin to 8 godzin");
+
+    }
+
+    private void userWantToFindOvertimesByGivenMonthAndYear(LocalDate todaysDate){
+        //2.0
+        //Given
+        outputStreamCaught.reset();
+        String inputData = "\n2\n2\n2023\n12\n";
+        userInput(inputData,outputStreamCaught);
+
+        //When
+        overtimeMainControlLoop.runAppMain();
+
+        //Then
+        String output = outputStreamCaught.toString();
+        String expectedOutput = "ID 1 ||  wpisano "+todaysDate+" ||  data nadgodzin 2023-12-12 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
+                "ID 2 ||  wpisano "+todaysDate+" ||  data nadgodzin 2023-12-01 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
+                "ID 3 ||  wpisano "+todaysDate+" ||  data nadgodzin 2023-12-02 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
+                "ID 4 ||  wpisano "+todaysDate+" ||  data nadgodzin 2023-12-12 ||  rodzaj zlecenie ||  czas pracy 8 godzin ";
+        assertThat(output).contains(expectedOutput);
 
     }
 }

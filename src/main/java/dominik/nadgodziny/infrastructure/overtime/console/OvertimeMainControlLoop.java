@@ -20,7 +20,7 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
     private final CsvConverter csvConverter;
     private final OvertimeReaderConsole overtimeReaderConsole;
     private final OvertimeReportingConsole overtimeReportingConsole;
-    private Scanner sc;
+    private Scanner sc = new Scanner(System.in);
 
      public void setScanner(Scanner sc) {
         this.sc = sc;
