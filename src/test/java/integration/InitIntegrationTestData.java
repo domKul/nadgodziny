@@ -15,6 +15,9 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -50,12 +53,19 @@ public abstract class InitIntegrationTestData {
         registry.add("spring.datasource.password", mysql::getPassword);
     }
 
-    protected void additionalTwoOvertimesAdder(){
+    protected void additionalTwoOvertimesAdderWith2023Year(){
         int day = 1;
         for(int i = 1; i < 3; i++){
-        LocalDate date = LocalDate.parse("2023-12-0"+day++);
+        LocalDate date = LocalDate.parse("2023-12-0" + day++);
             overtimeFacade.createOvertimeAndSaveToDb(date,"nadgodziny",8);
         }
+    }
+
+    protected void userInput(String input, ByteArrayOutputStream out) {
+        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+        scanner = new Scanner(testIn);
+        System.setOut(new PrintStream(out));
+        overtimeMainControlLoop.setScanner(scanner);
     }
 
 }
