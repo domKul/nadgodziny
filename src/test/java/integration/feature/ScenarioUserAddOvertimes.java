@@ -142,10 +142,11 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         // Then
         System.setOut(originalOut);
         String output2 = testOut2.toString();
+        LocalDate todaysDate = LocalDate.now();
         assertAll(
-                ()-> assertThat(output2).contains("ID 1 ||  wpisano 2024-07-10 || " +
+                ()-> assertThat(output2).contains("ID 1 ||  wpisano " + todaysDate + " || " +
                         " data nadgodzin 2023-12-12 ||  rodzaj nadgodziny || " +
-                        " czas pracy 8 godzin ")
+                        " czas pracy 8 godzin")
         );
 
         //1.5 they are two more overtimes in db and want to find all (3 overtimes output)
@@ -165,10 +166,11 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         // Then
         System.setOut(originalOut);
         String output3 = testOut3.toString();
+        String expectedListOfOvertimes = "ID 1 ||  wpisano " + todaysDate +" ||  data nadgodzin 2023-12-12 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
+                "ID 2 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-01 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
+                "ID 3 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-02 ||  rodzaj nadgodziny ||  czas pracy 8 godzin ";
         assertAll(
-                ()-> assertThat(output3).contains("ID 1 ||  wpisano 2024-07-10 ||  data nadgodzin 2023-12-12 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
-                        "ID 2 ||  wpisano 2024-07-10 ||  data nadgodzin 2023-12-01 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
-                        "ID 3 ||  wpisano 2024-07-10 ||  data nadgodzin 2023-12-02 ||  rodzaj nadgodziny ||  czas pracy 8 godzin ")
+                ()-> assertThat(output3).contains(expectedListOfOvertimes)
         );
     }
 }
