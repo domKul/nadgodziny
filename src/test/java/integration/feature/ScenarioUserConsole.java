@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
@@ -49,10 +48,11 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         userRunAllAndSeeInitialMenu();
         userEnterToAddOrDeleteMenu();
         userSelectFindOptionFromInitialMenu();
-        userSelectAddOrDeleteMenu();
-        userWantToAddOvertimesAndFindOneAddedBeforSearch(todaysDate);
+        userSelectAddOrDeleteMenuAndAddFirstOvertimeWithNadgodzinyStatus();
+        userWantToFindOvertimesAndFindOneAddedBeforSearch(todaysDate);
         userWantToFindOvertimesAndFind3OvertimesInDb(todaysDate);
         userWantToFindOvertimeByStatusZlecenieAndFindZeroResultResposnse();
+        userWantToAddOvertimesWithZlecenieStatus();
     }
 
     private void beforStartTheyAreZeroRecordsInDb() {
@@ -127,13 +127,11 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         assertTrue(actualMenuOutput2.contains(expectedMenuOutput2.trim()));
     }
 
-    private void userSelectAddOrDeleteMenu() {
+    private void userSelectAddOrDeleteMenuAndAddFirstOvertimeWithNadgodzinyStatus() {
         // 1.4 User select add/delete menu and save overtime to empty db
         // Given
         String inputData = "\n1\n1\n2023-12-12\n1\n8\n";
-        ByteArrayInputStream testIn = new ByteArrayInputStream(inputData.getBytes());
-        scanner = new Scanner(testIn);
-        overtimeMainControlLoop.setScanner(scanner);
+        userInput(inputData,outputStreamCaught);
 
         // When
         overtimeMainControlLoop.runAppMain();
@@ -142,14 +140,13 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         List<OvertimeResponseDto> listWithOneOvertime = overtimeFacade.findAll();
         assertEquals(1, listWithOneOvertime.size());
         OvertimeResponseDto addedOvertime = listWithOneOvertime.get(0);
-
         assertAll(
                 () -> assertEquals(LocalDate.parse("2023-12-12"), addedOvertime.overtimeDate()),
                 () -> assertEquals(8, addedOvertime.duration())
         );
     }
 
-    private void userWantToAddOvertimesAndFindOneAddedBeforSearch(LocalDate todaysDate) {
+    private void userWantToFindOvertimesAndFindOneAddedBeforSearch(LocalDate todaysDate) {
         // 1.5 user want to find all overtimes and find 1 overtime after adding it
         // Given
         outputStreamCaught.reset();
@@ -160,9 +157,9 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         overtimeMainControlLoop.runAppMain();
 
         // Then
-        String output2 = outputStreamCaught.toString();
+        String output = outputStreamCaught.toString();
         assertAll(
-                () -> assertThat(output2).contains("ID 1 ||  wpisano " + todaysDate + " || " +
+                () -> assertThat(output).contains("ID 1 ||  wpisano " + todaysDate + " || " +
                         " data nadgodzin 2023-12-12 ||  rodzaj nadgodziny || " +
                         " czas pracy 8 godzin")
         );
@@ -180,12 +177,12 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         overtimeMainControlLoop.runAppMain();
 
         // Then
-        String output3 = outputStreamCaught.toString();
+        String output = outputStreamCaught.toString();
         String expectedListOfOvertimes = "ID 1 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-12 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
                 "ID 2 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-01 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
                 "ID 3 ||  wpisano " + todaysDate + " ||  data nadgodzin 2023-12-02 ||  rodzaj nadgodziny ||  czas pracy 8 godzin ";
         assertAll(
-                () -> assertThat(output3).contains(expectedListOfOvertimes)
+                () -> assertThat(output).contains(expectedListOfOvertimes)
         );
     }
 
@@ -200,8 +197,24 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         overtimeMainControlLoop.runAppMain();
 
         //Then
-        String output4 = outputStreamCaught.toString();
+        String output = outputStreamCaught.toString();
         String expectedResposne = "Znaleziono 0";
-        assertThat(output4).contains(expectedResposne);
+        assertThat(output).contains(expectedResposne);
+    }
+
+    private void userWantToAddOvertimesWithZlecenieStatus(){
+        //1.7 user add new overtime with status zlecenie to db
+        //Given
+        outputStreamCaught.reset();
+        String inputData = "\n1\n1\n2023-12-12\n2\n8\n";
+        userInput(inputData,outputStreamCaught);
+
+        //When
+        overtimeMainControlLoop.runAppMain();
+
+        //Then
+        List<OvertimeResponseDto> all = overtimeFacade.findByStatusAndYear(2023,"zlecenie");
+        int expectedSize = 1;
+        assertThat(expectedSize).isEqualTo(all.size());
     }
 }
