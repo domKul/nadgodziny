@@ -53,6 +53,7 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         userWantToFindOvertimesAndFind3OvertimesInDb(todaysDate);
         userWantToFindOvertimeByStatusZlecenieAndFindZeroResultResposnse();
         userWantToAddOvertimesWithZlecenieStatus();
+        userWantToSumeAllOvertimesByGivenMonthAndYear();
     }
 
     private void beforStartTheyAreZeroRecordsInDb() {
@@ -216,5 +217,20 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         List<OvertimeResponseDto> all = overtimeFacade.findByStatusAndYear(2023,"zlecenie");
         int expectedSize = 1;
         assertThat(expectedSize).isEqualTo(all.size());
+    }
+
+    private void userWantToSumeAllOvertimesByGivenMonthAndYear(){
+        //Given
+        outputStreamCaught.reset();
+        String inputData = "\n2\n4\n2023\n12\n";
+        userInput(inputData,outputStreamCaught);
+
+        //When
+        overtimeMainControlLoop.runAppMain();
+
+        //Then
+        String output = outputStreamCaught.toString();
+        String expectedOutput= "Łączna suma godzin to 32";
+        assertThat(output).contains(expectedOutput);
     }
 }
