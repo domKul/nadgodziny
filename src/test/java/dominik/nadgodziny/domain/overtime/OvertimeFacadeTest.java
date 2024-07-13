@@ -88,7 +88,6 @@ class OvertimeFacadeTest {
                 ()->assertThat(result.get(0).status().equals("nadgodziny")),
                 ()->assertThat(result.get(0).overtimeDate().getYear() == 2023)
 
-
         );
     }
 
