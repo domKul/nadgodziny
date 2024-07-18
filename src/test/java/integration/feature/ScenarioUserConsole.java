@@ -34,6 +34,7 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         System.setOut(new PrintStream(outputStreamCaught));
         MockitoAnnotations.openMocks(this);
         mockControlLoop = Mockito.spy(overtimeMainControlLoop);
+        outputStreamCaught.reset();
     }
 
     @AfterEach
@@ -53,8 +54,8 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         userWantToFindOvertimesAndFind3OvertimesInDb(todaysDate);
         userWantToFindOvertimeByStatusZlecenieAndFindZeroResultResposnse();
         userWantToAddOvertimesWithZlecenieStatus();
-        userWantToSumeAllOvertimesByGivenMonthAndYear();
-        userWantToSumeAllOvertimesByGivenStatus();
+        userWantToSumAllOvertimesByGivenMonthAndYear();
+        userWantToSumAllOvertimesByGivenStatus();
         userWantToFindOvertimesByGivenMonthAndYear(todaysDate);
     }
 
@@ -71,9 +72,7 @@ class ScenarioUserConsole extends InitIntegrationTestData {
 
     private void userRunAllAndSeeInitialMenu() {
         // 1.1 User runs the app and wants to see initial menu options
-        // Given
-        outputStreamCaught.reset();
-        // When
+        // Given && When
         mockControlLoop.runAppMain();
 
         // Then
@@ -94,7 +93,6 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     private void userEnterToAddOrDeleteMenu() {
         // 1.2 User selects 1 to enter add/delete menu
         // Given
-        outputStreamCaught.reset();
         doReturn(1).doReturn(3).when(mockControlLoop).inputNumber();
 
         // When
@@ -112,7 +110,6 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     private void userSelectFindOptionFromInitialMenu() {
         // 1.3 User selects 2 to enter find overtimes menu
         // Given
-        outputStreamCaught.reset();
         doReturn(2).doReturn(6).when(mockControlLoop).inputNumber();
 
         // When
@@ -152,7 +149,6 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     private void userWantToFindOvertimesAndFindOneAddedBeforSearch(LocalDate todaysDate) {
         // 1.5 user want to find all overtimes and find 1 overtime after adding it
         // Given
-        outputStreamCaught.reset();
         String inputData2 = "\n2\n1\n";
         userInput(inputData2, outputStreamCaught);
 
@@ -171,7 +167,6 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     private void userWantToFindOvertimesAndFind3OvertimesInDb(LocalDate todaysDate) {
         //1.5 they are two more overtimes in db and want to find all (3 overtimes output)
         // Given
-        outputStreamCaught.reset();
         additionalTwoOvertimesAdderWith2023Year();
         String inputData3 = "\n2\n1\n";
         userInput(inputData3, outputStreamCaught);
@@ -192,7 +187,6 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     private void userWantToFindOvertimeByStatusZlecenieAndFindZeroResultResposnse() {
         //1.6 user want to find overtimes with status "zlecenie" in 2023 year and they are 0 in db with messale "Znaleziono 0"
         //Given
-        outputStreamCaught.reset();
         String inputData4 = "\n2\n3\n2023\n2";
         userInput(inputData4, outputStreamCaught);
 
@@ -208,7 +202,6 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     private void userWantToAddOvertimesWithZlecenieStatus(){
         //1.7 user add new overtime with status zlecenie to db
         //Given
-        outputStreamCaught.reset();
         String inputData = "\n1\n1\n2023-12-12\n2\n8\n";
         userInput(inputData,outputStreamCaught);
 
@@ -221,10 +214,9 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         assertThat(expectedSize).isEqualTo(all.size());
     }
 
-    private void userWantToSumeAllOvertimesByGivenMonthAndYear(){
-        //1.8 summ overtimes hurs from month (december = 12)
+    private void userWantToSumAllOvertimesByGivenMonthAndYear(){
+        //1.8 sum overtimes hours from month (december = 12)
         //Given
-        outputStreamCaught.reset();
         String inputData = "\n2\n4\n2023\n12\n";
         userInput(inputData,outputStreamCaught);
 
@@ -237,10 +229,9 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         assertThat(output).contains(expectedOutput);
     }
 
-    private void userWantToSumeAllOvertimesByGivenStatus(){
-        //1.9
+    private void userWantToSumAllOvertimesByGivenStatus(){
+        //1.9 user want to sum hours from overtimes by given status (nadgodziny) with mont (december = 12) and year (2023)
         //Given
-        outputStreamCaught.reset();
         String inputData = "\n2\n5\n2023\n12\n2";
         userInput(inputData,outputStreamCaught);
 
@@ -255,9 +246,8 @@ class ScenarioUserConsole extends InitIntegrationTestData {
     }
 
     private void userWantToFindOvertimesByGivenMonthAndYear(LocalDate todaysDate){
-        //2.0
+        //2.0 user want to retrieve all overtimes with month 12 (december)
         //Given
-        outputStreamCaught.reset();
         String inputData = "\n2\n2\n2023\n12\n";
         userInput(inputData,outputStreamCaught);
 
@@ -271,6 +261,5 @@ class ScenarioUserConsole extends InitIntegrationTestData {
                 "ID 3 ||  wpisano "+todaysDate+" ||  data nadgodzin 2023-12-02 ||  rodzaj nadgodziny ||  czas pracy 8 godzin \n" +
                 "ID 4 ||  wpisano "+todaysDate+" ||  data nadgodzin 2023-12-12 ||  rodzaj zlecenie ||  czas pracy 8 godzin ";
         assertThat(output).contains(expectedOutput);
-
     }
 }
