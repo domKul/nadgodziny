@@ -27,7 +27,6 @@ dependencies {
 	testImplementation 'org.testcontainers:testcontainers:1.19.0'
 	testImplementation 'org.testcontainers:junit-jupiter:1.19.0'
 	testImplementation 'org.testcontainers:mysql:1.19.0'
-	testImplementation group: 'org.wiremock', name: 'wiremock', version: '3.8.0'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
