@@ -2,14 +2,16 @@ spring:
   banner:
     location: banner.txt
   datasource:
-    url: jdbc:mysql://localhost:3306/nadgodziny?allowPublicKeyRetrieval=true&useSSL=false
-    username: root
-    password: x4pfavsjkodilla
+    url: jdbc:mysql://mysql-23c68702-dominik-4e4e.c.aivencloud.com:11526/defaultdb?ssl-mode=REQUIRED
+    username: avnadmin
+    password: AVNS_2JGrF4QVEr_0pPOU2nY
   jpa:
-    database: mysql
-    show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: update  # Możliwe wartości to 'none', 'validate', 'update', 'create', 'create-drop'
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
 
 twilio:
   message:
@@ -23,7 +25,7 @@ twilio:
       from: +13344718306
 
 scheduling:
-  enabled: true
+  enabled: false
   request:
     delay: 0 0 14 * * SAT
 #    delay: 0 * * * * *
