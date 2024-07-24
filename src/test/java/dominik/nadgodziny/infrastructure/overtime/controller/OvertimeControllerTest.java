@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
-public class OvertimeControllerTest extends OvertimesExamples{
+public class OvertimeControllerTest extends OvertimesExamples {
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,32 +29,28 @@ public class OvertimeControllerTest extends OvertimesExamples{
 
     @Test
     void findAllOvertimesReturnsListOfOvertimes() throws Exception {
-        //Given
-
-
-        //When
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/overtimes")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(4));
-
+        //Given & When
+        ResultActions perform = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/overtimes")
+                .contentType(MediaType.APPLICATION_JSON));
         //Then
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        perform.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(4));
     }
 
     @Test
-    void  shouldFindOvertimesByStatusReturnsFilteredOvertimes() throws Exception {
+    void shouldFindOvertimesByStatusReturnsFilteredOvertimes() throws Exception {
         //Given &  When
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/overtimes/status")
-                        .queryParam("year", "2024")
-                        .queryParam("status", "zlecenie")
-                        .contentType(MediaType.APPLICATION_JSON));
+                .queryParam("year", "2024")
+                .queryParam("status", "zlecenie")
+                .contentType(MediaType.APPLICATION_JSON));
         //Then
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
         resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(0));
     }
 
     @Test
-    void  shouldFindOvertimesByStatusReturnsFilteredOvertimesAndFindTwo() throws Exception {
+    void shouldFindOvertimesByStatusReturnsFilteredOvertimesAndFindTwo() throws Exception {
         //Given &  When
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/overtimes/status")
                 .queryParam("year", "2023")

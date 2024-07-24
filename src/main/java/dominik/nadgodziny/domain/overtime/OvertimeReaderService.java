@@ -29,21 +29,17 @@ class OvertimeReaderService implements OvertimeReader {
 
     @Override
     public List<OvertimeEntity> findAllOvertimesByStatus(int year, String status) {
-        return executeWithExceptionHandling(() -> findAllOvertimes().stream()
-                .filter(o -> o.getOvertimeDate().getYear() == year)
-                .filter(o -> o.getStatus().equals(status))
-                .toList(), Collections.emptyList());
+        return executeWithExceptionHandling(
+                () -> overtimeRepository.findAllByYearAndStatus(year, status), Collections.emptyList());
+
     }
 
     @Override
     public List<OvertimeEntity> findOvertimeByMonthAndYear(int year, int month) {
         return executeWithExceptionHandling(() -> {
-            List<OvertimeEntity> overtimeList = findAllOvertimes().stream()
-                    .filter(o -> o.getOvertimeDate().getYear() == year)
-                    .filter(o -> o.getOvertimeDate().getMonthValue() == month)
-                    .toList();
-            isEmptyConsoleInfo(overtimeList);
-            return overtimeList;
+            List<OvertimeEntity> allByYearAndMonth = overtimeRepository.findAllByYearAndMonth(year, month);
+            isEmptyConsoleInfo(allByYearAndMonth);
+            return allByYearAndMonth;
         }, Collections.emptyList());
     }
 

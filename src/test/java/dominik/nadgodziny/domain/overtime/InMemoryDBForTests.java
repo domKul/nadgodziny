@@ -180,4 +180,20 @@ class InMemoryDBForTests implements OvertimeRepository {
     public Page<OvertimeEntity> findAll(Pageable pageable) {
         return null;
     }
+
+    @Override
+    public List<OvertimeEntity> findAllByYearAndStatus(int year, String status) {
+       return database.values().stream()
+                .filter(overtimeEntity -> overtimeEntity.getOvertimeDate().getYear() == year)
+                .filter(overtimeEntity -> overtimeEntity.getStatus().equals(status))
+                .toList();
+    }
+
+    @Override
+    public List<OvertimeEntity> findAllByYearAndMonth(int year, int month) {
+       return database.values().stream()
+                .filter(overtimeEntity -> overtimeEntity.getOvertimeDate().getYear() == year)
+                .filter(overtimeEntity -> overtimeEntity.getOvertimeDate().getMonthValue() == month)
+                .toList();
+    }
 }
