@@ -13,9 +13,9 @@ class OvertimeReportingService implements OvertimeReporter {
     private final OvertimeRepository overtimeRepository;
 
       public void addNewOvertime(OvertimeEntity overtime) {
-        Optional<OvertimeEntity> ifNotNull = Optional.ofNullable(overtime);
+        Optional<OvertimeEntity> optionalOvertime = Optional.ofNullable(overtime);
         try {
-            if (ifNotNull.isPresent()) {
+            if (optionalOvertime.isPresent()) {
                  overtimeRepository.save(overtime);
             }
         } catch (Exception e) {
