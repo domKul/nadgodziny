@@ -211,7 +211,7 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         //Then
         List<OvertimeResponseDto> all = overtimeFacade.findByStatusAndYear(2023,"zlecenie");
         int expectedSize = 1;
-        assertThat(expectedSize).isEqualTo(all.size());
+        assertThat(all.size()).isEqualTo(expectedSize);
     }
 
     private void userWantToSumAllOvertimesByGivenMonthAndYear(){
