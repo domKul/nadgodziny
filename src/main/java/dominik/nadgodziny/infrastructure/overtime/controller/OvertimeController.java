@@ -2,6 +2,7 @@ package dominik.nadgodziny.infrastructure.overtime.controller;
 
 import dominik.nadgodziny.domain.overtime.OvertimeFacade;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,12 @@ class OvertimeController {
     @GetMapping
     ResponseEntity<List<OvertimeResponseDto>>findAllOvertimes(){
         List<OvertimeResponseDto> all = overtimeConsoleFacade.findAll();
+        return ResponseEntity.ok(all);
+    }
+
+    @GetMapping("/statistics")
+    ResponseEntity<OvertimeStatisticsDto>findAllOvertimesStatistics(){
+        OvertimeStatisticsDto all = overtimeConsoleFacade.showStatisticsByYear();
         return ResponseEntity.ok(all);
     }
 

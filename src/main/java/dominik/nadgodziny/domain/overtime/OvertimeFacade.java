@@ -1,6 +1,7 @@
 package dominik.nadgodziny.domain.overtime;
 
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
@@ -45,7 +46,7 @@ public class OvertimeFacade {
        return overtimeReaderService.sumOfHoursByGivenStatusOfGivenMonthAndGivenYear(year,month,status);
     }
 
-    public void showStatisticsByYear(){
-        overtimeStatisticsService.generateStatistics();
+    public OvertimeStatisticsDto showStatisticsByYear(){
+       return overtimeStatisticsService.generateStatistics();
     }
 }
