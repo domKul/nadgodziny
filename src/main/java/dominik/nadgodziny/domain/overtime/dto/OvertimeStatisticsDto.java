@@ -1,7 +1,8 @@
 package dominik.nadgodziny.domain.overtime.dto;
 
+import java.util.Map;
+
 public record OvertimeStatisticsDto(
-        int year,
-        int hours
+        Map<Integer,Integer> stats
 ) {
 }

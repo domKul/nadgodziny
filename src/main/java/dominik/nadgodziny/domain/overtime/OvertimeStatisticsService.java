@@ -20,7 +20,7 @@ class OvertimeStatisticsService {
              hours = map.getValue();
             ConsoleWriter.printText("W roku " + year + " zrobiono " + hours + " dodatkowych godzin");
         }
-        return new OvertimeStatisticsDto(year,hours);
+        return new OvertimeStatisticsDto(overtimeHoursByYear);
     }
 
     private Map<Integer, Integer> calculateOvertimeHoursByYear() {
