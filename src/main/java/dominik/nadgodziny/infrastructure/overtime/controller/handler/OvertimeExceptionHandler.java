@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 @ControllerAdvice
 class OvertimeExceptionHandler {
@@ -47,16 +45,5 @@ class OvertimeExceptionHandler {
         Map<String, String> error = new HashMap<>();
         error.put(ex.getName(), ex.getName() + " required");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
-        Map<String, String> errors = ex.getConstraintViolations()
-                .stream()
-                .collect(Collectors.toMap(
-                        violation -> violation.getPropertyPath().toString(),
-                        ConstraintViolation::getMessage
-                ));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 }

@@ -1,9 +1,9 @@
 package dominik.nadgodziny.domain.overtime;
 
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
@@ -24,8 +24,10 @@ class OvertimeReportingService implements OvertimeReporter {
      }
 
     @Override
-    public OvertimeEntity createOvertimeObject(LocalDate date, String status, int hours) {
-        OvertimeEntity overtime = new OvertimeEntity(date, status, hours);
+    public OvertimeEntity createOvertimeObject(OvertimeCreateDto overtimeCreateDto) {
+        OvertimeEntity overtime = new OvertimeEntity(overtimeCreateDto.overtimeDate(),
+                overtimeCreateDto.status(),
+                overtimeCreateDto.duration());
         addNewOvertime(overtime);
         return overtime;
     }

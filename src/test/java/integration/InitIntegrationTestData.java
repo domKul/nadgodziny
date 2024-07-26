@@ -2,6 +2,7 @@ package integration;
 
 import dominik.nadgodziny.NadgodzinyApplication;
 import dominik.nadgodziny.domain.overtime.OvertimeFacade;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoop;
 import dominik.nadgodziny.infrastructure.overtime.export.csv.CsvConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,8 @@ public abstract class InitIntegrationTestData {
         int day = 1;
         for(int i = 1; i < 3; i++){
         LocalDate date = LocalDate.parse("2023-12-0" + day++);
-            overtimeFacade.createOvertimeAndSaveToDb(date,"nadgodziny",8);
+            OvertimeCreateDto overtimeCreateDto = new OvertimeCreateDto(date,"nadgodziny",8);
+            overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto);
         }
     }
 

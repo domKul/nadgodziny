@@ -1,6 +1,7 @@
 package dominik.nadgodziny.infrastructure.overtime.console;
 
 import dominik.nadgodziny.domain.overtime.OvertimeFacade;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +19,20 @@ class OvertimeReportingConsole extends StatusSelectionProcessor {
     private final OvertimeFacade overtimeFacade;
 
     void createOvertimeObjectFromConsole(Scanner scanner) {
+
         try {
-            LocalDate date = promptForDate(scanner);
-            String status = promptForStatus(scanner);
-            int hours = promptForHours(scanner);
-            overtimeFacade.createOvertimeAndSaveToDb(date, status, hours);
+            OvertimeCreateDto overtimeCreateDto = getOvertimeCreateDto(scanner);
+            overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto);
         } catch (DateTimeParseException e) {
             printText("Zły format daty.");
         }
+    }
+
+    private OvertimeCreateDto getOvertimeCreateDto(Scanner scanner) {
+        LocalDate date = promptForDate(scanner);
+        String status = promptForStatus(scanner);
+        int hours = promptForHours(scanner);
+        return new OvertimeCreateDto(date, status, hours);
     }
 
     private LocalDate promptForDate(Scanner scanner) {
