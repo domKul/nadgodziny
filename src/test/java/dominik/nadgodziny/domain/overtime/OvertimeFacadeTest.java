@@ -52,7 +52,7 @@ class OvertimeFacadeTest {
     @Test
     void shouldFindAllOvertimeWIthSuccessWithGivenMonth() {
         //Given
-        LocalDate date1 = LocalDate.parse("2023-10-09");
+        LocalDate date1 = LocalDate.parse("2023-09-12");
         String status1 = "nadgodziny";
         int hours1 = 5;
         OvertimeCreateDto overtimeCreateDto1 = new OvertimeCreateDto(date1, status1, hours1);
@@ -70,7 +70,7 @@ class OvertimeFacadeTest {
 
         //Then
         assertAll(
-                ()->assertThat(result.size()).isEqualTo(2),
+                ()->assertThat(result.size()).isEqualTo(3),
                 ()->assertThat(result.get(0).duration()).isEqualTo(5),
                 ()->assertThat(result.get(0).overtimeDate().getDayOfMonth()).isEqualTo(12)
         );
@@ -106,7 +106,7 @@ class OvertimeFacadeTest {
         //Then
         assertAll(
                 ()->assertThat(result).isNotNull(),
-                ()->assertThat(result).isEqualTo(5)
+                ()->assertThat(5).isEqualTo(result)
         );
     }
 
