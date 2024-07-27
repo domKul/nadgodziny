@@ -20,14 +20,14 @@ twilio:
     body: Dodaj nadgodziny
   account:
     user: ACc88d082fd152619024b33f84b0a51d94
-    token: ab1f9bfbbbd8f82ddf4d2f83c3f36fd3
+    token:
   phone:
     number:
       to: +48697709761
       from: +13344718306
 
 scheduling:
-  enabled: false
+  enabled: true
   request:
     delay: 0 0 14 * * SAT
 #    delay: 0 * * * * *

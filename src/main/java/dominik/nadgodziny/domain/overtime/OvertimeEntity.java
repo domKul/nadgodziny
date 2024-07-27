@@ -17,7 +17,7 @@ import java.time.LocalDate;
 class OvertimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private LocalDate creationDate;
     private LocalDate overtimeDate;
