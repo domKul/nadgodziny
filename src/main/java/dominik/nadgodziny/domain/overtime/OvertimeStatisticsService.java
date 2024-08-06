@@ -1,5 +1,6 @@
 package dominik.nadgodziny.domain.overtime;
 
+import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
@@ -10,13 +11,9 @@ class OvertimeStatisticsService {
 
     private final OvertimeReader overtimeReaderService;
 
-    public void generateStatistics(){
+    public OvertimeStatisticsDto generateStatistics(){
         Map<Integer, Integer> overtimeHoursByYear = calculateOvertimeHoursByYear();
-        for(Map.Entry<Integer,Integer> map :overtimeHoursByYear.entrySet()){
-            int year = map.getKey();
-            int hours = map.getValue();
-            ConsoleWriter.printText("W roku " + year + " zrobiono " + hours + " dodatkowych godzin");
-        }
+        return new OvertimeStatisticsDto(overtimeHoursByYear);
     }
 
     private Map<Integer, Integer> calculateOvertimeHoursByYear() {

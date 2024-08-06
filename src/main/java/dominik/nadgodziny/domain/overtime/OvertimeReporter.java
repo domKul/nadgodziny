@@ -1,10 +1,10 @@
 package dominik.nadgodziny.domain.overtime;
 
-import java.time.LocalDate;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 
 interface OvertimeReporter {
 
-    OvertimeEntity createOvertimeObject(LocalDate date, String status, int hours);
+    OvertimeEntity createOvertimeObject(OvertimeCreateDto overtimeCreateDto);
     void addNewOvertime(OvertimeEntity overtime);
     void deleteOvertimeById(long id);
 }

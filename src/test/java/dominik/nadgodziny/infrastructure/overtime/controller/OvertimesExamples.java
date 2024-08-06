@@ -2,7 +2,7 @@ package dominik.nadgodziny.infrastructure.overtime.controller;
 
 import dominik.nadgodziny.NadgodzinyApplication;
 import dominik.nadgodziny.domain.overtime.OvertimeFacade;
-import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,31 +25,29 @@ import java.util.List;
 @Transactional
 public class OvertimesExamples {
 
-    protected List<OvertimeResponseDto> mockOvertimeResponseDtoList;
+    protected List<OvertimeCreateDto> mockOvertimeResponseDtoList;
 
     @Autowired
      OvertimeFacade overtimeFacade;
 
 
-    List<OvertimeResponseDto> twoOvertimesExamplesWithStatusZlecenie() {
+    List<OvertimeCreateDto> twoOvertimesExamplesWithStatusZlecenie() {
         return mockOvertimeResponseDtoList = Arrays.asList(
-                new OvertimeResponseDto(0, LocalDate.parse("2023-01-01"), LocalDate.parse("2023-01-01"), "zlecenie", 8),
-                new OvertimeResponseDto(0, LocalDate.parse("2023-01-01"), LocalDate.parse("2023-01-01"), "zlecenie", 8)
+                new OvertimeCreateDto( LocalDate.parse("2023-01-01"), "zlecenie", 8),
+                new OvertimeCreateDto( LocalDate.parse("2023-01-01"), "zlecenie", 8)
         );
     }
 
-    List<OvertimeResponseDto> twoOvertimesExamplesWithStatusNadgodziny() {
+    List<OvertimeCreateDto> twoOvertimesExamplesWithStatusNadgodziny() {
         return mockOvertimeResponseDtoList = Arrays.asList(
-                new OvertimeResponseDto(0, LocalDate.parse("2023-01-01"), LocalDate.parse("2023-01-01"), "nadgodziny", 8),
-                new OvertimeResponseDto(0, LocalDate.parse("2023-01-01"), LocalDate.parse("2023-01-01"), "nadgodziny", 8)
+                new OvertimeCreateDto(  LocalDate.parse("2023-01-01"), "nadgodziny", 8),
+                new OvertimeCreateDto( LocalDate.parse("2023-01-01"), "nadgodziny", 8)
         );
     }
 
-    void overtimesLoopAdder(List<OvertimeResponseDto>overtimeResponseDtoList) {
-        for (OvertimeResponseDto overtimeResponseDto : overtimeResponseDtoList) {
-            overtimeFacade.createOvertimeAndSaveToDb(overtimeResponseDto.overtimeDate(),
-                    overtimeResponseDto.status(),
-                    overtimeResponseDto.duration());
+    void overtimesLoopAdder(List<OvertimeCreateDto>overtimeResponseDtoList) {
+        for (OvertimeCreateDto overtimeResponseDto : overtimeResponseDtoList) {
+            overtimeFacade.createOvertimeAndSaveToDb(overtimeResponseDto);
         }
     }
 

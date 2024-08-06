@@ -1,10 +1,10 @@
 package dominik.nadgodziny.domain.overtime;
 
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,11 +22,12 @@ class OvertimeFacadeTest {
         LocalDate date = LocalDate.parse("2023-09-09");
         String status = "nadgodziny";
         int hours = 5;
+        OvertimeCreateDto overtimeCreateDto = new OvertimeCreateDto(date, status, hours);
 
         // When
         List<OvertimeResponseDto> allBefore = overtimeFacade.findAll();
         assertEquals(3,allBefore.size());
-        OvertimeResponseDto overtimeResponseDto = overtimeFacade.createOvertimeAndSaveToDb(date,status,hours);
+        OvertimeResponseDto overtimeResponseDto = overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto);
         List<OvertimeResponseDto> allAfter = overtimeFacade.findAll();
 
         // Then
@@ -50,14 +51,16 @@ class OvertimeFacadeTest {
     @Test
     void shouldFindAllOvertimeWIthSuccessWithGivenMonth() {
         //Given
-        LocalDate date1 = LocalDate.parse("2023-10-09");
+        LocalDate date1 = LocalDate.parse("2023-09-12");
         String status1 = "nadgodziny";
         int hours1 = 5;
+        OvertimeCreateDto overtimeCreateDto1 = new OvertimeCreateDto(date1, status1, hours1);
         LocalDate date2 = LocalDate.parse("2023-09-12");
         String status2 = "nadgodziny";
         int hours2 = 5;
-        overtimeFacade.createOvertimeAndSaveToDb(date1,status1,hours1);
-        overtimeFacade.createOvertimeAndSaveToDb(date2,status2,hours2);
+        OvertimeCreateDto overtimeCreateDto2 = new OvertimeCreateDto(date2, status2, hours2);
+        overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto1);
+        overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto2);
 
         //When
         int yearToFind = 2023;
@@ -66,7 +69,7 @@ class OvertimeFacadeTest {
 
         //Then
         assertAll(
-                ()->assertThat(result.size()).isEqualTo(2),
+                ()->assertThat(result.size()).isEqualTo(3),
                 ()->assertThat(result.get(0).duration()).isEqualTo(5),
                 ()->assertThat(result.get(0).overtimeDate().getDayOfMonth()).isEqualTo(12)
         );
@@ -102,7 +105,7 @@ class OvertimeFacadeTest {
         //Then
         assertAll(
                 ()->assertThat(result).isNotNull(),
-                ()->assertThat(result).isEqualTo(5)
+                ()->assertThat(5).isEqualTo(result)
         );
     }
 
@@ -112,7 +115,8 @@ class OvertimeFacadeTest {
         LocalDate date1 = LocalDate.parse("2023-09-20");
         String status1 = "nadgodziny";
         int hours1 = 5;
-        overtimeFacade.createOvertimeAndSaveToDb(date1,status1,hours1);
+        OvertimeCreateDto overtimeCreateDto = new OvertimeCreateDto(date1, status1, hours1);
+        overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto);
 
         //When
         int year = 2023;
@@ -130,19 +134,16 @@ class OvertimeFacadeTest {
     @Test
     void shouldSumAllOvertimesStatisticByYear(){
         //Given
-        ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStreamCaught));
         //When
-        overtimeFacade.showStatisticsByYear();
+        OvertimeStatisticsDto overtimeStatisticsDto = overtimeFacade.showStatisticsByYear();
 
         //Then
-        String expectedMessage = "W roku 2023 zrobiono 5 dodatkowych godzin\n" +
-                "W roku 2024 zrobiono 13 dodatkowych godzin".trim();
-
-        String result = outputStreamCaught.toString().trim();
-        System.out.println(result);
-        assertEquals(expectedMessage,result);
-        System.setOut(System.out);
+        int expectedFirstYear = 2023;
+        int expectedSecondYear = 2024;
+        int expectedFirstYearHours = 5;
+        int expectedSecondYearHours = 13;
+        assertThat(overtimeStatisticsDto.stats().get(expectedFirstYear)).isEqualTo(expectedFirstYearHours);
+        assertThat(overtimeStatisticsDto.stats().get(expectedSecondYear)).isEqualTo(expectedSecondYearHours);
     }
 
     @Test

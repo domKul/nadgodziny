@@ -1,9 +1,10 @@
 package dominik.nadgodziny.domain.overtime;
 
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,8 +19,8 @@ public class OvertimeFacade {
         return OvertimeMapper.mapToOvertimeResponseDtoList(overtimeByMonthAndYear);
     }
 
-    public OvertimeResponseDto createOvertimeAndSaveToDb(LocalDate date, String status, int hours){
-        OvertimeEntity overtime = overtimeReportingService.createOvertimeObject(date, status, hours);
+    public OvertimeResponseDto createOvertimeAndSaveToDb(OvertimeCreateDto overtimeCreateDto){
+        OvertimeEntity overtime = overtimeReportingService.createOvertimeObject(overtimeCreateDto);
         return OvertimeMapper.mapToOvertimeResponseDto(overtime);
     }
 
@@ -45,7 +46,7 @@ public class OvertimeFacade {
        return overtimeReaderService.sumOfHoursByGivenStatusOfGivenMonthAndGivenYear(year,month,status);
     }
 
-    public void showStatisticsByYear(){
-        overtimeStatisticsService.generateStatistics();
+    public OvertimeStatisticsDto showStatisticsByYear(){
+       return overtimeStatisticsService.generateStatistics();
     }
 }
