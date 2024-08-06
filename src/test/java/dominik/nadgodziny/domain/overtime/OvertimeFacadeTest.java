@@ -2,10 +2,9 @@ package dominik.nadgodziny.domain.overtime;
 
 import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -135,19 +134,16 @@ class OvertimeFacadeTest {
     @Test
     void shouldSumAllOvertimesStatisticByYear(){
         //Given
-        ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStreamCaught));
         //When
-        overtimeFacade.showStatisticsByYear();
+        OvertimeStatisticsDto overtimeStatisticsDto = overtimeFacade.showStatisticsByYear();
 
         //Then
-        String expectedMessage = "W roku 2023 zrobiono 5 dodatkowych godzin\n" +
-                "W roku 2024 zrobiono 13 dodatkowych godzin".trim();
-
-        String result = outputStreamCaught.toString().trim();
-        System.out.println(result);
-        assertEquals(expectedMessage,result);
-        System.setOut(System.out);
+        int expectedFirstYear = 2023;
+        int expectedSecondYear = 2024;
+        int expectedFirstYearHours = 5;
+        int expectedSecondYearHours = 13;
+        assertThat(overtimeStatisticsDto.stats().get(expectedFirstYear)).isEqualTo(expectedFirstYearHours);
+        assertThat(overtimeStatisticsDto.stats().get(expectedSecondYear)).isEqualTo(expectedSecondYearHours);
     }
 
     @Test

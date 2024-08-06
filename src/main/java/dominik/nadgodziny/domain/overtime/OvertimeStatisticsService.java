@@ -13,13 +13,6 @@ class OvertimeStatisticsService {
 
     public OvertimeStatisticsDto generateStatistics(){
         Map<Integer, Integer> overtimeHoursByYear = calculateOvertimeHoursByYear();
-        int year = 0;
-        int hours = 0;
-        for(Map.Entry<Integer,Integer> map :overtimeHoursByYear.entrySet()){
-             year = map.getKey();
-             hours = map.getValue();
-            ConsoleWriter.printText("W roku " + year + " zrobiono " + hours + " dodatkowych godzin");
-        }
         return new OvertimeStatisticsDto(overtimeHoursByYear);
     }
 

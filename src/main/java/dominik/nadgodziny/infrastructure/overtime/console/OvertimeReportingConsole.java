@@ -19,7 +19,6 @@ class OvertimeReportingConsole extends StatusSelectionProcessor {
     private final OvertimeFacade overtimeFacade;
 
     void createOvertimeObjectFromConsole(Scanner scanner) {
-
         try {
             OvertimeCreateDto overtimeCreateDto = getOvertimeCreateDto(scanner);
             overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto);

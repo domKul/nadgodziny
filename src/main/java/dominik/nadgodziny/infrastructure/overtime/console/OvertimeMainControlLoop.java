@@ -16,6 +16,7 @@ import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription {
 
     private final OvertimeFacade overtimeConsoleFacade;
+    private final OvertimeStatisticConsole overtimeStatisticConsole;
     private final ConfigurableApplicationContext applicationContext;
     private final CsvConverter csvConverter;
     private final OvertimeReaderConsole overtimeReaderConsole;
@@ -75,7 +76,7 @@ public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription 
     public void runAppStatistics() {
         try {
             initialMenu();
-            overtimeConsoleFacade.showStatisticsByYear();
+            overtimeStatisticConsole.getOvertimeStatistics();
             int nextInt = inputNumber();
             initialChoice(nextInt);
         } catch (InputMismatchException e) {
