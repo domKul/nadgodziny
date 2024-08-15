@@ -28,5 +28,6 @@ class SchedulingService {
     @Scheduled(cron = "${scheduling.request.delay}")
     public void saveRecordsToCsvFile() {
         csvConverter.writeOvertimesToCSV();
+        printText("Dane zostały zapisane do pliku CSV.");
     }
 }

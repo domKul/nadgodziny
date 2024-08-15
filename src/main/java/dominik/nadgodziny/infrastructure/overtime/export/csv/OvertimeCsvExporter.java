@@ -29,7 +29,6 @@ class OvertimeCsvExporter implements CsvConverter {
                 String[] row = writeLine(overtime);
                 writer.writeNext(row);
             }
-            System.out.println("Dane zostały zapisane do pliku CSV.");
         } catch (IOException e) {
             e.printStackTrace();
         }
