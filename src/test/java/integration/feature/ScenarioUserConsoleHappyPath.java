@@ -16,17 +16,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 
-class ScenarioUserConsole extends InitIntegrationTestData {
+class ScenarioUserConsoleHappyPath extends InitIntegrationTestData {
 
     private final ByteArrayOutputStream outputStreamCaught = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-    private Scanner scanner = new Scanner(System.in);
     OvertimeMainControlLoop mockControlLoop;
 
     @BeforeEach
@@ -65,7 +63,7 @@ class ScenarioUserConsole extends InitIntegrationTestData {
         NotFoundException notFoundException = Assertions.assertThrows(NotFoundException.class,
                 () -> overtimeFacade.findAll());
         // When
-        String expectedMessage = ErrorMessages.NOT_FOUND.getMessage();
+        String expectedMessage = ErrorMessages.DATA_NOT_FOUND.getMessage();
         // Then
         assertEquals(expectedMessage, notFoundException.getMessage());
     }
