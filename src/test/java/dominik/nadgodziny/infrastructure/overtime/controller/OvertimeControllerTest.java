@@ -1,6 +1,7 @@
 package dominik.nadgodziny.infrastructure.overtime.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 public class OvertimeControllerTest extends OvertimesExamples {
@@ -33,7 +40,7 @@ public class OvertimeControllerTest extends OvertimesExamples {
         ResultActions perform = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/overtimes")
                 .contentType(MediaType.APPLICATION_JSON));
         //Then
-        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        perform.andExpect(status().isOk());
         perform.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(4));
     }
 
@@ -45,7 +52,7 @@ public class OvertimeControllerTest extends OvertimesExamples {
                 .queryParam("status", "zlecenie")
                 .contentType(MediaType.APPLICATION_JSON));
         //Then
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+        resultActions.andExpect(status().isOk());
         resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(0));
     }
 
@@ -57,7 +64,28 @@ public class OvertimeControllerTest extends OvertimesExamples {
                 .queryParam("status", "zlecenie")
                 .contentType(MediaType.APPLICATION_JSON));
         //Then
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+        resultActions.andExpect(status().isOk());
         resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(2));
     }
+
+    @Test
+    void shouldAddOvertimeSuccessfullyToDb() throws Exception {
+        //Given
+        OvertimeCreateDto overtimeCreateDto = new OvertimeCreateDto(LocalDate.now(),"nadgodziny",8);
+
+        //When
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/overtimes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(overtimeCreateDto)));
+
+        //Then
+        String contentAsString = result.andReturn().getResponse().getContentAsString();
+        result.andExpect(status().isCreated());
+        assertAll(
+                ()->assertThat(contentAsString).contains(LocalDate.now().toString()),
+                ()->assertThat(contentAsString).contains("nadgodziny"),
+                ()->assertThat(contentAsString).contains("8")
+        );
+    }
+
 }

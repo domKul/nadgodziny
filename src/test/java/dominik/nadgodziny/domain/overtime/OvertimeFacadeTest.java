@@ -3,12 +3,14 @@ package dominik.nadgodziny.domain.overtime;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeResponseDto;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
+import dominik.nadgodziny.domain.overtime.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,6 +39,18 @@ class OvertimeFacadeTest {
                 () -> assertThat(overtimeResponseDto.overtimeDate().toString()).isEqualTo("2023-09-09"),
                 () -> assertThat(overtimeResponseDto.duration()).isEqualTo(5)
         );
+    }
+
+    @Test
+    void shouldThrowExceptionWhenOvertimeCreateDtoIsNull() {
+        // Given
+        OvertimeCreateDto overtimeCreateDto = null;
+
+        // Then
+        assertThrows(NotFoundException.class, () -> {
+            // When
+            overtimeFacade.createOvertimeAndSaveToDb(overtimeCreateDto);
+        });
     }
 
     @Test
