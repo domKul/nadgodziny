@@ -7,6 +7,7 @@ import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,26 +22,33 @@ class OvertimeController {
     private final OvertimeFacade overtimeConsoleFacade;
 
     @GetMapping
-    ResponseEntity<List<OvertimeResponseDto>>findAllOvertimes(){
+    ResponseEntity<List<OvertimeResponseDto>> findAllOvertimes() {
         List<OvertimeResponseDto> all = overtimeConsoleFacade.findAll();
         return ResponseEntity.ok(all);
     }
 
-    @PostMapping
-    ResponseEntity<OvertimeResponseDto>addOvertime(@RequestBody @Valid OvertimeCreateDto overtimeCreateDto){
+    @GetMapping("/months")
+    ResponseEntity<List<OvertimeResponseDto>> findOvertimeByMonth(@RequestParam int year,
+                                                                  @RequestParam int month) {
+        List<OvertimeResponseDto> byMonth = overtimeConsoleFacade.findByMonth(year, month);
+        return ResponseEntity.ok().body(byMonth);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<OvertimeResponseDto> addOvertime(@RequestBody @Valid OvertimeCreateDto overtimeCreateDto) {
         OvertimeResponseDto overtimeAndSaveToDb = overtimeConsoleFacade.createOvertimeAndSaveToDb(overtimeCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(overtimeAndSaveToDb);
     }
 
     @GetMapping("/statistics")
-    ResponseEntity<OvertimeStatisticsDto>findAllOvertimesStatistics(){
+    ResponseEntity<OvertimeStatisticsDto> findAllOvertimesStatistics() {
         OvertimeStatisticsDto all = overtimeConsoleFacade.showStatisticsByYear();
         return ResponseEntity.ok(all);
     }
 
     @GetMapping("/status")
-    ResponseEntity<List<OvertimeResponseDto>>findOvertimesByStatus(@RequestParam  int year,
-                                                                   @RequestParam  String status) {
+    ResponseEntity<List<OvertimeResponseDto>> findOvertimesByStatus(@RequestParam int year,
+                                                                    @RequestParam String status) {
         List<OvertimeResponseDto> byStatusAndYear = overtimeConsoleFacade.findByStatusAndYear(year, status);
         return ResponseEntity.ok(byStatusAndYear);
     }
