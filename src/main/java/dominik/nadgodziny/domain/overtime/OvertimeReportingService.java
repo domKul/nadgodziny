@@ -2,9 +2,8 @@ package dominik.nadgodziny.domain.overtime;
 
 import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
 import dominik.nadgodziny.domain.overtime.exception.ErrorMessages;
+import dominik.nadgodziny.domain.overtime.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Optional;
 
 import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 @RequiredArgsConstructor
@@ -13,11 +12,8 @@ class OvertimeReportingService implements OvertimeReporter {
     private final OvertimeRepository overtimeRepository;
 
       public void addNewOvertime(OvertimeEntity overtime) {
-        Optional<OvertimeEntity> optionalOvertime = Optional.ofNullable(overtime);
         try {
-            if (optionalOvertime.isPresent()) {
                  overtimeRepository.save(overtime);
-            }
         } catch (Exception e) {
             throw new RuntimeException(ErrorMessages.INTERNAL_SERVER_ERROR.name(), e);
         }
@@ -25,11 +21,12 @@ class OvertimeReportingService implements OvertimeReporter {
 
     @Override
     public OvertimeEntity createOvertimeObject(OvertimeCreateDto overtimeCreateDto) {
-        OvertimeEntity overtime = new OvertimeEntity(overtimeCreateDto.overtimeDate(),
-                overtimeCreateDto.status(),
-                overtimeCreateDto.duration());
-        addNewOvertime(overtime);
-        return overtime;
+        if (overtimeCreateDto == null) {
+            throw new NotFoundException(ErrorMessages.NOT_FOUND.getMessage());
+        }
+        OvertimeEntity overtimeEntity = OvertimeMapper.mapToEntity(overtimeCreateDto);
+        addNewOvertime(overtimeEntity);
+        return overtimeEntity;
     }
 
     @Override

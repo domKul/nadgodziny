@@ -9,6 +9,7 @@ public enum ErrorMessages {
 
     INTERNAL_SERVER_ERROR("Wystąpił błąd podczas zapisu nadgodzin do bazy danych."),
     NOT_FOUND("Overtimes Not Found"),
+    BODY_CANNOT_BE_NULL("Body cannot be null"),
     DATA_NOT_FOUND("Data Not Found"),
     WRONG_STATUS_NUMBER("Mozesz wybrac miedzy 1 a 2"),
     WRONG_YEAR_OR_MONTH("Błąd: Nieprawidłowy rok lub miesiąc.");
