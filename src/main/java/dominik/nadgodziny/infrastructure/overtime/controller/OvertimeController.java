@@ -42,8 +42,8 @@ class OvertimeController {
 
     @GetMapping("/statistics")
     ResponseEntity<OvertimeStatisticsDto> findAllOvertimesStatistics() {
-        OvertimeStatisticsDto all = overtimeConsoleFacade.showStatisticsByYear();
-        return ResponseEntity.ok(all);
+        OvertimeStatisticsDto statistics = overtimeConsoleFacade.showStatisticsByYear();
+        return ResponseEntity.ok(statistics);
     }
 
     @GetMapping("/status")

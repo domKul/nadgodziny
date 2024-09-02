@@ -34,7 +34,7 @@ class OvertimeReaderConsole extends StatusSelectionProcessor {
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
         } catch (Exception e) {
-            ConsoleWriter.printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
+            ConsoleWriter.printText( e.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ class OvertimeReaderConsole extends StatusSelectionProcessor {
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
         } catch (Exception e) {
-            ConsoleWriter.printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
+            ConsoleWriter.printText(e.getMessage());
         }
     }
 
@@ -77,7 +77,7 @@ class OvertimeReaderConsole extends StatusSelectionProcessor {
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
         } catch (Exception e) {
-            ConsoleWriter.printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
+            ConsoleWriter.printText(e.getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ class OvertimeReaderConsole extends StatusSelectionProcessor {
         } catch (DataAccessException e) {
             ConsoleWriter.printText("Błąd dostępu do danych: " + e.getMessage());
         } catch (Exception e) {
-            ConsoleWriter.printText("Wystąpił nieoczekiwany błąd: " + e.getMessage());
+            ConsoleWriter.printText(e.getMessage());
         }
     }
 

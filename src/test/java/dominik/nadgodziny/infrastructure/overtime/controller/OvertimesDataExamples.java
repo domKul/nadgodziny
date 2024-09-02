@@ -23,7 +23,7 @@ import java.util.List;
 @Testcontainers
 @AutoConfigureMockMvc
 @Transactional
-public class OvertimesExamples {
+public class OvertimesDataExamples {
 
     protected List<OvertimeCreateDto> mockOvertimeResponseDtoList;
 
