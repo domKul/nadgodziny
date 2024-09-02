@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class OvertimeControllerHandlerTest extends OvertimesExamples {
+public class OvertimeControllerHandlerTest extends OvertimesDataExamples {
 
     @Autowired
     private MockMvc mockMvc;

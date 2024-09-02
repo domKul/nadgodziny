@@ -2,6 +2,7 @@ package dominik.nadgodziny.infrastructure.overtime.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dominik.nadgodziny.domain.overtime.dto.OvertimeCreateDto;
+import dominik.nadgodziny.domain.overtime.dto.OvertimeStatisticsDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class OvertimeControllerTest extends OvertimesExamples {
+public class OvertimeControllerTest extends OvertimesDataExamples {
 
     @Autowired
     private MockMvc mockMvc;
@@ -85,6 +87,28 @@ public class OvertimeControllerTest extends OvertimesExamples {
                 ()->assertThat(contentAsString).contains(LocalDate.now().toString()),
                 ()->assertThat(contentAsString).contains("nadgodziny"),
                 ()->assertThat(contentAsString).contains("8")
+        );
+    }
+
+    @Test
+    void shouldFindStatisticsSuccessfullyFromDb() throws Exception {
+        // Given
+        OvertimeStatisticsDto expectedStatistics = new OvertimeStatisticsDto(Map.of(2023, 32));
+
+        // When
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/overtimes/statistics")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Then
+        String contentAsString = response.andReturn().getResponse().getContentAsString();
+        System.out.println(contentAsString);
+        ObjectMapper objectMapper = new ObjectMapper();
+        OvertimeStatisticsDto actualStatistics = objectMapper.readValue(contentAsString, OvertimeStatisticsDto.class);
+        assertAll(
+                ()-> assertThat(actualStatistics.stats()).isEqualTo(expectedStatistics.stats()),
+                ()-> assertThat(actualStatistics.stats().containsKey(2023)).isTrue(),
+                ()-> assertThat(actualStatistics.stats().containsValue(32)).isTrue()
         );
     }
 
