@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+
 class PromptMenuTest {
 
     @Autowired

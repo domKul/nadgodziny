@@ -28,5 +28,4 @@ class BeanConfiguration {
                                          OvertimeStatisticsService overtimeStatisticsService) {
         return new OvertimeFacade(overtimeStatisticsService, overtimeReportingService, overtimeReaderService);
     }
-
 }
