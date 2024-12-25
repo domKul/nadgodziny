@@ -33,7 +33,7 @@ scheduling:
     delay: 0 0 14 * * SAT
     #delay: 0 * * * * *
 application:
-  version: Version 1.4.3
+  version: Version 1.4.4
 
 convert:
   csv:
