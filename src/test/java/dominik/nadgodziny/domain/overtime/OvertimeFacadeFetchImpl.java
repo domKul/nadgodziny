@@ -3,6 +3,7 @@ package dominik.nadgodziny.domain.overtime;
 import java.util.List;
 
 class OvertimeFacadeFetchImpl implements OvertimeReader {
+
     public OvertimeFacadeFetchImpl(List<OvertimeEntity> overtimes) {
         this.overtimes = overtimes;
     }

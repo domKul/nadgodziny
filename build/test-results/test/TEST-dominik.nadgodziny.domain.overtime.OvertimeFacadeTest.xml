@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2025-05-17T16:34:10" hostname="MacBook-Air-Dominik.local" time="0.034">
+  <properties/>
+  <testcase name="shouldSumAllHoursByGivenStatusInGivenMonth()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.022"/>
+  <testcase name="shouldFindAllOvertimeWIthSuccessWithGivenStatus()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.001"/>
+  <testcase name="shouldCreateOvertimeAndSaveToDbSuccessfully()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.003"/>
+  <testcase name="shouldSumAllOvertimesStatisticByYear()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.0"/>
+  <testcase name="shouldDeleteOvertimeByGivenId()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.001"/>
+  <testcase name="shouldSumAllHoursByGivenMonth()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.001"/>
+  <testcase name="shouldFindAllOvertimeWIthSuccessWithGivenMonth()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.001"/>
+  <testcase name="shouldFindAllOvertimeWIthSuccessWithThreeResults()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenOvertimeCreateDtoIsNull()" classname="dominik.nadgodziny.domain.overtime.OvertimeFacadeTest" time="0.003"/>
+  <system-out><![CDATA[Usnunieto nadgodzini o id: 19
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

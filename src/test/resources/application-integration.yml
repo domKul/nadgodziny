@@ -2,6 +2,11 @@ spring:
   banner:
     location: banner.txt
 
+  datasource:
+    url: ${DB}
+    username: ${DB_ADMIN}
+    password: ${DB_PW}
+
   jpa:
     database: mysql
     show-sql: false
@@ -12,13 +17,13 @@ twilio:
   message:
     body: Dodaj nadgodziny
   account:
-    user: ${TWILIO_ACCOUNT}
-    token: ${TWILIO_PASSWORD}
+    user: ${TWILIO_USER}
+    token: ${TWILIO_TOKEN}
 
   phone:
     number:
-      to: ${MY_PHONE}
-      from: ${TWILIO_NUMBER}
+      to: ${USER_TO}
+      from: ${USER_FROM}
 
 scheduling:
   enabled: false

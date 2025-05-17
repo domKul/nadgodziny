@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dominik.nadgodziny.infrastructure.overtime.console.PromptMenuTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-05-17T16:34:10" hostname="MacBook-Air-Dominik.local" time="0.016">
+  <properties/>
+  <testcase name="shouldPrintOvertimeStatusSelectionMenu()" classname="dominik.nadgodziny.infrastructure.overtime.console.PromptMenuTest" time="0.004"/>
+  <testcase name="shouldPrintInitialInfoOfMainMenuFind()" classname="dominik.nadgodziny.infrastructure.overtime.console.PromptMenuTest" time="0.003"/>
+  <testcase name="shouldPrintInitialInfoOfMainMenu()" classname="dominik.nadgodziny.infrastructure.overtime.console.PromptMenuTest" time="0.002"/>
+  <testcase name="shouldPrintInitialCsvExportMenu()" classname="dominik.nadgodziny.infrastructure.overtime.console.PromptMenuTest" time="0.003"/>
+  <testcase name="shouldPrintInitialInfoOfCreateAndDeleteMenu()" classname="dominik.nadgodziny.infrastructure.overtime.console.PromptMenuTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

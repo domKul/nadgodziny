@@ -28,7 +28,7 @@ twilio:
       from: ${USER_FROM}
 
 scheduling:
-  enabled: true
+  enabled: false
   request:
     delay: 0 0 14 * * SAT
     #delay: 0 * * * * *
