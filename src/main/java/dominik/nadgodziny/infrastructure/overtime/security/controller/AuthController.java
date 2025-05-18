@@ -6,6 +6,7 @@ import dominik.nadgodziny.domain.user.UserEntity;
 import dominik.nadgodziny.domain.user.UserRepository;
 import dominik.nadgodziny.domain.user.dto.AuthRequest;
 import dominik.nadgodziny.domain.user.dto.AuthResponse;
+import dominik.nadgodziny.domain.user.dto.RegisterRequest;
 import dominik.nadgodziny.infrastructure.overtime.security.CustomUserDetailsService;
 import dominik.nadgodziny.infrastructure.overtime.security.JwtService;
 import lombok.*;

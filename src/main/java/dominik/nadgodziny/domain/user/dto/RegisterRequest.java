@@ -1,4 +1,4 @@
-package dominik.nadgodziny.infrastructure.overtime.security.controller;
+package dominik.nadgodziny.domain.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
