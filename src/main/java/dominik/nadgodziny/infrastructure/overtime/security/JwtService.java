@@ -12,6 +12,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
+    //todo jwt do ukrycia
     private static final String SECRET_KEY = "uD8HvIHRc+Tx/93qNNHUxTmgIXWAmX42zGJq0rRgQYI=";
 
     public String extractUsername(String token) {

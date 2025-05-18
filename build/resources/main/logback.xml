@@ -6,7 +6,7 @@
         </encoder>
     </appender>
 
-    <root level="log">
+    <root level="error">
         <appender-ref ref="STDOUT"/>
     </root>
 
