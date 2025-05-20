@@ -1,7 +1,6 @@
 package dominik.nadgodziny.domain.user;
 
-import dominik.nadgodziny.domain.user.dto.RegisterRequest;
-import dominik.nadgodziny.domain.user.dto.RegisterResponseDto;
+import dominik.nadgodziny.domain.user.dto.RegisterRequestDto;
 import dominik.nadgodziny.domain.user.exception.UserExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,16 +17,16 @@ import org.springframework.stereotype.Service;
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
-    UserEntity register(RegisterRequest registerRequest) {
-        if (userRepository.findByUsername(registerRequest.username()).isPresent()) {
+    UserEntity register(RegisterRequestDto registerRequestDto) {
+        if (userRepository.findByUsername(registerRequestDto.username()).isPresent()) {
             throw new UsernameNotFoundException(UserExceptionMessage.USER_ALREADY_EXISTS.name());
         }
-        UserEntity userEntity = buildUserEntity(registerRequest);
+        UserEntity userEntity = buildUserEntity(registerRequestDto);
         return userRepository.save(userEntity);
     }
 
-    UserEntity buildUserEntity(final RegisterRequest registerRequest) {
-        return UserMapper.dtoToUserEntity(registerRequest);
+    UserEntity buildUserEntity(final RegisterRequestDto registerRequestDto) {
+        return UserMapper.dtoToUserEntity(registerRequestDto);
     }
 
 

@@ -1,14 +1,14 @@
 package dominik.nadgodziny.domain.user;
 
-import dominik.nadgodziny.domain.user.dto.RegisterRequest;
+import dominik.nadgodziny.domain.user.dto.RegisterRequestDto;
 import dominik.nadgodziny.domain.user.dto.RegisterResponseDto;
 
 class UserMapper {
 
-    static UserEntity dtoToUserEntity(RegisterRequest registerRequest) {
+    static UserEntity dtoToUserEntity(RegisterRequestDto registerRequestDto) {
         return new UserEntity(
-                registerRequest.username(),
-                registerRequest.password()
+                registerRequestDto.username(),
+                registerRequestDto.password()
         );
     }
 

@@ -31,6 +31,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // do parsowania JSON
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
 	testImplementation 'org.testcontainers:testcontainers:1.19.0'
 	testImplementation 'org.testcontainers:junit-jupiter:1.19.0'
@@ -47,5 +48,26 @@ configurations {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+		useJUnitPlatform()
+//		environment "DB", System.getenv("DB")
+//		environment "DB_ADMIN", System.getenv("DB_ADMIN")
+//		environment "DB_PW", System.getenv("DB_PW")
+//		environment "TWILIO_USER", System.getenv("TWILIO_USER")
+//		environment "TWILIO_TOKEN", System.getenv("TWILIO_TOKEN")
+//		environment "USER_FROM", System.getenv("USER_FROM")
+//		environment "USER_TO", System.getenv("USER_TO")
+
 }
+
+allprojects {
+	tasks.withType(Test).configureEach {
+		environment "DB", System.getenv("DB")
+		environment "DB_ADMIN", System.getenv("DB_ADMIN")
+		environment "DB_PW", System.getenv("DB_PW")
+		environment "TWILIO_USER", System.getenv("TWILIO_USER")
+		environment "TWILIO_TOKEN", System.getenv("TWILIO_TOKEN")
+		environment "USER_FROM", System.getenv("USER_FROM")
+		environment "USER_TO", System.getenv("USER_TO")
+	}
+}
+
