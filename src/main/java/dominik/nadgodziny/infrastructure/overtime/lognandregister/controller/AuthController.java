@@ -1,12 +1,11 @@
-package dominik.nadgodziny.infrastructure.overtime.security.controller;
+package dominik.nadgodziny.infrastructure.overtime.lognandregister.controller;
 
 
-
-import dominik.nadgodziny.domain.user.UserEntity;
-import dominik.nadgodziny.domain.user.UserRepository;
 import dominik.nadgodziny.domain.user.dto.AuthRequest;
 import dominik.nadgodziny.domain.user.dto.AuthResponse;
 import dominik.nadgodziny.domain.user.dto.RegisterRequest;
+import dominik.nadgodziny.domain.user.dto.RegisterResponseDto;
+import dominik.nadgodziny.infrastructure.overtime.lognandregister.RegistrationService;
 import dominik.nadgodziny.infrastructure.overtime.security.CustomUserDetailsService;
 import dominik.nadgodziny.infrastructure.overtime.security.JwtService;
 import jakarta.validation.Valid;
@@ -27,9 +26,9 @@ class AuthController {
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
     private final CustomUserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
 
+
+    private final RegistrationService registrationService;
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
@@ -44,11 +43,7 @@ class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
-        UserEntity user = new UserEntity();
-        user.setUsername(request.username());
-        user.setPassword(passwordEncoder.encode(request.password()));
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
+    public ResponseEntity<RegisterResponseDto> register(@Valid @RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(registrationService.encodeAndSaveUser(request));
     }
 }
