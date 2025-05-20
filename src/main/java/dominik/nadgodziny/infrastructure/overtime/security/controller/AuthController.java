@@ -9,6 +9,7 @@ import dominik.nadgodziny.domain.user.dto.AuthResponse;
 import dominik.nadgodziny.domain.user.dto.RegisterRequest;
 import dominik.nadgodziny.infrastructure.overtime.security.CustomUserDetailsService;
 import dominik.nadgodziny.infrastructure.overtime.security.JwtService;
+import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @CrossOrigin("*")
-public class AuthController {
+class AuthController {
 
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
@@ -43,18 +44,11 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Validated @RequestBody RegisterRequest request) {
-        if (userRepository.findByUsername(request.username()).isPresent()) {
-            return ResponseEntity.badRequest().body("Username is already taken");
-        }
-
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
         UserEntity user = new UserEntity();
         user.setUsername(request.username());
         user.setPassword(passwordEncoder.encode(request.password()));
-
-
         userRepository.save(user);
-
         return ResponseEntity.ok("User registered successfully");
     }
 }

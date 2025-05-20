@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-17T16:34:10" hostname="MacBook-Air-Dominik.local" time="0.12">
+<testsuite name="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-20T17:25:55" hostname="MacBook-Air-Dominik.local" time="0.185">
   <properties/>
-  <testcase name="shouldExitFromProgramByGivenNumberAndCloseApplicationContext()" classname="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" time="0.12"/>
+  <testcase name="shouldExitFromProgramByGivenNumberAndCloseApplicationContext()" classname="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" time="0.185"/>
   <system-out><![CDATA[Zamykanie aplikacji...
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.107s</div>
+<div class="counter">0.113s</div>
 <p>duration</p>
 </div>
 </td>
@@ -66,6 +66,9 @@
 <li>
 <a href="#tab1">Tests</a>
 </li>
+<li>
+<a href="#tab2">Standard output</a>
+</li>
 </ul>
 <div id="tab0" class="tab">
 <h2>Failed tests</h2>
@@ -73,7 +76,7 @@
 <a name="findAllOvertimesReturnsListOfOvertimes()"></a>
 <h3 class="failures">findAllOvertimesReturnsListOfOvertimes()</h3>
 <span class="code">
-<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;401&gt;
+<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;403&gt;
 	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
 	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
 	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
@@ -259,7 +262,7 @@
 <a name="shouldFindOvertimesByStatusReturnsFilteredOvertimes()"></a>
 <h3 class="failures">shouldFindOvertimesByStatusReturnsFilteredOvertimes()</h3>
 <span class="code">
-<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;401&gt;
+<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;403&gt;
 	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
 	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
 	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
@@ -352,7 +355,7 @@
 <a name="shouldFindOvertimesByStatusReturnsFilteredOvertimesAndFindTwo()"></a>
 <h3 class="failures">shouldFindOvertimesByStatusReturnsFilteredOvertimesAndFindTwo()</h3>
 <span class="code">
-<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;401&gt;
+<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;403&gt;
 	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
 	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
 	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
@@ -445,7 +448,7 @@
 <a name="shouldFindStatisticsSuccessfullyFromDb()"></a>
 <h3 class="failures">shouldFindStatisticsSuccessfullyFromDb()</h3>
 <span class="code">
-<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;401&gt;
+<pre>java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;403&gt;
 	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
 	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
 	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
@@ -547,7 +550,7 @@
 </thead>
 <tr>
 <td class="failures">findAllOvertimesReturnsListOfOvertimes()</td>
-<td class="failures">0.014s</td>
+<td class="failures">0.021s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
@@ -562,15 +565,206 @@
 </tr>
 <tr>
 <td class="failures">shouldFindOvertimesByStatusReturnsFilteredOvertimesAndFindTwo()</td>
-<td class="failures">0.037s</td>
+<td class="failures">0.032s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
 <td class="failures">shouldFindStatisticsSuccessfullyFromDb()</td>
-<td class="failures">0.014s</td>
+<td class="failures">0.018s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre> _   _    _    ____   ____  ___  ____ ________ _   ___   __
+| \ | |  / \  |  _ \ / ___|/ _ \|  _ \__  /_ _| \ | \ \ / /
+|  \| | / _ \ | | | | |  _| | | | | | |/ / | ||  \| |\ V /
+| |\  |/ ___ \| |_| | |_| | |_| | |_| / /_ | || |\  | | |
+|_| \_/_/   \_\____/ \____|\___/|____/____|___|_| \_| |_|
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/overtimes/status
+       Parameters = {year=[2023], status=[zlecenie]}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 403
+    Error message = Access Denied
+          Headers = [X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/overtimes/statistics
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 403
+    Error message = Access Denied
+          Headers = [X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/overtimes
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 403
+    Error message = Access Denied
+          Headers = [X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/overtimes
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;64&quot;]
+             Body = {&quot;overtimeDate&quot;:&quot;2025-05-20&quot;,&quot;status&quot;:&quot;nadgodziny&quot;,&quot;duration&quot;:8}
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 403
+    Error message = Access Denied
+          Headers = [X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/overtimes/status
+       Parameters = {year=[2024], status=[zlecenie]}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 403
+    Error message = Access Denied
+          Headers = [X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+</pre>
+</span>
 </div>
 </div>
 <div id="footer">
@@ -580,7 +774,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.2.1</a> at 17 maj 2025, 18:34:47</p>
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at 20 maj 2025, 19:26:05</p>
 </div>
 </div>
 </body>

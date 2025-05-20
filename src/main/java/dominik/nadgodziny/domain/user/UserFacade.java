@@ -1,5 +1,7 @@
 package dominik.nadgodziny.domain.user;
 
+import dominik.nadgodziny.domain.user.dto.RegisterRequest;
+import dominik.nadgodziny.domain.user.dto.RegisterResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,10 @@ public class UserFacade {
 
     public UserEntity findUser(String username){
         return userService.findUserByUsername(username);
+    }
+
+    public RegisterResponseDto registerUser(RegisterRequest registerRequest){
+        return UserMapper.userEntityToResponseDto(userService.register(registerRequest));
     }
 
 
