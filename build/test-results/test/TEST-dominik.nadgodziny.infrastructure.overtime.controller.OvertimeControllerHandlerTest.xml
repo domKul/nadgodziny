@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerHandlerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-05-20T21:02:20" hostname="MacBook-Air-Dominik.local" time="0.14">
+  <properties/>
+  <testcase name="shouldHandleOvertimeNotFound()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerHandlerTest" time="0.086"/>
+  <testcase name="shouldHandleMissingYearQueryParam()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerHandlerTest" time="0.012"/>
+  <testcase name="shouldHandleMissingStatusQueryParam()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerHandlerTest" time="0.005"/>
+  <testcase name="shouldHandleOvertimeValidation()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerHandlerTest" time="0.034"/>
+  <system-out><![CDATA[ _   _    _    ____   ____  ___  ____ ________ _   ___   __
+| \ | |  / \  |  _ \ / ___|/ _ \|  _ \__  /_ _| \ | \ \ / /
+|  \| | / _ \ | | | | |  _| | | | | | |/ / | ||  \| |\ V /
+| |\  |/ ___ \| |_| | |_| | |_| | |_| / /_ | || |\  | | |
+|_| \_/_/   \_\____/ \____|\___/|____/____|___|_| \_| |_|
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

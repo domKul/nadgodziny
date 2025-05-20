@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="integration.feature.ScenarioUserConsoleHappyPath" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-20T21:02:31" hostname="MacBook-Air-Dominik.local" time="0.135">
+  <properties/>
+  <testcase name="userAddAndFindOvertimeInConsole()" classname="integration.feature.ScenarioUserConsoleHappyPath" time="0.135"/>
+  <system-out><![CDATA[ _   _    _    ____   ____  ___  ____ ________ _   ___   __
+| \ | |  / \  |  _ \ / ___|/ _ \|  _ \__  /_ _| \ | \ \ / /
+|  \| | / _ \ | | | | |  _| | | | | | |/ / | ||  \| |\ V /
+| |\  |/ ___ \| |_| | |_| | |_| | |_| / /_ | || |\  | | |
+|_| \_/_/   \_\____/ \____|\___/|____/____|___|_| \_| |_|
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

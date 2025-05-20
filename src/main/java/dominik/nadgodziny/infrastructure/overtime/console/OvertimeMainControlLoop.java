@@ -1,6 +1,5 @@
 package dominik.nadgodziny.infrastructure.overtime.console;
 
-import dominik.nadgodziny.domain.overtime.OvertimeFacade;
 import dominik.nadgodziny.infrastructure.overtime.export.csv.CsvConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,7 +14,6 @@ import static dominik.nadgodziny.domain.overtime.ConsoleWriter.printText;
 @RequiredArgsConstructor
 public class OvertimeMainControlLoop implements OvertimeMenuFunctionDescription {
 
-    private final OvertimeFacade overtimeConsoleFacade;
     private final OvertimeStatisticConsole overtimeStatisticConsole;
     private final ConfigurableApplicationContext applicationContext;
     private final CsvConverter csvConverter;
