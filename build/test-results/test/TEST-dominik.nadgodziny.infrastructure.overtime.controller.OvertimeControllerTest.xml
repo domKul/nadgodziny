@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-05-20T21:02:26" hostname="MacBook-Air-Dominik.local" time="0.089">
+<testsuite name="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-05-21T17:40:23" hostname="MacBook-Air-Dominik.local" time="0.101">
   <properties/>
-  <testcase name="shouldFindOvertimesByStatusReturnsFilteredOvertimesAndFindTwo()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.041"/>
-  <testcase name="shouldFindStatisticsSuccessfullyFromDb()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.015"/>
-  <testcase name="findAllOvertimesReturnsListOfOvertimes()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.011"/>
-  <testcase name="shouldAddOvertimeSuccessfullyToDb()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.011"/>
-  <testcase name="shouldFindOvertimesByStatusReturnsFilteredOvertimes()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.01"/>
-  <system-out><![CDATA[ _   _    _    ____   ____  ___  ____ ________ _   ___   __
-| \ | |  / \  |  _ \ / ___|/ _ \|  _ \__  /_ _| \ | \ \ / /
-|  \| | / _ \ | | | | |  _| | | | | | |/ / | ||  \| |\ V /
-| |\  |/ ___ \| |_| | |_| | |_| | |_| / /_ | || |\  | | |
-|_| \_/_/   \_\____/ \____|\___/|____/____|___|_| \_| |_|
-{"stats":{"2023":32}}
-]]></system-out>
+  <testcase name="shouldFindOvertimesByStatusReturnsFilteredOvertimesAndFindTwo()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.054"/>
+  <testcase name="shouldFindStatisticsSuccessfullyFromDb()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.016"/>
+  <testcase name="findAllOvertimesReturnsListOfOvertimes()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.008"/>
+  <testcase name="shouldAddOvertimeSuccessfullyToDb()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.012"/>
+  <testcase name="shouldFindOvertimesByStatusReturnsFilteredOvertimes()" classname="dominik.nadgodziny.infrastructure.overtime.controller.OvertimeControllerTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

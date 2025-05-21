@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-20T21:02:11" hostname="MacBook-Air-Dominik.local" time="0.453">
+<testsuite name="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-21T17:40:11" hostname="MacBook-Air-Dominik.local" time="0.116">
   <properties/>
-  <testcase name="shouldExitFromProgramByGivenNumberAndCloseApplicationContext()" classname="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" time="0.453"/>
-  <system-out><![CDATA[Zamykanie aplikacji...
-]]></system-out>
-  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/dominik/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.8/ae6ebe485f3bcd0a1e20241488a32e6400a501ef/byte-buddy-agent-1.14.8.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
+  <testcase name="shouldExitFromProgramByGivenNumberAndCloseApplicationContext()" classname="dominik.nadgodziny.infrastructure.overtime.console.OvertimeMainControlLoopTest" time="0.116"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
 </testsuite>
