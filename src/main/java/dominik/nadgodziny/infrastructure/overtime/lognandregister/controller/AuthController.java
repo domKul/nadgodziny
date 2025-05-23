@@ -1,13 +1,13 @@
 package dominik.nadgodziny.infrastructure.overtime.lognandregister.controller;
 
 
-import dominik.nadgodziny.infrastructure.overtime.lognandregister.dto.AuthRequestDto;
-import dominik.nadgodziny.infrastructure.overtime.lognandregister.dto.AuthResponseDto;
 import dominik.nadgodziny.domain.user.dto.RegisterRequestDto;
 import dominik.nadgodziny.domain.user.dto.RegisterResponseDto;
 import dominik.nadgodziny.infrastructure.overtime.lognandregister.LoginAndRegisterService;
+import dominik.nadgodziny.infrastructure.overtime.lognandregister.dto.AuthRequestDto;
+import dominik.nadgodziny.infrastructure.overtime.lognandregister.dto.AuthResponseDto;
 import jakarta.validation.Valid;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
