@@ -49,18 +49,6 @@ configurations {
 
 tasks.named('test') {
 		useJUnitPlatform()
-//		environment "DB", System.getenv("DB")
-//		environment "DB_ADMIN", System.getenv("DB_ADMIN")
-//		environment "DB_PW", System.getenv("DB_PW")
-//		environment "TWILIO_USER", System.getenv("TWILIO_USER")
-//		environment "TWILIO_TOKEN", System.getenv("TWILIO_TOKEN")
-//		environment "USER_FROM", System.getenv("USER_FROM")
-//		environment "USER_TO", System.getenv("USER_TO")
-
-}
-
-allprojects {
-	tasks.withType(Test).configureEach {
 		environment "DB", System.getenv("DB")
 		environment "DB_ADMIN", System.getenv("DB_ADMIN")
 		environment "DB_PW", System.getenv("DB_PW")
@@ -68,6 +56,8 @@ allprojects {
 		environment "TWILIO_TOKEN", System.getenv("TWILIO_TOKEN")
 		environment "USER_FROM", System.getenv("USER_FROM")
 		environment "USER_TO", System.getenv("USER_TO")
-	}
+
 }
+
+
 

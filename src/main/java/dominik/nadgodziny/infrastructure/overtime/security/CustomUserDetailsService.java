@@ -4,7 +4,9 @@ package dominik.nadgodziny.infrastructure.overtime.security;
 import dominik.nadgodziny.domain.user.UserEntity;
 import dominik.nadgodziny.domain.user.UserFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service

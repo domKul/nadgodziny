@@ -33,6 +33,7 @@ scheduling:
     delay: 0 0 14 * * SAT
     #delay: 0 * * * * *
 application:
+  secret: uD8HvIHRc+Tx/93qNNHUxTmgIXWAmX42zGJq0rRgQYI=
   version: Version 1.4.4
 
 convert:
